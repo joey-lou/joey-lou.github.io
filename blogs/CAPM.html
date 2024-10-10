@@ -172,12 +172,16 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <p>We will illustrate the reason behind U-shaped investment opportunity curve below.
 In the real world, there will always be correlation between assets, therefore, some form of "curving" is expected for the opportunity curve:</p>
 <p>Given two assets A and B, we can always construct combined asset from two, and depending on the correlation between two original assets, the combined asset will form the U-shaped curve, representing possible investment opportunities.</p>
-<p>Recall that for a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: 
-* $E_{c} = \alpha E_a + (1- \alpha)E_b$
-* $\sigma_c = \sqrt{\alpha^2 \sigma_a^2 + (1-\alpha)^2\sigma_b^2 + 2r_{ab}\alpha(1-\alpha)\sigma_a\sigma_b}$, where $r_{ab}$ is the correlation between two assets.</p>
-<p>Observe that under extreme condition where $r_{ab} = {1, -1}$, the two assets will form either line or two stright lines to the x-axis:
-* If $r_{ab} =1$,  $\sigma_c = \alpha\sigma_a + (1-\alpha)\sigma_b$
-* If $r_{ab} =-1$, $\sigma_c = \alpha\sigma_a - (1-\alpha)\sigma_b$</p>
+<p>Recall that for a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
+<ul>
+<li>$E_{c} = \alpha E_a + (1- \alpha)E_b$</li>
+<li>$\sigma_c = \sqrt{\alpha^2 \sigma_a^2 + (1-\alpha)^2\sigma_b^2 + 2r_{ab}\alpha(1-\alpha)\sigma_a\sigma_b}$, where $r_{ab}$ is the correlation between two assets.</li>
+</ul>
+<p>Observe that under extreme condition where $r_{ab} = {1, -1}$, the two assets will form either line or two stright lines to the x-axis:</p>
+<ul>
+<li>If $r_{ab} =1$,  $\sigma_c = \alpha\sigma_a + (1-\alpha)\sigma_b$</li>
+<li>If $r_{ab} =-1$, $\sigma_c = \alpha\sigma_a - (1-\alpha)\sigma_b$</li>
+</ul>
 <p>*<em>For simplicity, $R$ is omitted in notation, one should assume $E_a = E_{Ra}, \sigma_a = \sigma_{Ra}$.</em></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># change correlation between asset a and b to see intermediate combinations</span>
 <span class="k">def</span> <span class="nf">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">):</span>
