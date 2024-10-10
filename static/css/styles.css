@@ -1,0 +1,49 @@
+html,
+body {
+  height: 100%;
+}
+
+footer {
+  font-family: 'Gill Sans';
+}
+
+.card-img-top {
+  margin: 0 auto;
+  max-width: 50%;
+  padding-top: 1em;
+}
+
+#content-body {
+  min-height: 100%;
+}
+
+#game-container {
+  height: 80vmin; /* Allow space for footer */
+  width: 80vmin;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the DOM horizontally */
+  margin: 0 auto; /* Center the DOM vertically */
+}
+
+#theme-toggle {
+  transition: opacity 0.3s ease;
+  align-self: self-start;
+}
+
+#theme-toggle:hover {
+  opacity: 0.7;
+}
+
+#theme-toggle svg {
+  transition: fill 0.3s ease;
+}
+
+#theme-toggle:hover svg {
+  fill: #333; /* Darker color on hover */
+}
+
+/* For dark mode */
+[data-bs-theme='dark'] #theme-toggle:hover svg {
+  fill: #ccc; /* Lighter color on hover for dark mode */
+}

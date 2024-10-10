@@ -1,0 +1,150 @@
+<!--
+  JLou's Personal Site
+  Copyright (c) 2022-2024 Joey Lou
+  Licensed under the MIT License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../static/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="../static/favicon/site.webmanifest"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou's Personal Site</title>
+    <script
+      type="module"
+      src="../static/js/color_theme_toggle.js"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../static/css/styles.css"
+    />
+    
+<!-- Include MathJax library for LaTeX -->
+<script>
+    MathJax = {
+        tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+</script>
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?config=TeX-MML-AM_CHTML"
+></script>
+
+  </head>
+
+  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-secondary bg-opacity-50 px-5">
+      <a class="navbar-brand" href="../index.html">About</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html"
+            >Blogs</a
+          >
+          <a class="nav-item nav-link" href="../games/index.html"
+            >Games</a
+          >
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <button class="btn align-items-center" id="theme-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-brightness-high-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"
+              />
+            </svg>
+          </button>
+        </ul>
+      </div>
+    </nav>
+    <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
+      <div id="content-body" class="flex-grow-1 px-3 py-3">
+        
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+  
+  <div class="col">
+    <div class="card mh-100">
+      <div class="card-header">
+        <a
+          class="text-secondary text-decoration-none"
+          href="CAPM.html"
+        >
+          CAPM
+        </a>
+      </div>
+      <div class="card-body">
+        <p class="card-text"><p>The concept for efficient assets is actually quite straightforward. 
+As rational investors, we worry about the expected wealth and the volitility (...</p></p>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+      </div>
+    </div>
+    <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
+      <small> v0.1.0 | 2024-10-09 | 
+        Copyright © 2022-2024 Joey Lou | 
+        <a href="https://github.com/joey-lou/joey-lou.github.io/blob/main/LICENSE">MIT License </small>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- make sure to add script tags for any additional js -->
+    
+  </body>
+</html>

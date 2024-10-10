@@ -1,0 +1,69 @@
+#game-board {
+  background-color: #84b0e334;
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.snake {
+  background-color: greenyellow;
+  width: 1fr;
+  height: 1fr;
+  display: grid;
+  border: 0.15vmin solid grey;
+}
+
+.head {
+  background-color: rgb(3, 121, 31);
+}
+
+.food {
+  background-color: orangered;
+  width: 1fr;
+  height: 1fr;
+  display: grid;
+  border: 0.15vmin solid grey;
+  border-radius: 50%;
+}
+
+.hidden {
+  display: none;
+}
+
+.game-over {
+  color: red;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.cell {
+  background-color: var(--cell-dead-color);
+  border: 1px solid var(--cell-border-color);
+  transition: background-color 0.1s ease;
+}
+
+.cell:hover {
+  background-color: var(--cell-hover-color);
+}
+
+.cell.alive {
+  background-color: var(--cell-alive-color);
+}
+
+#game-board.life-grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
