@@ -1,29 +1,75 @@
-html,
-body {
+body,
+html {
   height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 footer {
   font-family: 'Gill Sans';
 }
 
+.card {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s;
+}
+
 .card-img-top {
-  margin: 0 auto;
+  margin-top: 1rem;
   max-width: 50%;
-  padding-top: 1em;
+  object-fit: cover;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.card:hover {
+  transform: scale(1.05);
 }
 
 #content-body {
   min-height: 100%;
 }
 
-#game-container {
-  height: 80vmin; /* Allow space for footer */
-  width: 80vmin;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Center the DOM horizontally */
-  margin: 0 auto; /* Center the DOM vertically */
+/* Navbar styles */
+.navbar {
+  transition: background-color 0.3s ease;
+}
+
+.navbar-brand,
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navbar-brand::after,
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.navbar-brand:hover::after,
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .navbar-nav {
+    margin-top: 1rem;
+  }
+
+  .nav-link {
+    padding: 0.5rem 0;
+  }
 }
 
 #theme-toggle {
@@ -33,6 +79,7 @@ footer {
 
 #theme-toggle:hover {
   opacity: 0.7;
+  transform: rotate(30deg);
 }
 
 #theme-toggle svg {

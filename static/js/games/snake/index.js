@@ -15,6 +15,9 @@ class Status {
 
 let status = Status.IDLE;
 let intervalId;
+let score = 0;
+let highScore = localStorage.getItem('snakeHighScore') || 0;
+let gridSize = { x: 21, y: 21 };
 
 function toggleVisibilityByName(name, to_visible) {
   var elements = document.getElementsByClassName(name);
@@ -26,8 +29,6 @@ function toggleVisibilityByName(name, to_visible) {
     }
   }
 }
-
-let gridSize = { x: 21, y: 21 };
 
 function calculateGridSize() {
   const gameBoard = document.getElementById('game-board');
@@ -67,6 +68,8 @@ function startGame() {
     }, 1000 / SNAKE_SPEED);
     status = Status.RUNNING;
     toggleVisibilityByName('game-over', false);
+    score = 0;
+    updateScores();
   } else {
     console.warn('Tried to start game while game already started');
   }
@@ -78,6 +81,8 @@ function endGame() {
     window.removeEventListener('keydown', changeDirection);
     clearInterval(intervalId);
 
+    updateScores(); // Add this line to update the high score
+
     status = Status.IDLE;
     window.addEventListener('keydown', onPressSpaceBar);
     toggleVisibilityByName('game-over', true);
@@ -87,14 +92,16 @@ function endGame() {
 }
 
 const onPressSpaceBar = (ev) => {
-  if (ev.code === 'Space') {
+  if (ev.code === 'Space' && status === Status.IDLE) {
     endGame();
     startGame();
+    window.removeEventListener('keydown', onPressSpaceBar);
   }
 };
 
 const onGameOver = () => {
   endGame();
+  window.addEventListener('keydown', onPressSpaceBar);
 };
 
 function initialize() {
@@ -105,7 +112,19 @@ function initialize() {
 
 function update(onGameOver) {
   updateSnake(onGameOver);
-  updateFood();
+  if (updateFood()) {
+    score += 1;
+    updateScores();
+  }
+}
+
+function updateScores() {
+  document.getElementById('score').textContent = score;
+  if (score > highScore) {
+    highScore = score;
+    localStorage.setItem('snakeHighScore', highScore);
+  }
+  document.getElementById('high-score').textContent = highScore;
 }
 
 function draw() {
@@ -135,5 +154,6 @@ window.addEventListener('resize', () => {
 });
 
 onResize();
+updateScores();
 
 export { gridSize };

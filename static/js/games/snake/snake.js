@@ -26,9 +26,10 @@ export function draw(gameBoard) {
     snakeElement.style.gridRowStart = `${grid.y}`;
     snakeElement.style.gridColumnStart = `${grid.x}`;
     snakeElement.classList.add('snake');
-    if (idx == 0) {
-      snakeElement.classList.add('head');
+    if (idx === 0) {
+      snakeElement.classList.add('snake-head');
     }
+    snakeElement.style.animation = `snakePulse 0.5s ease-in-out ${idx * 0.05}s infinite alternate`;
     gameBoard?.appendChild(snakeElement);
   });
 }
