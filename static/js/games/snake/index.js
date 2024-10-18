@@ -32,12 +32,12 @@ function toggleVisibilityByName(name, to_visible) {
 
 function calculateGridSize() {
   const gameBoard = document.getElementById('game-board');
-  const minCells = 10;
-  const maxCells = 50;
+  const minCells = 15;
+  const maxCells = 30;
   const aspectRatio = gameBoard.clientWidth / gameBoard.clientHeight;
 
-  let xCells = Math.floor(aspectRatio * 21);
-  let yCells = 21;
+  let xCells = Math.floor(gameBoard.clientWidth / 35);
+  let yCells = Math.floor(gameBoard.clientHeight / 35);
 
   // Adjust if outside the min/max range
   if (xCells < minCells) {

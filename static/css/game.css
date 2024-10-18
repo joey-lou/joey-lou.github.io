@@ -8,8 +8,8 @@
 }
 
 #game-container {
-  height: 80vmin; /* Allow space for footer */
-  width: 80vmin;
+  height: 85vmin; /* Allow space for footer */
+  width: 85vmin;
   display: flex;
   align-items: center;
   justify-content: center; /* Cente the DOM horizontally */

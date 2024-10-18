@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     do {
       const x = Math.random() * (canvas.width - 2 * margin) + margin;
       const y = Math.random() * (canvas.height - 2 * margin) + margin;
-      const size = Math.random() * 15 + 10;
+      const size = canvas.width * (Math.random() * 0.03 + 0.025);
       const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
       newObject = new ObjectClass(x, y, size, color);
     } while (objects.some((obj) => isOverlapping(newObject, obj)));
@@ -52,13 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
     createObject(GameTriangle, triangles);
   }
 
-  const mouseObject = new MouseObject(config.mouseX, config.mouseY, 1000);
+  const mouseObject = new MouseObject(config.mouseX, config.mouseY, canvas.width);
   const allObjects = [...circles, ...squares, ...triangles, mouseObject];
 
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    mouseObject.mass = mouseObject.isPressed ? 100000 : 0;
+    mouseObject.mass = mouseObject.isPressed ? canvas.width * 100 : 0;
 
     allObjects.forEach((object) => {
       object.updateForces(allObjects);
