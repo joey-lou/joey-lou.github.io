@@ -50,19 +50,10 @@
       href="../static/css/styles.css"
     />
     
-<!-- Include MathJax library for LaTeX -->
-<script>
-    MathJax = {
-        tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-        }
-    };
-</script>
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js?config=TeX-MML-AM_CHTML"
-></script>
+<link
+    rel="stylesheet"
+    href="../static/css/game.css"
+/>
 
   </head>
 
@@ -82,10 +73,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <a class="nav-item nav-link" href="index.html"
+          <a class="nav-item nav-link" href="../blogs/index.html"
             >Blogs</a
           >
-          <a class="nav-item nav-link" href="../games/index.html"
+          <a class="nav-item nav-link" href="index.html"
             >Games</a
           >
         </ul>
@@ -101,26 +92,23 @@
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
-  
-  <div class="col">
-    <div class="card mh-100">
-      <div class="card-header">
-        <a
-          class="text-secondary text-decoration-none"
-          href="CAPM.html"
-        >
-          CAPM
-        </a>
-      </div>
-      <div class="card-body">
-        <p class="card-text"><p>The concept for efficient assets is actually quite straightforward. 
-As rational investors, we worry about the expected wealth and the volitility (...</p></p>
-      </div>
-    </div>
-  </div>
-  
+<div id="game-container" class="mb-3">
+    <div id="game-board" class="maze-grid"></div>
 </div>
+<div class="text-center d-flex align-items-center justify-content-center">
+    <select id="algorithm-select" class="form-select d-inline-block w-auto me-2">
+        <option value="prim">Prim's Algorithm</option>
+        <option value="dfs">Randomized DFS</option>
+    </select>
+    <button id="generate-btn" class="btn btn-outline-secondary me-5">
+        Generate Maze
+    </button>
+    <div class="d-flex me-5">
+        <label for="speed-slider" class="form-label mb-0 me-3">Speed:</label>
+        <input type="range" class="form-range" id="speed-slider" min="1" max="100" value="50">
+    </div>
+</div>
+<script type="module" src="../static/js/games/maze/index.js"></script>
 
       </div>
     </div>
@@ -135,7 +123,6 @@ As rational investors, we worry about the expected wealth and the volitility (..
       crossorigin="anonymous"
     ></script>
     
-    <!-- make sure to add script tags for any additional js -->
-    
+
   </body>
 </html>
