@@ -79,7 +79,6 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
 
     if (count === 1 && lengthSinceSplit === 1) {
       fillWall(x, y);
-      addTimeout(setTimeout(processNextCell, getDelay()));
     } else {
       const newLengthSinceSplit = count > 2 ? 1 : lengthSinceSplit + 1;
 
@@ -92,8 +91,8 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
           visited.add(key);
         }
       }
-      processNextCell();
     }
+    addTimeout(setTimeout(processNextCell, getDelay()));
   }
 
   processNextCell();

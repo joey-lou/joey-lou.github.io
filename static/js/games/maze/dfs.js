@@ -91,7 +91,7 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
         stack.push([newX, newY, newLengthSinceSplit]);
       }
     }
-    return false;
+    return true;
   }
 
   function processNextCell() {
