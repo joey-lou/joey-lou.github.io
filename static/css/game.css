@@ -16,16 +16,14 @@
   margin: 0 auto; /* Center the DOM vertically */
 }
 
-#game-top-bar {
+#game-bar {
   width: 80vmin;
   margin: 0 auto;
   justify-content: space-between;
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  margin-bottom: 0.5rem;
   display: flex;
-  font-size: 0.8rem;
 }
 
 .snake {
@@ -73,7 +71,7 @@
 
 .cell {
   background-color: var(--cell-dead-color);
-  border: 1px solid var(--cell-border-color);
+  border: 0.05em solid var(--cell-border-color);
   transition: background-color 0.1s ease;
 }
 
@@ -97,12 +95,31 @@
   display: grid;
 }
 
-.cell.wall {
+.maze {
   background-color: var(--cell-alive-color);
-  border: 1px solid #333;
+  transition: background-color 0.1s ease;
 }
 
-.cell.highlight {
+.maze.wall {
+  background-color: var(--cell-dead-color);
+  border: 0.05em solid var(--cell-border-color);
+}
+
+.maze:hover {
+  background-color: var(--cell-hover-color);
+}
+
+.maze.highlight {
+  background-color: #00ff00;
+  transition: background-color 0.3s ease;
+}
+
+.maze.remove {
+  background-color: #ff0000;
+  transition: background-color 0.3s ease;
+}
+
+.maze.visit {
   background-color: #ffff00;
   transition: background-color 0.3s ease;
 }

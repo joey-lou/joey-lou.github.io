@@ -1,6 +1,8 @@
 export const friction = 0.999;
 export const wallDamping = 0.5;
-export const trailSize = 10;
+export const trailSize = 5;
+export const numEach = 10;
+export const margin = 20;
 
 export let canvas;
 export let mouseX;

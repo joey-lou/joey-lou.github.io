@@ -10,11 +10,11 @@ export const DIAGONALS = [
   [-1, 1],
   [1, -1],
 ];
-export const GRID_SIZE = 25;
+export let GRID_SIZE = 30;
 export const maze = [];
 export let isGenerating = false;
 export let generationSpeed = 50;
-
+export let timeouts = [];
 export function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -29,6 +29,22 @@ export function carvePassage(x, y) {
   maze[y][x].element.classList.remove('wall');
   setTimeout(() => {
     maze[y][x].element.classList.remove('highlight');
+  }, 300);
+}
+
+export function fillWall(x, y) {
+  maze[y][x].isWall = true;
+  maze[y][x].element.classList.add('wall');
+  maze[y][x].element.classList.add('remove');
+  setTimeout(() => {
+    maze[y][x].element.classList.remove('remove');
+  }, 500);
+}
+
+export function visitCell(x, y) {
+  maze[y][x].element.classList.add('visit');
+  setTimeout(() => {
+    maze[y][x].element.classList.remove('visit');
   }, 300);
 }
 
@@ -88,6 +104,10 @@ export function isValidCell(x, y) {
   return x > 0 && x < GRID_SIZE - 1 && y > 0 && y < GRID_SIZE - 1;
 }
 
+export function isPassage(x, y) {
+  return !maze[y][x].isWall;
+}
+
 export function getDelay() {
   return 101 - generationSpeed;
 }
@@ -98,4 +118,18 @@ export function setIsGenerating(value) {
 
 export function setGenerationSpeed(value) {
   generationSpeed = value;
+}
+
+// Add this new function
+export function setGridSize(size) {
+  GRID_SIZE = Math.min(Math.max(30, size), 60);
+}
+
+export function clearTimeouts() {
+  timeouts.forEach((timeout) => clearTimeout(timeout));
+  timeouts = [];
+}
+
+export function addTimeout(timeout) {
+  timeouts.push(timeout);
 }

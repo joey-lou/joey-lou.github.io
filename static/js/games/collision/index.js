@@ -1,12 +1,7 @@
-import { GameObject } from './game-object.js';
 import { GameCircle, GameSquare, GameTriangle } from './game-shapes.js';
 import { MouseObject } from './mouse-object.js';
 import { getRandomVelocity, isOverlapping } from './utils.js';
 import * as config from './config.js';
-
-// Constants
-const numEach = 10;
-const margin = 20;
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
@@ -34,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function createObject(ObjectClass, objects) {
     let newObject;
     do {
-      const x = Math.random() * (canvas.width - 2 * margin) + margin;
-      const y = Math.random() * (canvas.height - 2 * margin) + margin;
+      const x = Math.random() * (canvas.width - 2 * config.margin) + config.margin;
+      const y = Math.random() * (canvas.height - 2 * config.margin) + config.margin;
       const size = canvas.width * (Math.random() * 0.03 + 0.025);
       const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
       newObject = new ObjectClass(x, y, size, color);
@@ -46,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
     objects.push(newObject);
   }
 
-  for (let i = 0; i < numEach; i++) {
+  for (let i = 0; i < config.numEach; i++) {
     createObject(GameCircle, circles);
     createObject(GameSquare, squares);
     createObject(GameTriangle, triangles);

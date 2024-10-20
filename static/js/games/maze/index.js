@@ -1,6 +1,15 @@
-import { maze, isGenerating, GRID_SIZE, setIsGenerating, setGenerationSpeed } from './share.js';
-import { dfsAlgorithm } from './dfs.js';
-import { primAlgorithm } from './prims.js';
+import {
+  maze,
+  isGenerating,
+  setIsGenerating,
+  setGenerationSpeed,
+  GRID_SIZE,
+  setGridSize,
+  clearTimeouts,
+} from './share.js';
+import { dfsAlgorithm, dfsAlgorithm2 } from './dfs.js';
+import { primAlgorithm, primsAlgorithm2 } from './prims.js';
+import { generateCellularMaze } from './cellular.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const gridElement = document.getElementById('game-board');
@@ -8,7 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const algorithmSelect = document.getElementById('algorithm-select');
   const speedSlider = document.getElementById('speed-slider');
 
+  function calculateGridSize() {
+    const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
+    const cellSize = 20; // Adjust this value to change the cell size
+    return Math.max(30, Math.floor(containerSize / cellSize));
+  }
+
   function createGrid() {
+    clearTimeouts();
+    setIsGenerating(false);
+    const newGridSize = calculateGridSize();
+    setGridSize(newGridSize);
+
     gridElement.innerHTML = '';
     gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
     gridElement.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
@@ -16,11 +36,13 @@ document.addEventListener('DOMContentLoaded', () => {
       maze[i] = [];
       for (let j = 0; j < GRID_SIZE; j++) {
         const cell = document.createElement('div');
-        cell.classList.add('cell', 'wall');
+        cell.classList.add('maze', 'wall');
         gridElement.appendChild(cell);
         maze[i][j] = { element: cell, isWall: true };
       }
     }
+    generateBtn.disabled = false;
+    algorithmSelect.disabled = false;
   }
 
   function generateMaze() {
@@ -31,9 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
     algorithmSelect.disabled = true;
     resetMaze();
     if (algorithm === 'prim') {
-      primAlgorithm(generateBtn, algorithmSelect);
+      primsAlgorithm2(generateBtn, algorithmSelect);
     } else if (algorithm === 'dfs') {
-      dfsAlgorithm(generateBtn, algorithmSelect);
+      dfsAlgorithm2(generateBtn, algorithmSelect);
+    } else if (algorithm === 'cellular') {
+      generateCellularMaze(generateBtn, algorithmSelect);
     } else {
       console.warn('Unknown algorithm:', algorithm);
       setIsGenerating(false);
