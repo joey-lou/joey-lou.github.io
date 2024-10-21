@@ -8,7 +8,7 @@ import {
   isPassage,
   countAdjacentPassages,
   countDiagonalPassages,
-  addTimeout,
+  delay,
 } from './share.js';
 
 export async function generateCellularMaze(generateBtn, algorithmSelect) {
@@ -60,7 +60,7 @@ export async function generateCellularMaze(generateBtn, algorithmSelect) {
           }
         }
       }
-      await new Promise((resolve) => addTimeout(setTimeout(resolve, getDelay())));
+      await delay(getDelay());
     }
   }
 

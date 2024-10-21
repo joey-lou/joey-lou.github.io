@@ -4,11 +4,12 @@ import {
   setIsGenerating,
   setGenerationSpeed,
   GRID_SIZE,
-  setGridSize,
+  resizeGrid,
   clearTimeouts,
 } from './share.js';
-import { dfsAlgorithm, dfsAlgorithm2 } from './dfs.js';
-import { primAlgorithm, primsAlgorithm2 } from './prims.js';
+import { dfsAlgorithm2 } from './dfs.js';
+import { primsAlgorithm2 } from './prims.js';
+import { fractalAlgorithm } from './fractal.js';
 import { generateCellularMaze } from './cellular.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -17,17 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const algorithmSelect = document.getElementById('algorithm-select');
   const speedSlider = document.getElementById('speed-slider');
 
-  function calculateGridSize() {
-    const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
-    const cellSize = 20; // Adjust this value to change the cell size
-    return Math.max(30, Math.floor(containerSize / cellSize));
-  }
-
   function createGrid() {
     clearTimeouts();
     setIsGenerating(false);
-    const newGridSize = calculateGridSize();
-    setGridSize(newGridSize);
+    resizeGrid();
 
     gridElement.innerHTML = '';
     gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
@@ -58,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
       dfsAlgorithm2(generateBtn, algorithmSelect);
     } else if (algorithm === 'cellular') {
       generateCellularMaze(generateBtn, algorithmSelect);
+    } else if (algorithm === 'fractal') {
+      fractalAlgorithm(generateBtn, algorithmSelect);
     } else {
       console.warn('Unknown algorithm:', algorithm);
       setIsGenerating(false);

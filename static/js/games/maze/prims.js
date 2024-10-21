@@ -10,7 +10,7 @@ import {
   countAdjacentPassages,
   fillWall,
   visitCell,
-  addTimeout,
+  delay,
 } from './share.js';
 
 function addWalls(x, y, walls) {
@@ -23,12 +23,12 @@ function addWalls(x, y, walls) {
   }
 }
 
-export function primAlgorithm(generateBtn, algorithmSelect) {
+export async function primAlgorithm(generateBtn, algorithmSelect) {
   const startX = Math.floor(GRID_SIZE / 2);
   const startY = Math.floor(GRID_SIZE / 2);
   const walls = [];
 
-  function processNextWall() {
+  async function processNextWall() {
     if (walls.length === 0) {
       setIsGenerating(false);
       generateBtn.disabled = false;
@@ -43,10 +43,9 @@ export function primAlgorithm(generateBtn, algorithmSelect) {
     if (validNewPassage(x, y)) {
       carvePassage(x, y);
       addWalls(x, y, walls);
-      addTimeout(setTimeout(processNextWall, getDelay()));
-    } else {
-      processNextWall();
+      await delay(getDelay());
     }
+    processNextWall();
   }
 
   carvePassage(startX, startY);
@@ -54,7 +53,7 @@ export function primAlgorithm(generateBtn, algorithmSelect) {
   processNextWall();
 }
 
-function removeDeadEnds(generateBtn, algorithmSelect) {
+async function removeDeadEnds(generateBtn, algorithmSelect) {
   generateBtn.disabled = true;
   algorithmSelect.disabled = true;
   const queue = [];
@@ -65,7 +64,7 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
   queue.push([startX, startY, 0]);
   visited.add(`${startX},${startY}`);
 
-  function processNextCell() {
+  async function processNextCell() {
     if (queue.length === 0) {
       setIsGenerating(false);
       generateBtn.disabled = false;
@@ -92,7 +91,8 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
         }
       }
     }
-    addTimeout(setTimeout(processNextCell, getDelay()));
+    await delay(getDelay());
+    processNextCell();
   }
 
   processNextCell();

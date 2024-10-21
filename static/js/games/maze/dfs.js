@@ -11,10 +11,10 @@ import {
   visitCell,
   GRID_SIZE,
   fillWall,
-  addTimeout,
+  delay,
 } from './share.js';
 
-export function dfsAlgorithm(generateBtn, algorithmSelect) {
+export async function dfsAlgorithm(generateBtn, algorithmSelect) {
   const stack = [];
   const startX = Math.floor(GRID_SIZE / 2);
   const startY = Math.floor(GRID_SIZE / 2);
@@ -42,7 +42,7 @@ export function dfsAlgorithm(generateBtn, algorithmSelect) {
     return true;
   }
 
-  function processNextCell() {
+  async function processNextCell() {
     if (stack.length === 0) {
       setIsGenerating(false);
       generateBtn.disabled = false;
@@ -52,14 +52,13 @@ export function dfsAlgorithm(generateBtn, algorithmSelect) {
 
     const [x, y] = stack.pop();
     if (visit(x, y)) {
-      addTimeout(setTimeout(processNextCell, getDelay()));
-    } else {
-      processNextCell();
+      await delay(getDelay());
     }
+    processNextCell();
   }
 }
 
-function removeDeadEnds(generateBtn, algorithmSelect) {
+async function removeDeadEnds(generateBtn, algorithmSelect) {
   generateBtn.disabled = true;
   algorithmSelect.disabled = true;
   const stack = [];
@@ -94,7 +93,7 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
     return true;
   }
 
-  function processNextCell() {
+  async function processNextCell() {
     if (stack.length === 0) {
       setIsGenerating(false);
       generateBtn.disabled = false;
@@ -104,10 +103,9 @@ function removeDeadEnds(generateBtn, algorithmSelect) {
 
     const [x, y, lengthSinceSplit] = stack.pop();
     if (visit(x, y, lengthSinceSplit)) {
-      addTimeout(setTimeout(processNextCell, getDelay()));
-    } else {
-      processNextCell();
+      await delay(getDelay());
     }
+    processNextCell();
   }
 }
 

@@ -10,7 +10,7 @@ export const DIAGONALS = [
   [-1, 1],
   [1, -1],
 ];
-export let GRID_SIZE = 30;
+export let GRID_SIZE = 29; // must be 3 * n  + 2
 export const maze = [];
 export let isGenerating = false;
 export let generationSpeed = 50;
@@ -101,6 +101,7 @@ export function validNewPassage(x, y) {
 }
 
 export function isValidCell(x, y) {
+  // exclude the border cells
   return x > 0 && x < GRID_SIZE - 1 && y > 0 && y < GRID_SIZE - 1;
 }
 
@@ -109,7 +110,7 @@ export function isPassage(x, y) {
 }
 
 export function getDelay() {
-  return 101 - generationSpeed;
+  return 201 - generationSpeed;
 }
 
 export function setIsGenerating(value) {
@@ -120,9 +121,11 @@ export function setGenerationSpeed(value) {
   generationSpeed = value;
 }
 
-// Add this new function
-export function setGridSize(size) {
-  GRID_SIZE = Math.min(Math.max(30, size), 60);
+export function resizeGrid() {
+  const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
+  const cellSize = 20; // Adjust this value to change the cell size
+  const minDisvisor = Math.round(containerSize / cellSize / 2);
+  GRID_SIZE = Math.min(60, Math.max(30, Math.floor(minDisvisor) * 2));
 }
 
 export function clearTimeouts() {
@@ -132,4 +135,13 @@ export function clearTimeouts() {
 
 export function addTimeout(timeout) {
   timeouts.push(timeout);
+}
+
+export function delay(ms = getDelay()) {
+  // generic delay function, used within async functions
+  return new Promise((resolve) => addTimeout(setTimeout(resolve, ms)));
+}
+
+export function isWall(x, y) {
+  return maze[y][x].isWall;
 }
