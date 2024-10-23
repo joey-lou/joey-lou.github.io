@@ -12,38 +12,32 @@ import {
   countAdjacentPassages,
 } from './share.js';
 
-export async function fractalAlgorithm(generateBtn, algorithmSelect) {
-  for (let i = 0; i < GRID_SIZE; i++) {
-    for (let j = 0; j < GRID_SIZE; j++) {
-      carvePassage(i, j);
-    }
+async function generateSquareFractal(startX, startY, size) {
+  if (size <= 2) {
+    return;
   }
 
-  await delay(getDelay());
-
-  // base case
-  for (let i = 0; i < 3; i++) {
-    for (let j = 0; j < 3; j++) {
-      if (i === 1 && j === 1) carvePassage(i, j);
+  for (let i = startX; i < startX + 3; i++) {
+    for (let j = startY; j < startY + 3; j++) {
+      if (i === startX + 1 && j === startY + 1) carvePassage(i, j);
       else fillWall(i, j);
+      await delay(getDelay());
     }
   }
 
-  // size is the same for x and y
-  // also this marks the boundary of current recursive grid
-  let currentSize = 2;
-  while (currentSize < GRID_SIZE) {
-    let xoffsets = [0, currentSize];
-    let yoffsets = [0, currentSize];
+  let endIdx = 2;
+  while (endIdx < size) {
+    let xoffsets = [startX, startX + endIdx];
+    let yoffsets = [startY, startY + endIdx];
 
     for (let xoffset of xoffsets) {
       for (let yoffset of yoffsets) {
-        if (xoffset === 0 && yoffset === 0) continue;
+        if (xoffset === startX && yoffset === startY) continue;
         // Randomly choose rotation (0, 90, 180, or 270 degrees)
         const rotation = Math.floor(Math.random() * 4) * 90;
 
-        for (let i = 0; i < currentSize + 1; i++) {
-          for (let j = 0; j < currentSize + 1; j++) {
+        for (let i = 0; i < endIdx + 1; i++) {
+          for (let j = 0; j < endIdx + 1; j++) {
             let x, y;
 
             // Apply rotation
@@ -53,21 +47,21 @@ export async function fractalAlgorithm(generateBtn, algorithmSelect) {
                 y = j + yoffset;
                 break;
               case 90:
-                x = currentSize - j + xoffset;
+                x = endIdx - j + xoffset;
                 y = i + yoffset;
                 break;
               case 180:
-                x = currentSize - i + xoffset;
-                y = currentSize - j + yoffset;
+                x = endIdx - i + xoffset;
+                y = endIdx - j + yoffset;
                 break;
               case 270:
                 x = j + xoffset;
-                y = currentSize - i + yoffset;
+                y = endIdx - i + yoffset;
                 break;
             }
 
             if (x < GRID_SIZE && y < GRID_SIZE) {
-              if (isPassage(i, j)) {
+              if (isPassage(i + startX, j + startY)) {
                 carvePassage(x, y);
               } else {
                 fillWall(x, y);
@@ -82,42 +76,76 @@ export async function fractalAlgorithm(generateBtn, algorithmSelect) {
 
     // randomly clear three junctions
     let jointEnds = [
-      [1, currentSize, currentSize - 1, currentSize],
-      [currentSize, 1, currentSize, currentSize - 1],
-      [currentSize, currentSize * 2, currentSize, currentSize + 1],
-      [currentSize * 2, currentSize, currentSize + 1, currentSize],
+      [startX + 1, startY + endIdx, startX + endIdx - 1, startY + endIdx],
+      [startX + endIdx, startY + 1, startX + endIdx, startY + endIdx - 1],
+      [startX + endIdx, startY + endIdx * 2, startX + endIdx, startY + endIdx + 1],
+      [startX + endIdx * 2, startY + endIdx, startX + endIdx + 1, startY + endIdx],
     ];
 
     jointEnds = shuffleArray(jointEnds);
     for (let i = 0; i < 3; i++) {
       let [x1, y1, x2, y2] = jointEnds[i];
-      for (let j = 0; j < 10; j++) {
-        let x = Math.floor(Math.random() * (x2 - x1) + x1);
-        let y = Math.floor(Math.random() * (y2 - y1) + y1);
-        if (countAdjacentPassages(x, y).count === 2) {
-          carvePassage(x, y);
-          break;
-        }
-      }
+      if (!(await carveBoarder(x1, y1, x2, y2)))
+        console.log('no boarder carved between', x1, y1, x2, y2);
       await delay(getDelay());
     }
-    currentSize *= 2;
+    endIdx *= 2;
+  }
+}
+
+async function carveBoarder(x1, y1, x2, y2) {
+  for (let j = 0; j < 10; j++) {
+    let x = Math.floor(Math.random() * (x2 - x1) + x1);
+    let y = Math.floor(Math.random() * (y2 - y1) + y1);
+    if (countAdjacentPassages(x, y).count === 2) {
+      carvePassage(x, y);
+      return true;
+    }
+  }
+  return false;
+}
+
+async function generateFractalMaze(startX, startY, width, height) {
+  if (width <= 2 || height <= 2) {
+    return;
   }
 
-  // Seal border with walls and open passages one cell inner if needed
-  for (let i = 0; i < GRID_SIZE - 1; i++) {
-    if (!isWall(0, i)) carvePassage(0, i);
-    if (!isWall(GRID_SIZE - 1, i)) carvePassage(GRID_SIZE - 2, i);
-    if (!isWall(i, 0)) carvePassage(i, 0);
-    if (!isWall(i, GRID_SIZE - 1)) carvePassage(i, GRID_SIZE - 2);
+  const size = Math.pow(2, Math.floor(Math.log2(Math.min(width, height))));
+  await generateSquareFractal(startX, startY, size);
 
-    fillWall(0, i);
-    fillWall(GRID_SIZE - 1, i);
-    fillWall(i, 0);
-    fillWall(i, GRID_SIZE - 1);
+  const nextStartX = startX + size;
+  const nextStartY = startY + size;
+  const remainingWidth = width - size;
+  const remainingHeight = height - size;
+
+  if (remainingWidth > 0) {
+    await generateFractalMaze(nextStartX, startY, remainingWidth, size);
+    await carveBoarder(nextStartX, startY, nextStartX, nextStartY);
     await delay(getDelay());
   }
-  fillWall(GRID_SIZE - 1, GRID_SIZE - 1);
+  if (remainingHeight > 0) {
+    await generateFractalMaze(startX, nextStartY, size, remainingHeight);
+    await carveBoarder(startX, nextStartY, nextStartX, nextStartY);
+    await delay(getDelay());
+  }
+  if (remainingWidth > 0 && remainingHeight > 0) {
+    await generateFractalMaze(nextStartX, nextStartY, remainingWidth, remainingHeight);
+    await carveBoarder(nextStartX, nextStartY, width, nextStartY);
+    await delay(getDelay());
+    await carveBoarder(nextStartX, nextStartY, nextStartX, height);
+    await delay(getDelay());
+  }
+}
+
+export async function fractalAlgorithm(generateBtn, algorithmSelect) {
+  for (let i = 0; i < GRID_SIZE; i++) {
+    for (let j = 0; j < GRID_SIZE; j++) {
+      carvePassage(i, j);
+    }
+  }
+
+  await delay(getDelay());
+  await generateFractalMaze(0, 0, GRID_SIZE, GRID_SIZE);
 
   setIsGenerating(false);
   generateBtn.disabled = false;

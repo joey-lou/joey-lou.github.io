@@ -110,7 +110,7 @@ export function isPassage(x, y) {
 }
 
 export function getDelay() {
-  return 201 - generationSpeed;
+  return 501 - generationSpeed;
 }
 
 export function setIsGenerating(value) {
@@ -124,8 +124,22 @@ export function setGenerationSpeed(value) {
 export function resizeGrid() {
   const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
   const cellSize = 20; // Adjust this value to change the cell size
-  const minDisvisor = Math.round(containerSize / cellSize / 2);
-  GRID_SIZE = Math.min(60, Math.max(30, Math.floor(minDisvisor) * 2));
+  const minSize = 33; // 2^4 + 2^3 + 2^2 + 2^1 + 2^0 + 1
+  const maxSize = 65; // 2^6 + 1
+
+  let size = Math.floor(containerSize / cellSize);
+  size = Math.max(minSize, Math.min(maxSize, size));
+
+  // Adjust size to be sum of powers of 2 + 1
+  let powerSum = 1;
+  while (powerSum < size) {
+    let power = Math.floor(Math.log2(size - powerSum));
+    if (power < 3) break;
+    powerSum += Math.pow(2, power);
+  }
+
+  GRID_SIZE = powerSum;
+  console.log(GRID_SIZE);
 }
 
 export function clearTimeouts() {
