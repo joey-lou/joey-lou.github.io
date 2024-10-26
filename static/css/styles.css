@@ -3,10 +3,11 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  font-family: 'Oxygen', sans-serif;
 }
 
 footer {
-  font-family: 'Gill Sans';
+  font-family: 'Arvo', serif;
 }
 
 .card {
@@ -25,8 +26,13 @@ footer {
   margin-right: auto;
 }
 
+.card-footer {
+  background-color: var(--bs-body-bg);
+}
+
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 1rem var(--bs-secondary-bg);
 }
 
 #content-body {
@@ -36,6 +42,7 @@ footer {
 /* Navbar styles */
 .navbar {
   transition: background-color 0.3s ease;
+  font-family: 'Oxanium';
 }
 
 .navbar-brand,
