@@ -63,13 +63,7 @@ export function populatePattern(pattern) {
         [35, 2],
         [35, 3],
       ];
-      gunPattern.forEach(([x, y]) =>
-        setCellAlive(
-          centerX - Math.floor(GRID_SIZE / 3) + x,
-          centerY - Math.floor(GRID_SIZE / 3) + y,
-          true
-        )
-      );
+      gunPattern.forEach(([x, y]) => setCellAlive(centerX - 18 + x, centerY - 15 + y, true));
       break;
     case 'pulsar':
       const pulsarPattern = [

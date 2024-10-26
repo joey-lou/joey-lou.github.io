@@ -79,7 +79,7 @@ html {
 
 .cell {
   background-color: var(--cell-dead-color);
-  border: 0.05em solid var(--cell-border-color);
+  border: 0.01rem solid var(--cell-border-color);
   transition: background-color 0.1s ease;
 }
 

@@ -1,6 +1,8 @@
 import { populatePattern } from './patterns.js';
 
-export const GRID_SIZE = 50;
+export let GRID_SIZE = 50;
+export const MIN_GRID_SIZE = 50;
+export const MAX_GRID_SIZE = 80;
 export let grid = [];
 let newGrid = [];
 let isRunning = false;
@@ -73,6 +75,14 @@ function updateGridAppearance() {
   }
 }
 
+function calculateGridSize() {
+  const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
+  const cellSize = 20; // Adjust this value to change the cell size
+  let size = Math.floor(containerSize / cellSize);
+  size = Math.max(MIN_GRID_SIZE, Math.min(MAX_GRID_SIZE, size));
+  return size;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const gridElement = document.getElementById('game-board');
   const startBtn = document.getElementById('start-btn');
@@ -87,9 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function createGrid() {
+    GRID_SIZE = calculateGridSize();
     gridElement.innerHTML = ''; // Clear existing cells
     gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
     gridElement.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
+    grid = [];
+    newGrid = [];
     for (let i = 0; i < GRID_SIZE; i++) {
       grid[i] = [];
       newGrid[i] = [];
@@ -164,5 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
     wrapEdges = e.target.checked;
   });
 
-  window.addEventListener('resize', createGrid); // Allow resize
+  window.addEventListener('resize', () => {
+    const oldGridSize = GRID_SIZE;
+    const newGridSize = calculateGridSize();
+    if (newGridSize !== oldGridSize) {
+      clearGrid();
+      createGrid();
+    }
+  });
 });
