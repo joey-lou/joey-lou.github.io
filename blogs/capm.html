@@ -1,0 +1,370 @@
+<!--
+  JLou's Personal Site
+  Copyright (c) 2022-2024 Joey Lou
+  Licensed under the MIT License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../static/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="../static/favicon/site.webmanifest"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou's Personal Site</title>
+    <script
+      type="module"
+      src="../static/js/theme-toggle.js"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../static/css/styles.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    
+<link
+  id="pypigment-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/pypigments/solarized-light.css"
+/>
+<link
+  id="blog-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/blogs.css"
+/>
+<!-- Include MathJax library for LaTeX -->
+<script>
+MathJax = {
+    tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  </head>
+
+  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+    <nav class="navbar sticky-top navbar-expand-lg bg-secondary bg-opacity-50 px-5">
+      <a class="navbar-brand" href="../index.html">About</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html"
+            >Blogs</a
+          >
+          <a class="nav-item nav-link" href="../games/index.html"
+            >Games</a
+          >
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <button class="btn align-items-center" id="theme-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
+              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+            </svg>
+          </button>
+        </ul>
+      </div>
+    </nav>
+    <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
+      <div id="content-body" class="flex-grow-1 px-3 py-3">
+        
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto content">
+        <h1>CAPM</h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Import relevant packages</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+</code></pre></div>
+
+<h2>Efficient Assets</h2>
+<p>The concept for efficient assets is actually quite straightforward. 
+As rational investors, we worry about the expected wealth and the volitility (fluctuations) of our wealth. Since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
+<p>Thus, we define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
+<p>Further, the efficient asset lies on a curve in the 2-D plane of $E_R$ and $\sigma_R$. The conditions for an efficient asset are as follows:
+Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\nexists A_{Ri} \in R^2$, where $\sigma_{Ri} &lt; \sigma_{Ra} \wedge E_{Ri} &gt; E_{Ra}$.</p>
+<p>Reference: <em><a href="http://efinance.org.cn/cn/fm/Capital%20Asset%20Prices%20A%20Theory%20of%20Market%20Equilibrium%20under%20Conditions%20of%20Risk.pdf">A Theory of Market Equilibrium under Conditions of Risk</a></em> [William F. Sharpe]</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    To explore the reason behind the curved frontier plot,</span>
+<span class="sd">    we can recreate the proof in paper with two points on the</span>
+<span class="sd">    efficient frontier a and b, the scales are arbitrary</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">Asset</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">er</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">corr</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">=</span> <span class="n">er</span>  <span class="c1"># expected return of asset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sig</span> <span class="o">=</span> <span class="n">sigma</span>  <span class="c1"># sigma of asset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corr</span> <span class="o">=</span> <span class="n">corr</span>  <span class="c1"># HACK correlation</span>
+
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
+        <span class="n">er</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">+</span> <span class="n">asset</span><span class="o">.</span><span class="n">er</span>
+        <span class="n">corr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">asset</span><span class="o">.</span><span class="n">sig</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">corr</span> <span class="o">*</span> <span class="n">asset</span><span class="o">.</span><span class="n">sig</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="n">er</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">corr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">Number</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">Number</span><span class="p">),</span> <span class="s2">&quot;not supported&quot;</span>
+        <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">*</span> <span class="n">num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig</span> <span class="o">*</span> <span class="n">num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Asset(E=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">er</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, corrleation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="mf">0.7</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>The Investment Opportunity Curve</h2>
+<p>We will illustrate the reason behind U-shaped investment opportunity curve below.
+In the real world, there will always be correlation between assets, therefore, some form of "curving" is expected for the opportunity curve:</p>
+<p>Given two assets A and B, we can always construct combined asset from two, and depending on the correlation between two original assets, the combined asset will form the U-shaped curve, representing possible investment opportunities.</p>
+<p>Recall that for a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
+<ul>
+<li>$E_{c} = \alpha E_a + (1- \alpha)E_b$</li>
+<li>$\sigma_c = \sqrt{\alpha^2 \sigma_a^2 + (1-\alpha)^2\sigma_b^2 + 2r_{ab}\alpha(1-\alpha)\sigma_a\sigma_b}$, where $r_{ab}$ is the correlation between two assets.</li>
+</ul>
+<p>Observe that under extreme condition where $r_{ab} = {1, -1}$, the two assets will form either line or two stright lines to the x-axis:</p>
+<ul>
+<li>If $r_{ab} =1$,  $\sigma_c = \alpha\sigma_a + (1-\alpha)\sigma_b$</li>
+<li>If $r_{ab} =-1$, $\sigma_c = \alpha\sigma_a - (1-\alpha)\sigma_b$</li>
+</ul>
+<p>*<em>For simplicity, $R$ is omitted in notation, one should assume $E_a = E_{Ra}, \sigma_a = \sigma_{Ra}$.</em></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># change correlation between asset a and b to see intermediate combinations</span>
+<span class="k">def</span> <span class="nf">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;E_r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sigma_r&quot;</span><span class="p">)</span>
+    <span class="n">alphas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">A_a</span><span class="p">,</span> <span class="n">A_b</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="n">corr</span><span class="p">),</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">assets</span> <span class="o">=</span> <span class="p">[</span><span class="n">A_a</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">A_b</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span> <span class="k">for</span> <span class="n">alpha</span> <span class="ow">in</span> <span class="n">alphas</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">asset</span><span class="o">.</span><span class="n">er</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">],</span> <span class="p">[</span><span class="n">asset</span><span class="o">.</span><span class="n">sig</span> <span class="k">for</span> <span class="n">asset</span> <span class="ow">in</span> <span class="n">assets</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Combined asset with corr=</span><span class="si">{</span><span class="n">corr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">A_a</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_b</span><span class="o">.</span><span class="n">er</span><span class="p">],</span> <span class="p">[</span><span class="n">A_a</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">A_b</span><span class="o">.</span><span class="n">sig</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;corr=1.0&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">A_a</span><span class="o">.</span><span class="n">er</span><span class="p">],</span> <span class="p">[</span><span class="n">A_a</span><span class="o">.</span><span class="n">sig</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">A_b</span><span class="o">.</span><span class="n">er</span><span class="p">],</span> <span class="p">[</span><span class="n">A_b</span><span class="o">.</span><span class="n">sig</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">();</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+<span class="nd">@interact</span><span class="p">(</span><span class="n">corr</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">corr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="n">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>Risk Free Return</h2>
+<p>So far, we have only looked at assets where risk is non-zero, meaning $\sigma &gt; 0$, we can explore the addition of risk-free asset, and how that will affect our overall portfolio.</p>
+<p>Now, the original ideas are still valid, where risky assets will make up an <strong>investment opportunity curve</strong>. But with addition of risk-free asset P, with $E_{Rp} = P, \sigma_{Rp} = 0$, we can form new combination assets with P and any point "inside" the opportunity curve to form our new opportunity lines:</p>
+<p>Combined asset C between P and A will have  $\sigma_{Rc} = (1 - \alpha)\sigma_{Ra} $, thus forming a stright line from $(E_{Rp}, 0)$ to $(E_{Ra}, \sigma_{Ra})$.</p>
+<p>Therefore, as rational investors, we can maximize our expected return with the least risk ($\sigma_R$) by placing our bets on a combined asset that is on the line that originates from the risk-free asset point, and is tangent to the investment opportunity curve.</p>
+<p>In the example below, we can adjust $\alpha$, the proportion of risk-free asset we take on in combination of risky asset A. Notice that we can take on negative $\alpha$, which means we can borrow to take on more risks for better returns. But regardless, we travel along line PA which represents the most efficient assets that can be achieved from combinaing the risk-less and the risky.</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    To illustrate the idea, we use a quadratic equation to mimic</span>
+<span class="sd">    the set of risky assets which form the investment opportunity curve</span>
+<span class="sd">    and we show that the best options lie on the tangent between the curve</span>
+<span class="sd">    and risk-free point</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># draw quadratic curve</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.3</span>
+<span class="c1"># solve systems eqns for tangent coeff</span>
+<span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">10</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span><span class="o">/</span><span class="mi">10</span>
+<span class="n">a</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span> <span class="o">/</span> <span class="mf">0.1</span>
+<span class="n">y_t</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">x_t</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="mi">10</span>
+
+<span class="c1"># risky asset A and risk_free asset P</span>
+<span class="n">A_a</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x_t</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">A_p</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+    <span class="n">A_c</span> <span class="o">=</span> <span class="n">A_p</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">A_a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;E_r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sigma_r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Investment Opportunity Curve&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Efficient Combinations (PA)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_a</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_a</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_c</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_c</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;C&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_p</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_p</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightskyblue&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">();</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+<span class="c1"># alpha is the proportion of risk-free asset we take on</span>
+<span class="nd">@interact</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="n">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
+</code></pre></div>
+
+<h2>Capital Market Line</h2>
+<p>If the above picture accurately captures our current market, then what will happen?</p>
+<p>Every rational investor should be rushing to purchase the combinations on line $PA$ outlined above since it is most efficient. However, those actions should in turn have an effect on the returns and risks of the asset A: it will drive up the price and reduce the expected returns of A, thus making it move above and left with respect to the opportunity curve and no longer the most efficient.</p>
+<p>By contrast, those which were previous inside the efficient tangent $PA$ could move outwards as they are deemed less desirable, which could in turn decrease their price and increase their returns.</p>
+<p>As a result, as market reaches equilibrium, the investment opportunity curve will morph its shape till there is on longer a single point of asset that is most efficient but instead a line of effcient assets that could achieve the same effect.</p>
+<p>As illustrated below, there will be multiple assets that lie on the efficient line $PBA^*$ and they should all be perfectly correlated. Assets on this line can either be formed from a combination of risky asset with the risk-free or a combination of risky assets (if it is on the section $BA^*$ for instance).</p>
+<p>This line $PBA^*$ is what Sharpe referred in his paper as the <strong>Capital Market Line</strong>, indicating a linear relationship between risk and return on efficient asset combinations.</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd"> Again, we use quadratic curve to outline the feasible assets</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1"># draw quadratic curve</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="mi">5</span><span class="o">*</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.3</span>
+<span class="c1"># make efficient line</span>
+<span class="n">y_e</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mf">0.2</span>
+<span class="n">y_limit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">y_e</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># old efficient asset A</span>
+<span class="n">A_a</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="n">x_t</span> <span class="o">+</span> <span class="n">b</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="c1"># new efficient assets A*, B that are on efficient line</span>
+<span class="n">A_aa</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="n">x_t</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x_t</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span>
+<span class="n">x_b</span> <span class="o">=</span> <span class="n">x_t</span> <span class="o">*</span> <span class="mf">0.71</span>
+<span class="n">A_b</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="n">x_b</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x_b</span> <span class="o">-</span> <span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;E_r&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Sigma_r&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Investment Opportunity Curve&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_limit</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;lightskyblue&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_e</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Efficient Combinations (PBA*)&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orangered&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_a</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_a</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_aa</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_aa</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;A*&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_b</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_b</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;B&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">A_p</span><span class="o">.</span><span class="n">er</span><span class="p">,</span> <span class="n">A_p</span><span class="o">.</span><span class="n">sig</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;P&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">();</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+</code></pre></div>
+
+<h2>Systematic and Unsystematic Risk</h2>
+<p>We have seen what an efficient frontier should look like, with and without the risk-free assets, as well as under the condition where rational investors create feedback loop that reshapes the frontier.</p>
+<p>Now, we can go on to look at individual assets and their relation to efficient combinations.
+Sharpe suggests a regression analyses on their respective returns for a better picture.</p>
+<p>Borrowing the picture from paper, we have a combination asset $g$ that is on the efficient capital line, and its constituent asset $i$, which is inside the shaded feasible region. The combination line formed by these assets should be a curve lodging on the <strong>Capital Market Line</strong> (CML). This is implied by the continuity of combination assets and its optimum when touching the efficient CML.</p>
+<p><img alt="CAPM" src="/static/images/CAPM_1.png" width="500px" /></p>
+<p>More interestingly, this tangential relationship suggests an underlying equation that links the return and risk of our arbitrary constinuent asset $i$, and those of our efficient asset $g$ which is on the CML. The proof is relatively simple to follow and detailed in the paper. The resulting equation is as follows:</p>
+<p>$$\frac{Cov(R_i, R_g)}{Var(R_g)} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$$</p>
+<div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    We will simulate an efficient asset g and i as random variables with</span>
+<span class="sd">    gaussian distribution</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">rfr</span> <span class="o">=</span> <span class="mi">5</span>  <span class="c1"># set risk_free_rate</span>
+<span class="n">size</span> <span class="o">=</span> <span class="mi">200</span>  <span class="c1"># number of points</span>
+<span class="n">sigma_g</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">noise</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">rfr</span><span class="p">,</span> <span class="n">sigma_g</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+<span class="n">r_g</span> <span class="o">=</span> <span class="n">rfr</span> <span class="o">+</span> <span class="n">noise</span>  <span class="c1"># market returns as normal random var</span>
+
+
+<span class="k">def</span> <span class="nf">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+    <span class="c1"># set beta (B_ig)</span>
+    <span class="n">r_i</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">noise</span> <span class="o">+</span> <span class="n">rfr</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma_g</span>
+    <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">r_g</span><span class="p">,</span> <span class="n">r_i</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">r_g</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">r_g</span><span class="p">))</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">intercept</span> <span class="o">+</span> <span class="n">slope</span> <span class="o">*</span> <span class="n">x</span>
+
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">rfr</span><span class="o">*</span><span class="mf">1.3</span><span class="p">,</span> <span class="n">rfr</span> <span class="o">*</span> <span class="mf">2.8</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">rfr</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;r_g %&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;r_i %&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;regression line&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orangered&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">r_g</span><span class="p">,</span> <span class="n">r_i</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;returns&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+    <span class="n">E_rg</span><span class="p">,</span> <span class="n">E_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">r_g</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">r_i</span><span class="p">)</span>
+    <span class="n">sig_rg</span><span class="p">,</span> <span class="n">sig_ri</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">r_g</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">r_i</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">rfr</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;risk_free=</span><span class="si">{</span><span class="n">rfr</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">E_rg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;E[r_g]=</span><span class="si">{</span><span class="n">E_rg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;g&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">E_ri</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;E[r_i]=</span><span class="si">{</span><span class="n">E_ri</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">&quot;-.&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">();</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="c1"># calculate sample beta using different formulas</span>
+    <span class="n">beta_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">E_ri</span><span class="o">-</span><span class="n">rfr</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">E_rg</span><span class="o">-</span><span class="n">rfr</span><span class="p">)</span>
+    <span class="n">beta_2</span> <span class="o">=</span> <span class="n">r_value</span> <span class="o">*</span> <span class="n">sig_ri</span> <span class="o">/</span> <span class="n">sig_rg</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Beta = </span><span class="si">{</span><span class="n">beta_1</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">beta_2</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">), Sigma_ri = </span><span class="si">{</span><span class="n">sig_ri</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, Sigma_rg = </span><span class="si">{</span><span class="n">sig_rg</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+
+<span class="c1"># alpha is the proportion of risk-free asset we take on</span>
+<span class="nd">@interact</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+    <span class="n">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
+</code></pre></div>
+
+<p>As illustrated above, we can take another view at the relationship between assets $i$ and $g$ via regression analysis. The results come nicely together with the equation we found earlier.</p>
+<p>The regression coefficient between $R_i$ and $R_g$, $B_{ig} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$.</p>
+<p>This is hugely important as we can see a clear relationship between risk, return and risk-free rate:</p>
+<ol>
+<li>If expected return of our asset is the same as risk-free rate $P$, then it should not have any risk associated with it, since $\frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = 0 \Rightarrow \sigma_{Ri} = 0$</li>
+<li>If we expect returns higher than risk-free return, the risk will be captured by the coefficient $B_{ig}$, which suggests the risk is relative to that of the efficient asset</li>
+<li>The risk associated with assets on the efficient <strong>Capital Market Line</strong> are systematic, which represents the overall economic swings and cannot be diversified away</li>
+<li>More risks can be taken on if we expect higher than market return ($E_{Rg}$), this is shown as pushing $E_{Ri}&gt; E_{Rg}$, which gives $B_{ig} &gt; 1 \Rightarrow r_{ig}\sigma_{Ri} &gt; \sigma_{Rg}$</li>
+</ol>
+    </div>
+  </div>
+
+      </div>
+    </div>
+    <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
+      <small> 2024-10-25 | 
+        Copyright © 2022-2024 Joey Lou | 
+        <a href="https://github.com/joey-lou/joey-lou.github.io/blob/main/LICENSE">MIT License </small>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- make sure to add script tags for any additional js -->
+    
+  </body>
+</html>
