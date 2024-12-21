@@ -1,0 +1,219 @@
+<!--
+  JLou's Personal Site
+  Copyright (c) 2022-2024 Joey Lou
+  Licensed under the MIT License.
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../static/favicon/favicon-16x16.png"
+    />
+    <link
+      rel="manifest"
+      href="../static/favicon/site.webmanifest"
+    />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou's Personal Site</title>
+    <script
+      type="module"
+      src="../static/js/theme-toggle.js"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../static/css/styles.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+    
+<link
+  id="pypigment-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/pypigments/solarized-light.css"
+/>
+<link
+  id="blog-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/blogs.css"
+/>
+<!-- Include MathJax library for LaTeX -->
+<script>
+MathJax = {
+    tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  </head>
+
+  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+    <nav class="navbar sticky-top navbar-expand-lg bg-secondary bg-opacity-50 px-5">
+      <a class="navbar-brand" href="../index.html">About</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html"
+            >Blogs</a
+          >
+          <a class="nav-item nav-link" href="../games/index.html"
+            >Games</a
+          >
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <button class="btn align-items-center" id="theme-toggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
+              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+            </svg>
+          </button>
+        </ul>
+      </div>
+    </nav>
+    <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
+      <div id="content-body" class="flex-grow-1 px-3 py-3">
+        
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto content">
+        <h1>Fastest Descent</h1>
+<p>Also known as the Brachistochrone problem: we release a ball from top of slope, how do we shape the slope to minimize the time of descent?</p>
+<h2>Implementation</h2>
+<h3>Bezier Curve</h3>
+<p>To allow users to create their own slope, I chose the interesting bezier curves, which are quite flexible and intuitive to understand.</p>
+<p>To understand Bezier curves, it is easy to start with 2 nodes (linear) case, given a start $P_0$ and end point $P_1$, we can define the curve as:
+$$S(t) = P_0 + t(P_1 - P_0), \quad 0 \leq t \leq 1$$</p>
+<p>With three nodes (quadratic) case, we can construct the curve iteratively. First, we find the "linear" Bezier points by sliding along the line connecting $P_0$ and $P_1$, and $P_1$ and $P_2$.
+$$S_0(t) = P_0 + t(P_1 - P_0)$$
+$$S_1(t) = P_1 + t(P_2 - P_1)$$</p>
+<p>Then we slide along the line connecting $S_0(t)$ and $S_1(t)$, and find "quadratic" Bezier points to create the Bezier curve.
+$$S(t) = S_0(t) + t(S_1(t) - S_0(t)), \quad 0 \leq t \leq 1$$</p>
+<p>For the $N$ nodes case, we can follow the same process iteratively, and the algorithm is known as De Casteljau's Algorithm. Below is a JavaScript implementation used in the demo.</p>
+<div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateBezierPoint</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">points</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">currentPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">points</span><span class="p">];</span>
+
+<span class="w">  </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">points</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">i</span><span class="o">--</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">newPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kd">let</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">i</span><span class="p">;</span><span class="w"> </span><span class="nx">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">newPoints</span><span class="p">.</span><span class="nx">push</span><span class="p">({</span>
+<span class="w">        </span><span class="nx">x</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">currentPoints</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">x</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">currentPoints</span><span class="p">[</span><span class="nx">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">].</span><span class="nx">x</span><span class="p">,</span>
+<span class="w">        </span><span class="nx">y</span><span class="o">:</span><span class="w"> </span><span class="p">(</span><span class="mf">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">t</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">currentPoints</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nx">currentPoints</span><span class="p">[</span><span class="nx">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">].</span><span class="nx">y</span><span class="p">,</span>
+<span class="w">      </span><span class="p">});</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="nx">currentPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">newPoints</span><span class="p">;</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">currentPoints</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h3>Simulation</h3>
+<p>Normally we would have to construct an accurate physics simulation. I.e. calculate acceleration of the ball, detect collisions against the slope, solve for system of equations, etc.</p>
+<p>However, we can cheat a bit by making some simplifying assumptions:</p>
+<ol>
+<li>No friction.</li>
+<li>Ball stays on the surface.</li>
+</ol>
+<p>Given these assumptions, and knowing conservation of energy, we can derive the speed of the ball at any given point along the slope, which is uniquely determined by the height $h$ of the point.
+$$E = \frac{1}{2}mv^2 + mgh \Rightarrow v(h) = \sqrt{2g(h_0 - h)}$$</p>
+<p>Then we can discretize the slope into $M-1$ segments with $M$ points. Given that we know the distance of the segment and velocity over which the ball travels over each segment, we can approximate the time it takes to travel over the segment and arrive at a table like one below, where $t_i$ is the time when ball reaches point $i$.</p>
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>$i$</th>
+<th>$t_i$</th>
+<th>$x_i$</th>
+<th>$y_i$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0.00</td>
+<td>50.00</td>
+<td>50.00</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0.09</td>
+<td>50.20</td>
+<td>50.05</td>
+</tr>
+<tr>
+<td>2</td>
+<td>0.13</td>
+<td>50.40</td>
+<td>50.10</td>
+</tr>
+<tr>
+<td>3</td>
+<td>0.16</td>
+<td>50.60</td>
+<td>50.15</td>
+</tr>
+<tr>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, we can effectively replay the ball's motion. Given the current time $t$, find the cloest point $i$ on the slope using binary search and move the ball to the point.</p>
+    </div>
+  </div>
+
+      </div>
+    </div>
+    <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
+      <small>
+        © Joey Lou | 2022-2024
+        <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    
+    <!-- make sure to add script tags for any additional js -->
+    
+  </body>
+</html>
