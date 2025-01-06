@@ -218,8 +218,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (!duck.isInPond()) {
         gameState = 'won';
+        duck.isMoving = false;
       } else if (fox.hasCaughtDuck(duck)) {
         gameState = 'lost';
+        duck.isMoving = false;
       }
     }
   }

@@ -140,23 +140,35 @@
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         
 
+<div id="game-bar" class="mb-3">
+    <div class="d-flex align-items-center gap-3">
+        <select id="algorithm-select" class="form-select d-inline-block w-auto me-2">
+            <option value="prim">Prim's</option>
+            <option value="dfs">DFS</option>
+            <option value="cellular">Cellular</option>
+            <option value="fractal">Fractal</option>
+        </select>
+        <button id="generate-btn" class="btn btn-outline-secondary">
+            Generate
+        </button>
+        <div class="d-flex align-items-center">
+            <label for="speed-slider" class="me-2">Speed:</label>
+            <input 
+                type="range" 
+                id="speed-slider" 
+                class="form-range" 
+                min="1" 
+                max="500" 
+                value="250"
+                style="width: 150px"
+            >
+            <span id="speed-value" class="ms-2">250</span>
+        </div>
+    </div>
+</div>
+
 <div id="game-container" class="mb-3">
     <div id="game-board" class="maze-grid"></div>
-</div>
-<div class="text-center d-flex align-items-center justify-content-center">
-    <select id="algorithm-select" class="form-select d-inline-block w-auto me-2">
-        <option value="prim">Prim's</option>
-        <option value="dfs">DFS</option>
-        <option value="cellular">Cellular</option>
-        <option value="fractal">Fractal</option>
-    </select>
-    <button id="generate-btn" class="btn btn-outline-secondary me-5">
-        Generate
-    </button>
-    <div class="d-flex me-5">
-        <label for="speed-slider" class="form-label mb-0 me-3">Speed:</label>
-        <input type="range" class="form-range" id="speed-slider" min="1" max="500" value="250">
-    </div>
 </div>
 
 
