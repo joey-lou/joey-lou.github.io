@@ -59,13 +59,47 @@
 />
 
 <style>
-  .card {
-    font-family: 'Oxanium';
-  }
+    #game-board {
+        background: var(--game-board-simple-background);
+    }
+    #game-container {
+        max-height: 800px;
+        max-width: 800px;
+    }
+    #game-bar {
+        max-width: 800px;
+    }
 </style>
 
 
 <!-- if game contains a blog section, provide all the style and scripts for it. -->
+
+<link
+  id="pypigment-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/pypigments/solarized-light.css"
+/>
+<link
+  id="blog-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/blogs.css"
+/>
+<style>
+    .content {
+        font-family: 'Oxanium';
+    }
+</style>
+<!-- Include MathJax library for LaTeX -->
+<script>
+MathJax = {
+    tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']]
+    }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
 
 
@@ -107,118 +141,57 @@
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         
 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-3 px-5">
-  
-  <div class="col">
-    <a href="snake.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Snake</h5>
+<div id="game-bar" class="mb-3">
+    <div class="d-flex align-items-center gap-3">
+        <button id="info-btn" class="btn btn-outline-secondary active">
+            Stats
+        </button>
+        <button id="reset-btn" class="btn btn-outline-secondary">
+            Reset
+        </button>
+        <div class="d-flex align-items-center">
+            <label for="speed-slider" class="me-2">Fox Speed:</label>
+            <input 
+                type="range" 
+                id="speed-slider" 
+                class="form-range" 
+                min="100" 
+                max="150" 
+                value="105" 
+                style="width: 150px"
+            >
+            <span id="speed-value" class="ms-2">105%</span>
         </div>
-        <img
-          src="../static/images/games/titles/snake.png"
-          class="card-img-top"
-          alt="Snake Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Snake game based on html grid.</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
-  <div class="col">
-    <a href="collision.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Collision</h5>
-        </div>
-        <img
-          src="../static/images/games/titles/comet.png"
-          class="card-img-top"
-          alt="Collision Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Collision sim based on html canvas.</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
-  <div class="col">
-    <a href="life.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Game of Life</h5>
-        </div>
-        <img
-          src="../static/images/games/titles/heart.png"
-          class="card-img-top"
-          alt="Game of Life Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Game of life based on html grid.</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
-  <div class="col">
-    <a href="maze.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Maze Generator</h5>
-        </div>
-        <img
-          src="../static/images/games/titles/maze.png"
-          class="card-img-top"
-          alt="Maze Generator Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Generate mazes using various algorithms.</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
-  <div class="col">
-    <a href="slope.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Slope</h5>
-        </div>
-        <img
-          src="../static/images/games/titles/slope.png"
-          class="card-img-top"
-          alt="Slope Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Simulate the fastest descent on a slope.</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
-  <div class="col">
-    <a href="chase.html" class="text-decoration-none">
-      <div class="card h-100 d-flex flex-column text-center">
-        <div class="card-header">
-          <h5 class="card-title mb-0 text-secondary">Duck and Fox</h5>
-        </div>
-        <img
-          src="../static/images/games/titles/duck.png"
-          class="card-img-top"
-          alt="Duck and Fox Image"
-        />
-        <div class="card-body d-flex flex-column">
-          <p class="card-text flex-grow-1">Can the duck escape the fox?</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  
+    </div>
 </div>
+    <div id="game-container">
+        <canvas id="game-board"></canvas>
+    </div>
 
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto content mt-5">
+        <h2>Duck Chase</h2>
+<p>Imagine our yellow dot is a duck swimming in a pond, and the red dot is a hungry fox. The fox circles around the pond to search for an opportunity to catch the duck. Duck is safe in the pond, but it needs to reach the shore to escape.</p>
+<h3>Game Rules</h3>
+<ol>
+<li>Click anywhere on the canvas to move the duck to pointed location. </li>
+<li>The fox (red) will chase the duck, such that it minimizes its distance to the duck.</li>
+<li>If the duck reaches the shore without being caught, then you win!</li>
+</ol>
+<h3>Solution</h3>
+<details class="tip">
+<summary>Hint</summary>
+<p>
+Try move along the grey circle within pond.</p>
+</details>
+<h4>Take the Shortest Path Ashore</h4>
+<p><img alt="Chase" src="/static/images/games/chase/wrong.png" width="300px" /></p>
+<p>We may be tempted to run in the opposite direction of the fox and take the shortest path ashore.
+But the velocity of the fox and duck has the following relationship: $v_{fox} \geq \pi \times v_{duck}$.
+As duck moves towards the shore, fox will surely catch up.</p>
+    </div>
+</div>
 
 
       </div>
@@ -235,6 +208,7 @@
     ></script>
     
 
+    <script type="module" src="../static/js/games/chase/index.js"></script>
 
 
   </body>

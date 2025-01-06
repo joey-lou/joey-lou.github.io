@@ -50,13 +50,63 @@
       href="../static/css/styles.css"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
-    
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+  
 <link
     rel="stylesheet"
     href="../static/css/game.css"
 />
+
+<style>
+.snake {
+  background-color: #4caf50;
+  border-radius: 20%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+.snake-head {
+  background-color: #45a049;
+  border-radius: 30%;
+}
+
+.snake-food {
+  background-color: #ff5722;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 87, 34, 0.6);
+}
+
+@keyframes snakePulse {
+  0% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.game-over {
+  color: #ff5722;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+</style>
+
+
+<!-- if game contains a blog section, provide all the style and scripts for it. -->
+
+
 
   </head>
 
@@ -95,6 +145,7 @@
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         
+
 <div id="game-bar" class="mb-1">
     <div>
         <kbd>SPACE</kbd> to start 
@@ -110,11 +161,13 @@
     <div id="game-board"></div>
 </div>
 
+
+
       </div>
     </div>
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2024
+        © Joey Lou | 2022-2025
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small>
     </footer>
     <script
@@ -123,10 +176,12 @@
       crossorigin="anonymous"
     ></script>
     
+
 <script
     type="module"
     src="../static/js/games/snake/index.js"
 ></script>
+
 
   </body>
 </html>

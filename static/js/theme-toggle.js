@@ -26,6 +26,7 @@ function setGameColors(theme) {
       '--game-board-background',
       'linear-gradient(135deg, #2c3e50 0%, #675A99 100%)'
     );
+    root.style.setProperty('--game-board-simple-background', '#2c3e50');
   } else {
     root.style.setProperty('--cell-dead-color', '#fff');
     root.style.setProperty('--cell-alive-color', '#000');
@@ -35,6 +36,7 @@ function setGameColors(theme) {
       '--game-board-background',
       'linear-gradient(135deg, #84b0e3 0%, #42dae8 100%)'
     );
+    root.style.setProperty('--game-board-simple-background', '#b7d2ee');
   }
 }
 

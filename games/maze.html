@@ -50,13 +50,57 @@
       href="../static/css/styles.css"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
-    
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+  
 <link
     rel="stylesheet"
     href="../static/css/game.css"
 />
+
+<style>
+
+.maze-grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+}
+
+.maze {
+  background-color: var(--cell-alive-color);
+  transition: background-color 0.1s ease;
+}
+
+.maze.wall {
+  background-color: var(--cell-dead-color);
+  border: 0.05em solid var(--cell-border-color);
+}
+
+.maze:hover {
+  background-color: var(--cell-hover-color);
+}
+
+.maze.highlight {
+  background-color: #00ff00;
+  transition: background-color 0.3s ease;
+}
+
+.maze.remove {
+  background-color: #ff0000;
+  transition: background-color 0.3s ease;
+}
+
+.maze.visit {
+  background-color: #ffff00;
+  transition: background-color 0.3s ease;
+}
+
+</style>
+
+
+<!-- if game contains a blog section, provide all the style and scripts for it. -->
+
+
 
   </head>
 
@@ -95,6 +139,7 @@
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         
+
 <div id="game-container" class="mb-3">
     <div id="game-board" class="maze-grid"></div>
 </div>
@@ -113,13 +158,14 @@
         <input type="range" class="form-range" id="speed-slider" min="1" max="500" value="250">
     </div>
 </div>
-<script type="module" src="../static/js/games/maze/index.js"></script>
+
+
 
       </div>
     </div>
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2024
+        © Joey Lou | 2022-2025
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small>
     </footer>
     <script
@@ -128,6 +174,9 @@
       crossorigin="anonymous"
     ></script>
     
+
+<script type="module" src="../static/js/games/maze/index.js"></script>
+
 
   </body>
 </html>

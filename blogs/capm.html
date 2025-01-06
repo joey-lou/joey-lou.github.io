@@ -50,9 +50,9 @@
       href="../static/css/styles.css"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
-    
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+  
 <link
   id="pypigment-style"
   rel="stylesheet"
@@ -115,10 +115,10 @@ MathJax = {
   <div class="row">
     <div class="col-lg-8 col-md-10 mx-auto content">
         <h1>CAPM</h1>
-<div class="codehilite"><pre><span></span><code><span class="c1"># Import relevant packages</span>
-<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
-<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<blockquote>
+<p>This blog was adopted from a jupyter notebook I wrote after reading paper <em><a href="http://efinance.org.cn/cn/fm/Capital%20Asset%20Prices%20A%20Theory%20of%20Market%20Equilibrium%20under%20Conditions%20of%20Risk.pdf">A Theory of Market Equilibrium under Conditions of Risk</a></em> [William F. Sharpe].</p>
+</blockquote>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span>
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
@@ -131,7 +131,6 @@ As rational investors, we worry about the expected wealth and the volitility (fl
 <p>Thus, we define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
 <p>Further, the efficient asset lies on a curve in the 2-D plane of $E_R$ and $\sigma_R$. The conditions for an efficient asset are as follows:
 Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\nexists A_{Ri} \in R^2$, where $\sigma_{Ri} &lt; \sigma_{Ra} \wedge E_{Ri} &gt; E_{Ra}$.</p>
-<p>Reference: <em><a href="http://efinance.org.cn/cn/fm/Capital%20Asset%20Prices%20A%20Theory%20of%20Market%20Equilibrium%20under%20Conditions%20of%20Risk.pdf">A Theory of Market Equilibrium under Conditions of Risk</a></em> [William F. Sharpe]</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To explore the reason behind the curved frontier plot,</span>
 <span class="sd">    we can recreate the proof in paper with two points on the</span>
@@ -293,7 +292,7 @@ In the real world, there will always be correlation between assets, therefore, s
 <p>Now, we can go on to look at individual assets and their relation to efficient combinations.
 Sharpe suggests a regression analyses on their respective returns for a better picture.</p>
 <p>Borrowing the picture from paper, we have a combination asset $g$ that is on the efficient capital line, and its constituent asset $i$, which is inside the shaded feasible region. The combination line formed by these assets should be a curve lodging on the <strong>Capital Market Line</strong> (CML). This is implied by the continuity of combination assets and its optimum when touching the efficient CML.</p>
-<p><img alt="CAPM" src="/static/images/CAPM_1.png" width="500px" /></p>
+<p><img alt="CAPM" src="/static/images/blogs/capm/CAPM_1.png" width="500px" /></p>
 <p>More interestingly, this tangential relationship suggests an underlying equation that links the return and risk of our arbitrary constinuent asset $i$, and those of our efficient asset $g$ which is on the CML. The proof is relatively simple to follow and detailed in the paper. The resulting equation is as follows:</p>
 <p>$$\frac{Cov(R_i, R_g)}{Var(R_g)} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$$</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
@@ -355,7 +354,7 @@ Sharpe suggests a regression analyses on their respective returns for a better p
     </div>
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2024
+        © Joey Lou | 2022-2025
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small>
     </footer>
     <script

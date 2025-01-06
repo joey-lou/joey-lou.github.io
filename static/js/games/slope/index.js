@@ -147,7 +147,8 @@ function drawSpline(ctx, points) {
 
 function drawTime(ctx, canvas, T) {
   ctx.font = '20px Oxanium';
-  ctx.fillStyle = '#000';
+  const theme = localStorage.getItem('theme') || 'light';
+  ctx.fillStyle = theme === 'light' ? '#000' : '#fff';
   ctx.textAlign = 'right';
   const timeText = `Time: ${T.toFixed(2)}s`;
   ctx.fillText(timeText, canvas.width - 20, 30);
