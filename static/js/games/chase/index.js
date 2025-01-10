@@ -120,6 +120,10 @@ class Fox {
     const distance = Math.sqrt(dx * dx + dy * dy);
     return distance <= CAPTURE_RADIUS;
   }
+
+  getAngle() {
+    return this.angle;
+  }
 }
 
 class GameInfo {
@@ -136,8 +140,9 @@ class GameInfo {
       `Distance:       ${Math.sqrt((duck.x - fox.x) ** 2 + (duck.y - fox.y) ** 2)
         .toFixed(0)
         .padStart(6)}`,
-      `Duck v:         ${duck.velocity.toFixed(1).padStart(6)}`,
-      `Fox v:          ${fox.velocity.toFixed(1).padStart(6)}`,
+      `Angular Dist:   ${((Math.abs(duck.getAngle() - fox.getAngle()) * 180) / Math.PI)
+        .toFixed(1)
+        .padStart(6)}°`,
       `Duck Angular v: ${((duck.angularVelocity * 180) / Math.PI).toFixed(1).padStart(6)}°/s`,
       `Fox Angular v:  ${((fox.angularVelocity * 180) / Math.PI).toFixed(1).padStart(6)}°/s`,
     ];

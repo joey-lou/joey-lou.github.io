@@ -86,11 +86,6 @@
   type="text/css"
   href="../static/css/blogs.css"
 />
-<style>
-    .content {
-        font-family: 'Oxanium';
-    }
-</style>
 <!-- Include MathJax library for LaTeX -->
 <script>
 MathJax = {
@@ -179,17 +174,52 @@ MathJax = {
 <li>The fox (red) will chase the duck, such that it minimizes its distance to the duck.</li>
 <li>If the duck reaches the shore without being caught, then you win!</li>
 </ol>
+<h4>Turn around and run?</h4>
+<p>Intuitively, we may be tempted to run in the opposite direction of the fox and take the shortest path ashore.
+But the speed of the fox is setup to be at least $\pi$ times duck's speed. Therefore, as duck moves towards the shore, fox will surely catch up.</p>
 <h3>Solution</h3>
 <details class="tip">
 <summary>Hint</summary>
 <p>
 Try move along the grey circle within pond.</p>
 </details>
-<h4>Take the Shortest Path Ashore</h4>
-<p><img alt="Chase" src="/static/images/games/chase/wrong.png" width="300px" /></p>
-<p>We may be tempted to run in the opposite direction of the fox and take the shortest path ashore.
-But the velocity of the fox and duck has the following relationship: $v_{fox} \geq \pi \times v_{duck}$.
-As duck moves towards the shore, fox will surely catch up.</p>
+<h4>The Grey Circle</h4>
+<p>As you probably noticed, if duck moves along or outside the grey circle, it will maintain the same angle with the fox. This is because beyond the grey circle, angular velocity of the duck is the same as the fox $\omega_{duck} = \omega_{fox}$.</p>
+<p>But the flip side of this is that if duck moves inside the grey circle, it can potentially increase its angle difference with the fox. This gives us an idea for a strategy: <strong>move spirally towards the grey circle from center of pond.</strong> </p>
+<p>This way, duck can gradually increase its angle difference with the fox. In an ideal scenario, duck can reach a point on the grey circle that is at most $\pi$ or $180^\circ$ degrees away from the fox, marking the maximum angle and distance away from the fox.</p>
+<h4>Then what?</h4>
+<p>Intuitively, we may think from this optimal point, duck should take the shortest path to shore. But is this really the best strategy?</p>
+<p>Well, if you give it a try, you may find as we increase the speed of the fox, this strategy may not work as well.</p>
+<h4>Optimal Path</h4>
+<p>Below, we plot out the ideal scenario mentioned above. Where the yellow and red dots are the duck and fox at maximum angle/distance away from each other. We can then formulate this problem of finding the optimal path from this point onwards into an optimization.</p>
+<p><img alt="optimal_scenario" src="/static/images/games/chase/optimal_scenario.png" width="800px" /></p>
+<p>As shown in plot, we will first define a few variables:</p>
+<ul>
+<li>$v_d$ to be duck's velocity, $v_f$ to be fox's and $\omega_f$ to be its angular velocity.</li>
+<li>$r$ to be grey circle's radius, $R$ to be pond radius.</li>
+<li>$\theta$ to be the potential angle duck takes to reach shore, while $\gamma$ being the angle fox will travel during the time duck takes to reach the shore.</li>
+<li>$d$ being the distance duck travelled. </li>
+</ul>
+<p>From here, we can immediately derive a few relations:</p>
+<ol>
+<li>$\frac{r}{R} = \frac{v_d}{v_f}$</li>
+<li>$d = \sqrt{(R \cos{\theta} - r)^2 + (R\sin{\theta})^2} = \sqrt{R^2 + r^2 - 2Rr\cos{\theta}}$ </li>
+<li>$\gamma = \frac{d}{v_d}\omega_f = \frac{d}{v_d}\frac{v_f}{R} = \frac{d}{r}$</li>
+</ol>
+<p>We will define the objective as the final angle between duck and fox and aim to maximize it:
+$$f(\theta) = \theta + \pi - \gamma  = \theta + \pi - \frac{\sqrt{R^2 + r^2 - 2Rr\cos\theta}}{r}, \text{where } 0\leq\theta\leq \arccos{\frac{r}{R}}.$$</p>
+<blockquote>
+<p><em>Side note on the limits, if $\theta\lt 0$, then it will certainly be worse for duck as it travels in direction of fox.
+If $\theta\gt \arccos{\frac{r}{R}}$, which means duck travels beyond the tangent line, this will cause fox to chase in the opposite direction and resulting in a speedier catch/failure as well.</em> </p>
+</blockquote>
+<p>We can take derivative and attempt to solve for optimal solution (assume there is one).
+$$f'(\theta) = 1 - \frac{R\sin\theta}{\sqrt{R^2 + r^2 - 2Rr\cos\theta}} = 0$$
+With basic calculus, we get the following,
+$$R^2\cos^2\theta - 2Rr\cos\theta + r^2 = 0$$
+$$\theta = \arccos{\frac{r}{R}}$$
+Meaning our upper limit for $\theta$ (intersection of tangent line to grey circle and the pond) happens to be a critical point.</p>
+<p>To further confirm, we can also plot out the solution for case when $v_f = \pi v_d$, where we can see the optimal path is indeed to aim for $\theta = \arccos{\frac{r}{R}}$.
+<img alt="solution" src="/static/images/games/chase/solution.png" width="800px" /></p>
     </div>
 </div>
 
