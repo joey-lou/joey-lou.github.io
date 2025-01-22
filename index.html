@@ -3,7 +3,7 @@
   Copyright (c) 2022-2024 Joey Lou
   Licensed under the MIT License.
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -24,17 +24,11 @@
       sizes="16x16"
       href="static/favicon/favicon-16x16.png"
     />
-    <link
-      rel="manifest"
-      href="static/favicon/site.webmanifest"
-    />
+    <link rel="manifest" href="static/favicon/site.webmanifest" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>JLou's Personal Site</title>
-    <script
-      type="module"
-      src="static/js/theme-toggle.js"
-    ></script>
+    <script type="module" src="static/js/theme-toggle.js"></script>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -45,26 +39,25 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
+      href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap"
       rel="stylesheet"
-      href="static/css/styles.css"
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
-  
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPJT5CNCH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-ZRPJT5CNCH');
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPJT5CNCH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-ZRPJT5CNCH');
     </script>
-  
-  
-  
+      
   </head>
 
   <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
@@ -83,17 +76,22 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <a class="nav-item nav-link" href="blogs/index.html"
-            >Blogs</a
-          >
-          <a class="nav-item nav-link" href="games/index.html"
-            >Games</a
-          >
+          <a class="nav-item nav-link" href="blogs/index.html">Blogs</a>
+          <a class="nav-item nav-link" href="games/index.html">Games</a>
         </ul>
         <ul class="navbar-nav ms-auto">
           <button class="btn align-items-center" id="theme-toggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sun" viewBox="0 0 16 16">
-              <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-sun"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"
+              />
             </svg>
           </button>
         </ul>
@@ -101,60 +99,76 @@
     </nav>
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
       <div id="content-body" class="flex-grow-1 px-3 py-3">
-        
 
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <h1 class="display-4 text-center mb-5">Answers to Internet's Most Asked Questions</h1>
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title h4">What is this site?</h2>
-                    As you probably guessed from the URL, this is my personal site.<br>
-                    I've always wanted a place to do some writing and code some fun stuff. So, here it is!
-                </div>
-            </div>
-            
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title h4">How is this site generated?</h2>
-                    <ul class="list-unstyled">
-                        <li><i class="fas fa-code mr-2"></i> Built with Python using <a href="https://flask.palletsprojects.com/en/stable/" class="text-decoration-none">Flask</a>.</li>
-                        <li><i class="fas fa-snowflake mr-2"></i> Rendered using <a href="https://frozen-flask.readthedocs.io/en/latest/" class="text-decoration-none">Frozen-Flask</a>.</li>
-                        <li><i class="fab fa-js-square mr-2"></i> Games are written in JavaScript.</li>
-                        <li><i class="fab fa-markdown mr-2"></i> Blog posts are written in Markdown and rendered using <a href="https://python-markdown.github.io" class="text-decoration-none">Python-Markdown</a>.</li>
-                    </ul>
-                </div>
-            </div>
-            
-            
-            <div class="card mb-4">
-                <div class="card-body"> 
-                    <h2 class="card-title h4">How to reach me?</h2>
-                    <p class="card-text">
-                        I may make mistakes or if you find the site interesting, feel free to contact me at
-                        <a href="mailto:usjoeylou@gmail.com" class="text-decoration-none">joey99lou@gmail.com</a>
-                    </p>
-                </div>
-            </div>
-
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h2 class="card-title h4">Who voted for these questions?</h2>
-                    <p class="card-text">Me, myself, and I. A unanimous decision :)</p>
-                </div>
-            </div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <h1 class="display-4 text-center mb-5">Answers to Internet's Most Asked Questions</h1>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title h4">What is this site?</h2>
+          As you probably guessed from the URL, this is my personal site.<br />
+          I've always wanted a place to do some writing and code some fun stuff. So, here it is!
         </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title h4">How is this site generated?</h2>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fas fa-code mr-2"></i> Built with Python using
+              <a href="https://flask.palletsprojects.com/en/stable/" class="text-decoration-none"
+                >Flask</a
+              >.
+            </li>
+            <li>
+              <i class="fas fa-snowflake mr-2"></i> Rendered using
+              <a href="https://frozen-flask.readthedocs.io/en/latest/" class="text-decoration-none"
+                >Frozen-Flask</a
+              >.
+            </li>
+            <li><i class="fab fa-js-square mr-2"></i> Games are written in JavaScript.</li>
+            <li>
+              <i class="fab fa-markdown mr-2"></i> Blog posts are written in Markdown and rendered
+              using
+              <a href="https://python-markdown.github.io" class="text-decoration-none"
+                >Python-Markdown</a
+              >.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title h4">How to reach me?</h2>
+          <p class="card-text">
+            I may make mistakes or if you find the site interesting, feel free to contact me at
+            <a href="mailto:usjoeylou@gmail.com" class="text-decoration-none"
+              >joey99lou@gmail.com</a
+            >
+          </p>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-body">
+          <h2 class="card-title h4">Who voted for these questions?</h2>
+          <p class="card-text">Me, myself, and I. A unanimous decision :)</p>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
-
-      </div>
+</div>
     </div>
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
         © Joey Lou | 2022-2025
-        <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small>
+        <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
+      >
     </footer>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
