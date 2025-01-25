@@ -9,6 +9,65 @@ export class ODESolver {
     return this.addStates(state, this.scaleState(k1, dt));
   }
 
+  // Backward Euler method with fixed-point iteration
+  backwardEuler(state, dt, t = 0, maxIterations = 100, tolerance = 1e-6) {
+    // yn+1 = yn + dt * f(tn+1, yn+1)
+    let currentGuess = this.euler(state, dt, t); // Initial guess using forward Euler
+    console.log(`Initial guess: \n${JSON.stringify(currentGuess)}`);
+    for (let i = 0; i < maxIterations; i++) {
+      const derivatives = this.derivatives(t + dt, currentGuess);
+      const newGuess = this.addStates(state, this.scaleState(derivatives, dt));
+
+      // Check convergence
+      const diff = Math.abs(this.stateDistance(newGuess, currentGuess));
+      if (diff < tolerance) {
+        console.log(`Converged in ${i} iterations with diff ${diff} \n${JSON.stringify(newGuess)}`);
+        return newGuess;
+      }
+
+      currentGuess = newGuess;
+    }
+
+    // Return last guess if not converged
+    return currentGuess;
+  }
+
+  // Helper method to compute "distance" between states using L2 norm
+  stateDistance(state1, state2) {
+    if (typeof state1 !== 'object' || state1 === null) {
+      return Math.abs(state1 - state2);
+    }
+
+    let sumSquaredDiff = 0;
+    let count = 0;
+
+    for (const key in state1) {
+      if (Array.isArray(state1[key])) {
+        state1[key].forEach((item, index) => {
+          if (typeof item === 'object') {
+            const diff = this.stateDistance(item, state2[key][index]);
+            sumSquaredDiff += diff * diff;
+            count += 1;
+          } else if (typeof item === 'number') {
+            const diff = item - state2[key][index];
+            sumSquaredDiff += diff * diff;
+            count += 1;
+          }
+        });
+      } else if (typeof state1[key] === 'object') {
+        const diff = this.stateDistance(state1[key], state2[key]);
+        sumSquaredDiff += diff * diff;
+        count += 1;
+      } else if (typeof state1[key] === 'number') {
+        const diff = state1[key] - state2[key];
+        sumSquaredDiff += diff * diff;
+        count += 1;
+      }
+    }
+
+    return count > 0 ? Math.sqrt(sumSquaredDiff / count) : 0;
+  }
+
   // Midpoint method (RK2)
   midpoint(state, dt, t = 0) {
     const k1 = this.derivatives(t, state);

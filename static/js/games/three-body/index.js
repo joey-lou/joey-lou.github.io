@@ -7,10 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // UI elements
   const solverSelect = document.getElementById('solver-select');
-  const dtInput = document.getElementById('dt-input');
+  const hInput = document.getElementById('h-input');
+  const speedInput = document.getElementById('speed-input');
   const gInput = document.getElementById('g-input');
   const massInput = document.getElementById('mass-input');
-  const speedInput = document.getElementById('speed-input');
+  const initialSpeedInput = document.getElementById('initial-speed-input');
   const trailInput = document.getElementById('trail-input');
   const resetBtn = document.getElementById('reset-btn');
   const pauseBtn = document.getElementById('pause-btn');
@@ -18,12 +19,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // Simulation state
   let isPaused = true; // Start paused
   let selectedBody = null;
+  let isDragging = false;
+  let H = parseFloat(hInput.value); // Integration step size
+  let SPEED = parseFloat(speedInput.value); // Animation speed multiplier
   let G = parseFloat(gInput.value);
-  let DT = parseFloat(dtInput.value);
   let MASS = parseFloat(massInput.value);
-  let speed = parseFloat(speedInput.value);
+  let INITIAL_SPEED = parseFloat(initialSpeedInput.value);
   let trailLength = parseFloat(trailInput.value);
-  let t = 0;
+  let t = 0; // Simulation time
+  let lastFrameTime = 0; // For real-time animation
 
   function createBodies() {
     const centerX = canvas.width / 2;
@@ -43,11 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setInitialVelocities(bodies) {
     bodies[0].vx = 0;
-    bodies[0].vy = -speed;
-    bodies[1].vx = speed;
-    bodies[1].vy = speed / 2;
-    bodies[2].vx = -speed;
-    bodies[2].vy = speed / 2;
+    bodies[0].vy = -INITIAL_SPEED;
+    bodies[1].vx = INITIAL_SPEED;
+    bodies[1].vy = INITIAL_SPEED / 2;
+    bodies[2].vx = -INITIAL_SPEED;
+    bodies[2].vy = INITIAL_SPEED / 2;
   }
 
   // Initialize simulation
@@ -55,11 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInitialVelocities(bodies);
   let solver = new NBodySolver(G);
 
-  // Mouse handling for dragging
-  let isDragging = false;
-
   function resizeCanvas() {
-    const computedStyle = getComputedStyle(canvas);
     canvas.width = canvas.clientWidth;
     canvas.height = canvas.clientHeight;
 
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     bodies = createBodies();
     setInitialVelocities(bodies);
     t = 0;
+    lastFrameTime = 0;
     if (!isPaused) {
       isPaused = true;
       pauseBtn.textContent = 'Run';
@@ -76,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
+  // Mouse handling for dragging
   canvas.addEventListener('mousedown', (e) => {
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -98,7 +100,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const rect = canvas.getBoundingClientRect();
       selectedBody.x = e.clientX - rect.left;
       selectedBody.y = e.clientY - rect.top;
-      selectedBody.clearTrail(); // Clear trail when dragging
+      // clear velocity and trail
+      selectedBody.vx = 0;
+      selectedBody.vy = 0;
+      selectedBody.clearTrail();
     }
   });
 
@@ -111,12 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // UI event handlers
-  solverSelect.addEventListener('change', () => {
-    // Solver method will be selected in the update loop
+  hInput.addEventListener('change', () => {
+    H = parseFloat(hInput.value);
   });
 
-  dtInput.addEventListener('change', () => {
-    DT = parseFloat(dtInput.value);
+  speedInput.addEventListener('change', () => {
+    SPEED = parseFloat(speedInput.value);
   });
 
   gInput.addEventListener('change', () => {
@@ -129,8 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
     bodies.forEach((body) => body.updateMass(MASS));
   });
 
-  speedInput.addEventListener('change', () => {
-    speed = parseFloat(speedInput.value);
+  initialSpeedInput.addEventListener('change', () => {
+    INITIAL_SPEED = parseFloat(initialSpeedInput.value);
     setInitialVelocities(bodies);
   });
 
@@ -144,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInitialVelocities(bodies);
     bodies.forEach((body) => body.updateTrailLength(trailLength));
     t = 0;
+    lastFrameTime = 0;
     if (!isPaused) {
       pauseBtn.click(); // Pause on reset
     }
@@ -154,43 +160,66 @@ document.addEventListener('DOMContentLoaded', () => {
     pauseBtn.textContent = isPaused ? 'Run' : 'Stop';
   });
 
-  function update() {
+  function update(currentTime) {
+    if (lastFrameTime === 0) {
+      lastFrameTime = currentTime;
+    }
+
+    // Calculate real time delta
+    const dt = (currentTime - lastFrameTime) / 1000; // Convert to seconds
+    lastFrameTime = currentTime;
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     if (!isPaused) {
-      // Create current state
-      const state = {
-        bodies: bodies.map((body) => ({
-          x: body.x,
-          y: body.y,
-          vx: body.vx,
-          vy: body.vy,
-          mass: body.mass,
-        })),
-      };
+      // Advance simulation by dt * SPEED using multiple steps of size H
+      const targetTime = t + dt * SPEED;
+      while (t < targetTime) {
+        const stepSize = Math.min(H, targetTime - t);
 
-      // Solve one step using selected method
-      let newState;
-      switch (solverSelect.value) {
-        case 'euler':
-          newState = solver.euler(state, DT, t);
-          break;
-        case 'midpoint':
-          newState = solver.midpoint(state, DT, t);
-          break;
-        default:
-          newState = solver.rk4(state, DT, t);
+        // Create current state
+        const state = {
+          bodies: bodies.map((body) => ({
+            x: body.x,
+            y: body.y,
+            vx: body.vx,
+            vy: body.vy,
+            mass: body.mass,
+          })),
+        };
+
+        // Solve one step using selected method
+        let newState;
+        switch (solverSelect.value) {
+          case 'euler':
+            newState = solver.euler(state, stepSize, t);
+            break;
+          case 'midpoint':
+            newState = solver.midpoint(state, stepSize, t);
+            break;
+          case 'backward-euler':
+            newState = solver.backwardEuler(state, stepSize, t);
+            break;
+          default:
+            newState = solver.rk4(state, stepSize, t);
+        }
+        t += stepSize;
+
+        // Update bodies with new state
+        bodies.forEach((body, i) => {
+          if (!body.isDragging) {
+            // Only update if not being dragged
+            body.x = newState.bodies[i].x;
+            body.y = newState.bodies[i].y;
+            body.vx = newState.bodies[i].vx;
+            body.vy = newState.bodies[i].vy;
+          }
+        });
       }
-      t += DT;
 
-      // Update bodies with new state
-      bodies.forEach((body, i) => {
+      // Update trails once per frame
+      bodies.forEach((body) => {
         if (!body.isDragging) {
-          // Only update if not being dragged
-          body.x = newState.bodies[i].x;
-          body.y = newState.bodies[i].y;
-          body.vx = newState.bodies[i].vx;
-          body.vy = newState.bodies[i].vy;
           body.updateTrail();
         }
       });
@@ -202,5 +231,5 @@ document.addEventListener('DOMContentLoaded', () => {
     requestAnimationFrame(update);
   }
 
-  update();
+  requestAnimationFrame(update);
 });

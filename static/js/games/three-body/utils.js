@@ -12,7 +12,7 @@ export class NBodySolver extends ODESolver {
           y: body.vy,
           vx: 0,
           vy: 0,
-          mass: body.mass,
+          mass: 0,
         })),
       };
 
