@@ -24,7 +24,6 @@ export class ODESolver {
       const diff = Math.sqrt(newGuess.reduce((sum, x, i) => sum + (x - currentGuess[i]) ** 2, 0));
 
       if (diff < tolerance) {
-        console.log('converged after ', i, ' iterations', 'with diff ', diff);
         return newGuess;
       }
 
@@ -32,6 +31,7 @@ export class ODESolver {
     }
 
     // Return last guess if not converged
+    console.warn('Backward euler did not converge after ', maxIterations, ' iterations');
     return currentGuess;
   }
 
@@ -56,6 +56,7 @@ export class ODESolver {
       currentGuess = newGuess;
     }
 
+    console.warn('Implicit midpoint did not converge after ', maxIterations, ' iterations');
     // Return last guess if not converged
     return currentGuess;
   }
