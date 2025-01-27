@@ -1,27 +1,30 @@
+// Base class for ODE solvers, only works with 1D Y arrays.
 export class ODESolver {
   constructor(derivatives) {
-    this.derivatives = derivatives; // function that returns dx/dt for given (t, state)
+    // function that returns derivatives for given (t, y)
+    this.derivatives = derivatives;
   }
 
   // Simple Euler method
-  euler(state, dt, t = 0) {
-    const k1 = this.derivatives(t, state);
-    return this.addStates(state, this.scaleState(k1, dt));
+  euler(Y, dt, t = 0) {
+    const k1 = this.derivatives(t, Y);
+    return Y.map((x, i) => x + k1[i] * dt);
   }
 
   // Backward Euler method with fixed-point iteration
-  backwardEuler(state, dt, t = 0, maxIterations = 100, tolerance = 1e-6) {
+  backwardEuler(Y, dt, t = 0, maxIterations = 100, tolerance = 1e-6) {
     // yn+1 = yn + dt * f(tn+1, yn+1)
-    let currentGuess = this.euler(state, dt, t); // Initial guess using forward Euler
-    console.log(`Initial guess: \n${JSON.stringify(currentGuess)}`);
+    let currentGuess = this.euler(Y, dt, t); // Initial guess using forward Euler
+
     for (let i = 0; i < maxIterations; i++) {
       const derivatives = this.derivatives(t + dt, currentGuess);
-      const newGuess = this.addStates(state, this.scaleState(derivatives, dt));
+      const newGuess = Y.map((x, i) => x + derivatives[i] * dt);
 
-      // Check convergence
-      const diff = Math.abs(this.stateDistance(newGuess, currentGuess));
+      // Check convergence using L2 norm
+      const diff = Math.sqrt(newGuess.reduce((sum, x, i) => sum + (x - currentGuess[i]) ** 2, 0));
+
       if (diff < tolerance) {
-        console.log(`Converged in ${i} iterations with diff ${diff} \n${JSON.stringify(newGuess)}`);
+        console.log('converged after ', i, ' iterations', 'with diff ', diff);
         return newGuess;
       }
 
@@ -32,129 +35,73 @@ export class ODESolver {
     return currentGuess;
   }
 
-  // Helper method to compute "distance" between states using L2 norm
-  stateDistance(state1, state2) {
-    if (typeof state1 !== 'object' || state1 === null) {
-      return Math.abs(state1 - state2);
-    }
+  // Implicit midpoint method with fixed-point iteration
+  implicitMidpoint(Y, dt, t = 0, maxIterations = 100, tolerance = 1e-6) {
+    // yn+1 = yn + dt * f(tn + dt/2, (yn + yn+1)/2)
+    let currentGuess = this.euler(Y, dt, t); // Initial guess using forward Euler
 
-    let sumSquaredDiff = 0;
-    let count = 0;
+    for (let i = 0; i < maxIterations; i++) {
+      // Calculate midpoint state
+      const midY = currentGuess.map((x, i) => (x + Y[i]) / 2);
+      const derivatives = this.derivatives(t + dt / 2, midY);
+      const newGuess = Y.map((x, i) => x + derivatives[i] * dt);
 
-    for (const key in state1) {
-      if (Array.isArray(state1[key])) {
-        state1[key].forEach((item, index) => {
-          if (typeof item === 'object') {
-            const diff = this.stateDistance(item, state2[key][index]);
-            sumSquaredDiff += diff * diff;
-            count += 1;
-          } else if (typeof item === 'number') {
-            const diff = item - state2[key][index];
-            sumSquaredDiff += diff * diff;
-            count += 1;
-          }
-        });
-      } else if (typeof state1[key] === 'object') {
-        const diff = this.stateDistance(state1[key], state2[key]);
-        sumSquaredDiff += diff * diff;
-        count += 1;
-      } else if (typeof state1[key] === 'number') {
-        const diff = state1[key] - state2[key];
-        sumSquaredDiff += diff * diff;
-        count += 1;
+      // Check convergence using L2 norm
+      const diff = Math.sqrt(newGuess.reduce((sum, x, i) => sum + (x - currentGuess[i]) ** 2, 0));
+
+      if (diff < tolerance) {
+        return newGuess;
       }
+
+      currentGuess = newGuess;
     }
 
-    return count > 0 ? Math.sqrt(sumSquaredDiff / count) : 0;
+    // Return last guess if not converged
+    return currentGuess;
   }
 
   // Midpoint method (RK2)
-  midpoint(state, dt, t = 0) {
-    const k1 = this.derivatives(t, state);
-    const midState = this.addStates(state, this.scaleState(k1, dt / 2));
-    const k2 = this.derivatives(t + dt / 2, midState);
-    return this.addStates(state, this.scaleState(k2, dt));
+  midpoint(Y, dt, t = 0) {
+    const k1 = this.derivatives(t, Y);
+    const midY = Y.map((x, i) => x + (k1[i] * dt) / 2);
+    const k2 = this.derivatives(t + dt / 2, midY);
+    return Y.map((x, i) => x + k2[i] * dt);
   }
 
   // RK4 method
-  rk4(state, dt, t = 0) {
-    const k1 = this.derivatives(t, state);
-    const k2 = this.derivatives(t + dt / 2, this.addStates(state, this.scaleState(k1, dt / 2)));
-    const k3 = this.derivatives(t + dt / 2, this.addStates(state, this.scaleState(k2, dt / 2)));
-    const k4 = this.derivatives(t + dt, this.addStates(state, this.scaleState(k3, dt)));
-
-    const combinedK = this.addStates(
-      this.addStates(this.scaleState(k1, 1 / 6), this.scaleState(k2, 1 / 3)),
-      this.addStates(this.scaleState(k3, 1 / 3), this.scaleState(k4, 1 / 6))
+  rk4(Y, dt, t = 0) {
+    const k1 = this.derivatives(t, Y);
+    const k2 = this.derivatives(
+      t + dt / 2,
+      Y.map((x, i) => x + (k1[i] * dt) / 2)
+    );
+    const k3 = this.derivatives(
+      t + dt / 2,
+      Y.map((x, i) => x + (k2[i] * dt) / 2)
+    );
+    const k4 = this.derivatives(
+      t + dt,
+      Y.map((x, i) => x + k3[i] * dt)
     );
 
-    return this.addStates(state, this.scaleState(combinedK, dt));
+    return Y.map((x, i) => x + ((k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]) * dt) / 6);
   }
 
-  // Utility functions for state operations
-  addStates(state1, state2) {
-    if (typeof state1 !== 'object' || state1 === null) {
-      return state1;
+  // Generic solve method that calls the appropriate solver
+  solve(method, Y, dt, t = 0, options = {}) {
+    switch (method) {
+      case 'euler':
+        return this.euler(Y, dt, t);
+      case 'midpoint':
+        return this.midpoint(Y, dt, t);
+      case 'backward-euler':
+        return this.backwardEuler(Y, dt, t, options.maxIterations, options.tolerance);
+      case 'implicit-midpoint':
+        return this.implicitMidpoint(Y, dt, t, options.maxIterations, options.tolerance);
+      case 'rk4':
+        return this.rk4(Y, dt, t);
+      default:
+        throw new Error(`Unknown solver: ${method}`);
     }
-
-    const result = Array.isArray(state1) ? [] : {};
-
-    for (const key in state1) {
-      if (Array.isArray(state1[key])) {
-        result[key] = state1[key].map((item, index) => {
-          if (typeof item === 'object') {
-            return this.addStates(item, state2[key][index]);
-          } else {
-            return item + state2[key][index];
-          }
-        });
-      } else if (typeof state1[key] === 'object') {
-        result[key] = this.addStates(state1[key], state2[key]);
-      } else if (typeof state1[key] === 'number') {
-        result[key] = state1[key] + state2[key];
-      } else {
-        result[key] = state1[key];
-      }
-    }
-    return result;
-  }
-
-  scaleState(state, factor) {
-    if (typeof state !== 'object' || state === null) {
-      return state;
-    }
-
-    const result = Array.isArray(state) ? [] : {};
-
-    for (const key in state) {
-      if (Array.isArray(state[key])) {
-        result[key] = state[key].map((item) => {
-          if (typeof item === 'object') {
-            return this.scaleState(item, factor);
-          } else {
-            return item * factor;
-          }
-        });
-      } else if (typeof state[key] === 'object') {
-        result[key] = this.scaleState(state[key], factor);
-      } else if (typeof state[key] === 'number') {
-        result[key] = state[key] * factor;
-      } else {
-        result[key] = state[key];
-      }
-    }
-    return result;
-  }
-}
-
-// Example usage for simple harmonic oscillator:
-export class HarmonicOscillatorSolver extends ODESolver {
-  constructor(k, m) {
-    // k: spring constant, m: mass
-    super((t, state) => ({
-      // Now takes time parameter
-      x: state.v,
-      v: (-k * state.x) / m,
-    }));
   }
 }

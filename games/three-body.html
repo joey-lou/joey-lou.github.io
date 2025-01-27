@@ -60,64 +60,7 @@
      
 <link rel="stylesheet" href="../static/css/game.css" />
 
-<style>
-  .game-container {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-
-  #game-board {
-    width: 100%;
-    height: 100%;
-    background: none;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  #game-bar {
-    position: absolute;
-    top: 1rem;
-    left: 1rem;
-    width: 200px;
-    padding: 0.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 0 1rem var(--bs-secondary-bg);
-    backdrop-filter: blur(10px);
-    align-items: normal;
-    display: flex;
-    flex-direction: column;
-  }
-
-  #game-bar label {
-    font-size: 0.9rem;
-  }
-
-  #game-bar .button-group {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.5rem;
-  }
-
-  #game-bar .control-group {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  #game-bar label {
-    min-width: 70px;
-    text-align: left;
-  }
-
-  /* Make inputs more compact */
-  #game-bar .form-control-sm,
-  #game-bar .form-select-sm {
-    padding: 0.25rem 0.25rem;
-    font-size: 0.875rem;
-    text-align: left;
-  }
-</style>
+<link rel="stylesheet" href="../static/css/game-fs.css" />
 
 
 <!-- if game contains a blog section, provide all the style and scripts for it. -->
@@ -174,6 +117,7 @@
         <option value="euler">Euler</option>
         <option value="midpoint">Midpoint</option>
         <option value="backward-euler">Backward Euler</option>
+        <option value="implicit-midpoint">Implicit Midpoint</option>
       </select>
     </div>
 
@@ -259,6 +203,27 @@
       <button id="reset-btn" class="btn btn-outline-secondary btn-sm">Reset</button>
       <button id="pause-btn" class="btn btn-outline-primary btn-sm">Run</button>
     </div>
+
+    <div
+      class="info-container"
+      data-bs-toggle="tooltip"
+      data-bs-placement="left"
+      data-bs-title="As shown in SHM sim, backward euler may be stable but does not conserve energy. Forward euler is expected to grow exponentially."
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        class="bi bi-info-circle"
+        viewBox="0 0 16 16"
+      >
+        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+        <path
+          d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+        />
+      </svg>
+    </div>
   </div>
 </div>
   </div>
@@ -274,6 +239,15 @@
       integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
       crossorigin="anonymous"
     ></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize all tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(
+          (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        );
+      });
+    </script>
      
 <script
   type="module"

@@ -57,7 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize simulation
   let bodies = createBodies();
   setInitialVelocities(bodies);
-  let solver = new NBodySolver(G);
+  let solver = new NBodySolver(
+    G,
+    bodies.map((body) => body.mass)
+  );
 
   function resizeCanvas() {
     canvas.width = canvas.clientWidth;
@@ -126,12 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   gInput.addEventListener('change', () => {
     G = parseFloat(gInput.value);
-    solver = new NBodySolver(G);
+    solver = new NBodySolver(
+      G,
+      bodies.map((body) => body.mass)
+    );
   });
 
   massInput.addEventListener('change', () => {
     MASS = parseFloat(massInput.value);
     bodies.forEach((body) => body.updateMass(MASS));
+    solver = new NBodySolver(
+      G,
+      bodies.map((body) => body.mass)
+    );
   });
 
   initialSpeedInput.addEventListener('change', () => {
@@ -177,44 +187,12 @@ document.addEventListener('DOMContentLoaded', () => {
       while (t < targetTime) {
         const stepSize = Math.min(H, targetTime - t);
 
-        // Create current state
-        const state = {
-          bodies: bodies.map((body) => ({
-            x: body.x,
-            y: body.y,
-            vx: body.vx,
-            vy: body.vy,
-            mass: body.mass,
-          })),
-        };
-
-        // Solve one step using selected method
-        let newState;
-        switch (solverSelect.value) {
-          case 'euler':
-            newState = solver.euler(state, stepSize, t);
-            break;
-          case 'midpoint':
-            newState = solver.midpoint(state, stepSize, t);
-            break;
-          case 'backward-euler':
-            newState = solver.backwardEuler(state, stepSize, t);
-            break;
-          default:
-            newState = solver.rk4(state, stepSize, t);
-        }
-        t += stepSize;
-
-        // Update bodies with new state
-        bodies.forEach((body, i) => {
-          if (!body.isDragging) {
-            // Only update if not being dragged
-            body.x = newState.bodies[i].x;
-            body.y = newState.bodies[i].y;
-            body.vx = newState.bodies[i].vx;
-            body.vy = newState.bodies[i].vy;
-          }
+        // Solve one step and update bodies directly
+        solver.step(bodies, stepSize, t, solverSelect.value, {
+          maxIterations: 10,
+          tolerance: 1e-8,
         });
+        t += stepSize;
       }
 
       // Update trails once per frame

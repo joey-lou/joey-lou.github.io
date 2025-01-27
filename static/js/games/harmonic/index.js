@@ -140,20 +140,10 @@ document.addEventListener('DOMContentLoaded', () => {
           v: oscillator.v,
         };
 
-        let newState;
-        switch (solverSelect.value) {
-          case 'euler':
-            newState = solver.euler(state, stepSize, t);
-            break;
-          case 'midpoint':
-            newState = solver.midpoint(state, stepSize, t);
-            break;
-          case 'backward-euler':
-            newState = solver.backwardEuler(state, stepSize, t);
-            break;
-          default:
-            newState = solver.rk4(state, stepSize, t);
-        }
+        let newState = solver.step(state, stepSize, t, solverSelect.value, {
+          maxIterations: 10,
+          tolerance: 1e-8,
+        });
         t += stepSize;
 
         oscillator.x = newState.x;

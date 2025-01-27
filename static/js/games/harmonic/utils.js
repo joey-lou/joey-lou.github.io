@@ -8,18 +8,28 @@ export class OscillatorSolver extends ODESolver {
     // Convert to first order system:
     // dx/dt = v
     // dv/dt = -(k/m)x - (b/m)v
-    super((t, state) => ({
-      x: state.v,
-      v: -(k / m) * state.x - (damping / m) * state.v,
-    }));
+    super((t, state) => [state[1], -(k / m) * state[0] - (damping / m) * state[1]]);
 
     this.omega = Math.sqrt(k / m); // Natural frequency
+    this.damping = damping;
+    this.k = k;
+    this.m = m;
+    console.log('omega', this.omega);
+  }
+
+  step(state, dt, t = 0, method = 'rk4', options = {}) {
+    const arrayState = [state.x, state.v];
+    const newState = this.solve(method, arrayState, dt, t, options);
+    return {
+      x: newState[0],
+      v: newState[1],
+    };
   }
 }
 
 // Helper class to track oscillator state and draw it
 export class Oscillator {
-  constructor(x0, y0, x_init = 100, v_init = 0) {
+  constructor(x0, y0, x_init = 200, v_init = 0) {
     this.x0 = x0; // Origin x
     this.y0 = y0; // Origin y
     this.x = x_init; // Position (pixels from origin)
@@ -52,7 +62,29 @@ export class Oscillator {
     };
   }
 
+  // Get theme-adjusted colors
+  getColors() {
+    const theme = localStorage.getItem('theme') || 'light';
+    if (theme === 'light') {
+      return {
+        spring: '#333333',
+        mass: '#cc0000',
+        shadow: 'rgba(100, 100, 100, 0.2)',
+        wall: '#666666',
+      };
+    } else {
+      return {
+        spring: '#00ffff', // Cyan
+        mass: '#ff6b6b', // Coral pink
+        shadow: 'rgba(200, 200, 200, 0.15)',
+        wall: '#7f7fff', // Periwinkle blue
+      };
+    }
+  }
+
   draw(ctx, t = 0, omega = 1) {
+    const colors = this.getColors();
+
     // Draw spring
     ctx.beginPath();
     ctx.moveTo(this.x0, this.y0);
@@ -67,7 +99,7 @@ export class Oscillator {
       ctx.lineTo(x, y);
     }
 
-    ctx.strokeStyle = '#000000';
+    ctx.strokeStyle = colors.spring;
     ctx.lineWidth = 2;
     ctx.stroke();
 
@@ -85,27 +117,31 @@ export class Oscillator {
         const y = this.y0 + (i % 2 === 0 ? amplitude : -amplitude);
         ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = 'rgba(100, 100, 100, 0.3)';
+      ctx.strokeStyle = colors.shadow;
       ctx.lineWidth = 3;
       ctx.stroke();
 
       // Draw shadow mass
       ctx.beginPath();
       ctx.arc(shadowX, this.y0, 15, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(200, 200, 200, 0.3)';
+      ctx.fillStyle = colors.shadow;
       ctx.fill();
     }
 
     // Draw mass
+    const massX = this.x0 + this.x;
+    const massY = this.y0;
+    const massRadius = 15;
+
     ctx.beginPath();
-    ctx.arc(this.x0 + this.x, this.y0, 15, 0, Math.PI * 2);
-    ctx.fillStyle = '#ff0000';
+    ctx.arc(massX, massY, massRadius, 0, Math.PI * 2);
+    ctx.fillStyle = colors.mass;
     ctx.fill();
 
     // Draw fixed point (wall)
     ctx.beginPath();
     ctx.rect(this.x0 - 10, this.y0 - 30, 10, 60);
-    ctx.fillStyle = '#666666';
+    ctx.fillStyle = colors.wall;
     ctx.fill();
   }
 }
