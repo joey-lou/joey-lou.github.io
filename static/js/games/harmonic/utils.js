@@ -140,7 +140,7 @@ export class Oscillator {
 
     // Draw fixed point (wall)
     ctx.beginPath();
-    ctx.rect(this.x0 - 10, this.y0 - 30, 10, 60);
+    ctx.rect(this.x0 - 5, this.y0 - 30, 10, 60);
     ctx.fillStyle = colors.wall;
     ctx.fill();
   }
