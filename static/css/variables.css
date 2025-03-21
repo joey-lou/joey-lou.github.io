@@ -42,7 +42,7 @@
   --bg-table-header: rgba(0, 0, 0, 0.03);
   --bg-table-alternate: rgba(0, 0, 0, 0.02);
 
-  /* Shadows */
+  /* Shadows - Light Theme */
   --shadow-sm: 0 0 0.5rem rgba(0, 0, 0, 0.1);
   --shadow-md: 0 0 1rem rgba(0, 0, 0, 0.15);
   --shadow-lg: 0 0 2rem rgba(0, 0, 0, 0.2);
@@ -79,4 +79,9 @@
   --text-code: #f783ac;
   --bg-table-header: rgba(255, 255, 255, 0.08);
   --bg-table-alternate: rgba(255, 255, 255, 0.04);
+
+  /* Shadows - Dark Theme */
+  --shadow-sm: 0 0 0.5rem rgba(125, 125, 125, 0.2);
+  --shadow-md: 0 0 1rem rgba(125, 125, 125, 0.3);
+  --shadow-lg: 0 0 2rem rgba(125, 125, 125, 0.4);
 }
