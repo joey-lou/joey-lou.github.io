@@ -1,7 +1,7 @@
 import { populatePattern } from './patterns.js';
 
 export let GRID_SIZE = 50;
-export const MIN_GRID_SIZE = 50;
+export const MIN_GRID_SIZE = 30;
 export const MAX_GRID_SIZE = 80;
 export let grid = [];
 let newGrid = [];

@@ -1,28 +1,60 @@
-#game-board {
-  background: var(--game-board-background);
+/**
+ * Game Styles - Common styling for all game pages
+ * 
+ * This file contains styles for standard game layout including:
+ * - Game container structure
+ * - Game board styling
+ * - Game control bar
+ * - Form controls within games
+ * 
+ * These styles are loaded by the games/base.html template.
+ */
+
+/* Game page wrapper - prevents scrolling in game view */
+.game-page-wrapper {
   width: 100%;
   height: 100%;
-  display: grid;
-  border-radius: 2rem;
-  box-shadow: 0 0 2rem var(--bs-secondary-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
 }
 
-#game-container {
+/* Main game container - holds board and controls */
+#game-container,
+.game-container {
   height: 85vmin; /* Allow space for footer */
   width: 85vmin;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center; /* Cente the DOM horizontally */
+  justify-content: center; /* Center the DOM horizontally */
   margin: 0 auto; /* Center the DOM vertically */
 }
 
+/* Game board - primary display area for games */
+#game-board {
+  width: 100%;
+  height: 100%;
+  border-radius: 2rem;
+  background: var(--game-board-background);
+  box-shadow: var(--shadow-md);
+  margin-bottom: 1rem;
+  transition: background-color var(--transition-standard);
+  /* Don't include display: grid here as it's set by individual games that need it */
+}
+
+/* Control bar for game inputs and controls */
 #game-bar {
   width: 80vmin;
-  margin: 0 auto;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.75rem;
+  /* Remove box shadow */
   display: flex;
-  font-family: 'Oxanium';
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto 0.25rem auto; /* Reduced bottom margin */
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  font-family: var(--font-game); /* Use game font for controls */
 }

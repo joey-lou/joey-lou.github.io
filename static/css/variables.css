@@ -1,0 +1,82 @@
+/**
+ * CSS Variables - Core variables for site theming
+ *
+ * This file centralizes all CSS variables used across the site,
+ * making it easier to maintain consistent theming between components.
+ * 
+ * Usage: Import this file before other CSS files in base.html
+ */
+
+:root {
+  /* Typography */
+  --font-primary: 'Oxygen', sans-serif;
+  --font-secondary: 'Arvo', serif;
+  --font-game: 'Oxanium', monospace;
+  --font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
+  /* Colors - Light Theme (default) */
+  --bg-primary: #ffffff;
+  --bg-primary-rgb: 255, 255, 255;
+  --bg-secondary: rgba(108, 117, 125, 0.1);
+  --bg-secondary-rgb: 108, 117, 125;
+  --bg-card-hover: rgba(108, 117, 125, 0.1);
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --border-color: rgba(108, 117, 125, 0.25);
+  --accent-primary: #007bff;
+  --accent-secondary: #0056b3;
+
+  /* Game-specific - Light Theme */
+  --cell-dead-color: #fff;
+  --cell-alive-color: #000;
+  --cell-border-color: #ccc;
+  --cell-hover-color: #e0e0e0;
+  --game-board-background: linear-gradient(135deg, #84b0e3 0%, #42dae8 100%);
+  --game-board-simple-background: #b7d2ee;
+  --bg-game-board: var(--game-board-background);
+
+  /* Blog & Code blocks - Light Theme */
+  --bg-code: rgba(0, 0, 0, 0.05);
+  --bg-code-block: rgba(0, 0, 0, 0.03);
+  --text-code: #d63384;
+  --bg-table-header: rgba(0, 0, 0, 0.03);
+  --bg-table-alternate: rgba(0, 0, 0, 0.02);
+
+  /* Shadows */
+  --shadow-sm: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 0 1rem rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 0 2rem rgba(0, 0, 0, 0.2);
+
+  /* Transitions */
+  --transition-standard: 0.3s ease;
+}
+
+/* Dark theme variables */
+[data-bs-theme='dark'] {
+  --bg-primary: #212529;
+  --bg-primary-rgb: 33, 37, 41;
+  --bg-secondary: rgba(255, 255, 255, 0.05);
+  --bg-secondary-rgb: 255, 255, 255;
+  --bg-card-hover: rgba(255, 255, 255, 0.1);
+  --text-primary: #f8f9fa;
+  --text-secondary: #adb5bd;
+  --border-color: rgba(255, 255, 255, 0.25);
+  --accent-primary: #0d6efd;
+  --accent-secondary: #6ea8fe;
+
+  /* Game-specific - Dark Theme */
+  --cell-dead-color: #000;
+  --cell-alive-color: #fff;
+  --cell-border-color: #555;
+  --cell-hover-color: #aaa;
+  --game-board-background: linear-gradient(135deg, #2c3e50 0%, #675a99 100%);
+  --game-board-simple-background: #2c3e50;
+  --bg-game-board: var(--game-board-background);
+
+  /* Blog & Code blocks - Dark Theme */
+  --bg-code: rgba(255, 255, 255, 0.1);
+  --bg-code-block: rgba(255, 255, 255, 0.08);
+  --text-code: #f783ac;
+  --bg-table-header: rgba(255, 255, 255, 0.08);
+  --bg-table-alternate: rgba(255, 255, 255, 0.04);
+}

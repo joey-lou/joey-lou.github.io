@@ -1,22 +1,51 @@
-body,
+/**
+ * Main Styles - Core styling for JLou's Personal Site
+ * 
+ * This file contains the base styles for the entire site, including:
+ * - Body and html defaults
+ * - Card styling for content items
+ * - Navbar animations and styling
+ * - Theme toggle button styling
+ * - Responsive adjustments
+ */
+
+/* Base document styles */
 html {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: 'Oxygen', sans-serif;
 }
 
+body {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  /* Ensure body covers viewport */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Footer font family override */
 footer {
-  font-family: 'Arvo', serif;
+  font-family: var(--font-secondary);
+  color: var(--text-secondary);
+  width: 100%;
 }
 
+/* Card styling for grid items */
 .card {
   display: inline-block;
   width: 100%;
   margin-bottom: 0.75rem;
-  transition: transform 0.2s;
+  transition: transform var(--transition-standard);
+  border-color: var(--border-color);
 }
 
+/* Center and constrain card images */
 .card-img-top {
   margin-top: 1rem;
   max-width: 50%;
@@ -26,31 +55,48 @@ footer {
   margin-right: auto;
 }
 
+/* Smaller text in card footers */
 .card-footer {
   font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
+/* Hover effects for cards */
 .card:hover {
   transform: scale(1.05);
-  background-color: var(--bs-secondary-bg);
-  box-shadow: 0 0 1rem var(--bs-secondary-bg);
+  background-color: var(--bg-card-hover);
+  box-shadow: var(--shadow-md);
+}
+
+/* Main content minimum height to push footer down */
+#content-wrapper {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 #content-body {
-  min-height: 100%;
+  flex: 1 0 auto;
+  width: 100%;
 }
 
 /* Navbar styles */
 .navbar {
-  transition: background-color 0.3s ease;
+  transition: background-color var(--transition-standard);
+  background-color: var(--bg-secondary);
+  width: 100%;
 }
 
+/* Navbar links with underline animation */
 .navbar-brand,
 .nav-link {
   position: relative;
-  transition: color 0.3s ease;
+  transition: color var(--transition-standard);
+  color: var(--text-primary);
 }
 
+/* Animated underline effect for navbar links */
 .navbar-brand::after,
 .nav-link::after {
   content: '';
@@ -60,15 +106,16 @@ footer {
   bottom: 0;
   left: 0;
   background-color: currentColor;
-  transition: width 0.3s ease;
+  transition: width var(--transition-standard);
 }
 
+/* Show underline on hover */
 .navbar-brand:hover::after,
 .nav-link:hover::after {
   width: 100%;
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 991px) {
   .navbar-nav {
     margin-top: 1rem;
@@ -79,22 +126,27 @@ footer {
   }
 }
 
+/* Theme toggle button styling */
 #theme-toggle {
-  transition: opacity 0.3s ease;
+  transition: opacity var(--transition-standard);
   align-self: self-start;
 }
 
-#theme-toggle:hover {
-  opacity: 0.7;
-  transform: rotate(30deg);
+/* Theme toggle SVG icon sizing */
+#theme-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: fill var(--transition-standard);
 }
 
-#theme-toggle svg {
-  transition: fill 0.3s ease;
+/* Hover effects for theme toggle */
+#theme-toggle:hover {
+  opacity: 0.7;
+  /* Remove transform: rotate(30deg); */
 }
 
 #theme-toggle:hover svg {
-  fill: #333; /* Darker color on hover */
+  fill: var(--text-primary);
 }
 
 /* For dark mode */

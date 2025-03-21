@@ -1,101 +1,157 @@
-/* GitHub-like Markdown styles */
+/**
+ * Blog Styles - GitHub-like Markdown styling for blog content
+ * 
+ * This file contains styles for blog content including:
+ * - Typography for headers and paragraphs
+ * - List styling (ordered and unordered)
+ * - Blockquote styling with accent border
+ * - Code block and inline code formatting
+ * - Table styling with responsive considerations
+ * 
+ * Designed to resemble GitHub's Markdown rendering while
+ * remaining compatible with both light and dark modes.
+ */
 
-blockquote {
-  margin-left: 20px; /* Adjust the left margin for indentation */
-  margin-right: 20px; /* Adjust the right margin if needed */
-  padding-left: 15px; /* Add padding for additional indentation */
-  border-left: 4px solid #007bff; /* Add a border for emphasis */
-  color: #6c757d; /* Change text color to Bootstrap secondary */
-  font-style: normal; /* Remove italic if desired */
+/* Blockquote styling with left border accent */
+.blog-content blockquote {
+  border-left: 4px solid var(--accent-primary);
+  margin: 1.5em 0;
+  padding: 0 1em;
+  color: var(--text-secondary);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-top: 24px;
-  margin-bottom: 16px;
+/* Headers (h1-h6) with specified margins */
+.blog-content h1,
+.blog-content h2,
+.blog-content h3,
+.blog-content h4,
+.blog-content h5,
+.blog-content h6 {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
   font-weight: 600;
-  line-height: 1.25;
+  color: var(--text-primary);
 }
 
-h1,
-h2 {
-  padding-bottom: 0.3em;
-  border-bottom: 1px solid #6c757d; /* Changed to Bootstrap secondary color */
-}
-
-h1 {
+/* Add GitHub-style underlines for headers */
+.blog-content h1 {
   font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-color);
 }
 
-h2 {
+.blog-content h2 {
+  font-size: 1.75em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.blog-content h3 {
   font-size: 1.5em;
 }
 
-h3 {
+.blog-content h4 {
   font-size: 1.25em;
 }
 
-h4 {
+.blog-content h5 {
+  font-size: 1.1em;
+}
+
+.blog-content h6 {
   font-size: 1em;
 }
 
-h5 {
-  font-size: 0.875em;
+/* Paragraph and list spacing */
+.blog-content p,
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1em;
+  line-height: 1.6;
+  color: var(--text-primary);
 }
 
-h6 {
-  font-size: 0.85em;
-  color: #6a737d;
-}
-
-p {
-  margin-top: 0;
-  margin-bottom: 16px;
-}
-
-ul,
-ol {
+/* List styling with proper padding */
+.blog-content ul,
+.blog-content ol {
   padding-left: 2em;
-  margin-top: 0;
-  margin-bottom: 16px;
 }
 
-li {
-  margin-bottom: 0.25em;
-}
-
-code {
+/* Inline code styling */
+.blog-content code {
+  background-color: var(--bg-code);
+  border-radius: 3px;
   padding: 0.2em 0.4em;
-  margin: 0;
+  font-family: var(--font-code);
   font-size: 85%;
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 0.05); /* Added a slight dark background */
+  color: var(--text-code);
 }
 
-pre {
-  padding: 16px;
-  overflow: auto;
-  font-size: 85%;
-  line-height: 1.45;
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 0.05); /* Added a slight dark background */
+/* Code block styling (pre elements containing code) */
+.blog-content pre {
+  background-color: var(--bg-code-block);
+  border-radius: 6px;
+  padding: 1em;
+  overflow-x: auto;
+  margin-bottom: 1em;
 }
 
-pre code {
-  padding: 0;
-  margin: 0;
-  font-size: 100%;
+.blog-content pre code {
   background-color: transparent;
-  border: 0;
+  padding: 0;
+  white-space: pre;
+  color: var(--text-code);
+  font-size: 85%;
 }
 
-table {
-  width: auto !important;
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
+/* Table styling to prevent full-width tables */
+.blog-content table {
+  border-collapse: collapse;
+  margin-bottom: 1em;
+  overflow-x: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.blog-content table th,
+.blog-content table td {
+  border: 1px solid var(--border-color);
+  padding: 0.5em 1em;
+}
+
+.blog-content table th {
+  background-color: var(--bg-table-header);
+  font-weight: 600;
+}
+
+.blog-content table tr:nth-child(even) {
+  background-color: var(--bg-table-alternate);
+}
+
+/* Image styling for maximum width and proper display */
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em auto;
+  border-radius: 6px;
+}
+
+/* Links with proper color and hover effect */
+.blog-content a {
+  color: var(--accent-primary);
+  text-decoration: none;
+  transition: color var(--transition-standard);
+}
+
+.blog-content a:hover {
+  color: var(--accent-secondary);
+  text-decoration: underline;
+}
+
+/* Horizontal rule styling */
+.blog-content hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
 }
