@@ -76,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', createGrid);
 
   speedSlider.addEventListener('input', (e) => {
-    setGenerationSpeed(parseInt(e.target.value));
+    const value = parseInt(e.target.value);
+    setGenerationSpeed(value);
+    document.getElementById('speed-value').textContent = value;
   });
 });
