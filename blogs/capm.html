@@ -171,11 +171,11 @@
 <blockquote>
 <p>This blog was adopted from a jupyter notebook I wrote after reading paper <em><a href="http://efinance.org.cn/cn/fm/Capital%20Asset%20Prices%20A%20Theory%20of%20Market%20Equilibrium%20under%20Conditions%20of%20Risk.pdf">A Theory of Market Equilibrium under Conditions of Risk</a></em> [William F. Sharpe].</p>
 </blockquote>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span>
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">matplotlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">ipywidgets</span><span class="w"> </span><span class="kn">import</span> <span class="n">interact</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numbers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Number</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 </code></pre></div>
 
 <h2>Efficient Assets</h2>
@@ -189,23 +189,23 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <span class="sd">    we can recreate the proof in paper with two points on the</span>
 <span class="sd">    efficient frontier a and b, the scales are arbitrary</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="k">class</span> <span class="nc">Asset</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">er</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">corr</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Asset</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">er</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">sigma</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">corr</span><span class="p">:</span> <span class="nb">float</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">=</span> <span class="n">er</span>  <span class="c1"># expected return of asset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sig</span> <span class="o">=</span> <span class="n">sigma</span>  <span class="c1"># sigma of asset</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">corr</span> <span class="o">=</span> <span class="n">corr</span>  <span class="c1"># HACK correlation</span>
 
-    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asset</span><span class="p">):</span>
         <span class="n">er</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">+</span> <span class="n">asset</span><span class="o">.</span><span class="n">er</span>
         <span class="n">corr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span>
         <span class="n">sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">asset</span><span class="o">.</span><span class="n">sig</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">corr</span> <span class="o">*</span> <span class="n">asset</span><span class="o">.</span><span class="n">sig</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="n">er</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">corr</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">Number</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">:</span> <span class="n">Number</span><span class="p">):</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">Number</span><span class="p">),</span> <span class="s2">&quot;not supported&quot;</span>
         <span class="k">return</span> <span class="n">Asset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">er</span> <span class="o">*</span> <span class="n">num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sig</span> <span class="o">*</span> <span class="n">num</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">,):</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Asset(E=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">er</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, sigma=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">sig</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, corrleation=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">corr</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span>
 
 <span class="n">a</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
@@ -230,7 +230,7 @@ In the real world, there will always be correlation between assets, therefore, s
 </ul>
 <p>*<em>For simplicity, $R$ is omitted in notation, one should assume $E_a = E_{Ra}, \sigma_a = \sigma_{Ra}$.</em></p>
 <div class="codehilite"><pre><span></span><code><span class="c1"># change correlation between asset a and b to see intermediate combinations</span>
-<span class="k">def</span> <span class="nf">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
@@ -247,7 +247,7 @@ In the real world, there will always be correlation between assets, therefore, s
     <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 
 <span class="nd">@interact</span><span class="p">(</span><span class="n">corr</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">corr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="n">corr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
     <span class="n">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
 </code></pre></div>
 
@@ -277,7 +277,7 @@ In the real world, there will always be correlation between assets, therefore, s
 <span class="n">A_p</span> <span class="o">=</span> <span class="n">Asset</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
 
 
-<span class="k">def</span> <span class="nf">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">):</span>
     <span class="n">A_c</span> <span class="o">=</span> <span class="n">A_p</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">A_a</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
@@ -295,7 +295,7 @@ In the real world, there will always be correlation between assets, therefore, s
 
 <span class="c1"># alpha is the proportion of risk-free asset we take on</span>
 <span class="nd">@interact</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
     <span class="n">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 </code></pre></div>
 
@@ -359,7 +359,7 @@ Sharpe suggests a regression analyses on their respective returns for a better p
 <span class="n">r_g</span> <span class="o">=</span> <span class="n">rfr</span> <span class="o">+</span> <span class="n">noise</span>  <span class="c1"># market returns as normal random var</span>
 
 
-<span class="k">def</span> <span class="nf">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">):</span>
     <span class="c1"># set beta (B_ig)</span>
     <span class="n">r_i</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">noise</span> <span class="o">+</span> <span class="n">rfr</span> <span class="o">+</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">sigma_g</span>
     <span class="n">slope</span><span class="p">,</span> <span class="n">intercept</span><span class="p">,</span> <span class="n">r_value</span><span class="p">,</span> <span class="n">p_value</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">r_g</span><span class="p">,</span> <span class="n">r_i</span><span class="p">)</span>
@@ -387,7 +387,7 @@ Sharpe suggests a regression analyses on their respective returns for a better p
 
 <span class="c1"># alpha is the proportion of risk-free asset we take on</span>
 <span class="nd">@interact</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">))</span>
-<span class="k">def</span> <span class="nf">h</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">h</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span>
     <span class="n">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
 </code></pre></div>
 
