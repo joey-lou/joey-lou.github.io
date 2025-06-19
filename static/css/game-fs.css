@@ -35,37 +35,74 @@
   left: 1rem;
   width: 250px;
   padding: 0.5rem;
+  font-size: 0.85rem;
   border-radius: 1rem;
-  box-shadow: var(--shadow-md);
-  backdrop-filter: blur(10px);
-  background-color: rgba(var(--bg-primary-rgb), 0.75);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   align-items: normal;
   display: flex;
   flex-direction: column;
 }
 
-/* Control labels in the game bar */
-#game-bar label {
-  font-size: 0.9rem;
-  color: var(--text-primary);
+/* Dark mode styling for game bar */
+[data-bs-theme='dark'] #game-bar {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 4px 16px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-/* Button groups for multiple control buttons */
-#game-bar .button-group {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-/* Control input groups (label + input pairs) */
+/* Control groups with compact layout */
 #game-bar .control-group {
   display: flex;
+  gap: 0.25rem;
+  min-width: 80px;
 }
 
-/* Label sizing for consistent layout */
+/* Vertical layout for range sliders */
+#game-bar .control-group:has(.form-range) {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Horizontal layout for text inputs and selects */
+#game-bar .control-group:has(.form-control),
+#game-bar .control-group:has(.form-select) {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Control labels in the game bar */
 #game-bar label {
-  min-width: 70px;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin: 0;
+  white-space: nowrap;
+  color: var(--text-primary);
+  min-width: auto;
   text-align: left;
+}
+
+/* Labels for horizontal layout (text inputs) */
+#game-bar .control-group:has(.form-control) label,
+#game-bar .control-group:has(.form-select) label {
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+/* Compact range sliders */
+#game-bar .form-range {
+  height: 0.5rem;
+  margin: 0;
 }
 
 /* Compact form controls in the game bar */
@@ -77,7 +114,19 @@
   flex-grow: 1;
 }
 
-/* Information button in bottom-right corner */
+/* Button groups for multiple control buttons */
+#game-bar .button-group {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+#game-bar .button-group .btn {
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Information button styling */
 .info-container {
   position: absolute;
   bottom: 10px;
@@ -87,7 +136,30 @@
   cursor: help;
 }
 
+.info-container svg {
+  width: 14px;
+  height: 14px;
+}
+
 /* Show info container more clearly on hover */
 .info-container:hover {
   opacity: 1;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  #game-bar {
+    font-size: 0.65rem;
+    padding: 0.25rem;
+    gap: 0.25rem;
+    width: 200px;
+  }
+
+  #game-bar .control-group {
+    min-width: 60px;
+  }
+
+  #game-bar label {
+    font-size: 0.6rem;
+  }
 }
