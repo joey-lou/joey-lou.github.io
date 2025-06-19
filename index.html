@@ -1,6 +1,6 @@
 <!--
-  JLou's Personal Site
-  Copyright (c) 2022-2024 Joey Lou
+  JLou's Home
+  Copyright (c) 2022-2025 Joey Lou
   Licensed under the MIT License.
   
   Base Template - Primary layout template that all other templates extend
@@ -40,7 +40,7 @@
     <link rel="manifest" href="static/favicon/site.webmanifest" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JLou's Personal Site</title>
+    <title>JLou's Home</title>
 
     <!-- Theme toggle functionality -->
     <script type="module" src="static/js/theme-toggle.js"></script>
@@ -84,7 +84,61 @@
     
 
     <!-- Additional head content from child templates -->
-     
+    
+<style>
+  .typing-header {
+    font-size: 3.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 2rem;
+    min-height: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 3.5rem;
+    background-color: var(--text-primary);
+    margin-left: 4px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+  }
+
+  @keyframes blink {
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .typing-header {
+      font-size: 2.5rem;
+      min-height: 3.5rem;
+    }
+    .typing-cursor {
+      height: 2.5rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .typing-header {
+      font-size: 2rem;
+      min-height: 3rem;
+    }
+    .typing-cursor {
+      height: 2rem;
+    }
+  }
+</style>
+
   </head>
 
   <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
@@ -135,12 +189,19 @@
 
 <div class="container py-5 col-lg-8">
   <div class="row justify-content-center">
-    <h1 class="display-4 text-center mb-5">Internet's Most Asked Questions</h1>
+    <div class="typing-header">
+      <span id="typing-text">Hello</span>
+      <span class="typing-cursor"></span>
+    </div>
+
     <div class="card">
       <div class="card-body">
-        <h2 class="card-title h4">What is this site?</h2>
-        As you probably guessed from the URL, this is my personal site.<br />
-        I've always wanted a place to do some writing and code some fun stuff. So, here it is!
+        <h2 class="card-title h4">Who am I?</h2>
+        I go by Joey, and I'm a
+        <a href="https://www.linkedin.com/in/joeylou/" class="text-decoration-none"
+          >software engineer</a
+        >
+        at a trading firm.
       </div>
     </div>
 
@@ -184,8 +245,11 @@
 
     <div class="card">
       <div class="card-body">
-        <h2 class="card-title h4">Who voted for these questions?</h2>
-        <p class="card-text">Me, myself, and I. A unanimous decision :)</p>
+        <h2 class="card-title h4">Did I vibe code this?</h2>
+        <p class="card-text">
+          Not initially, but now I am counting the days till Claude replaces me and keeps a better
+          blog page (<a href="https://ai-2027.com/" class="text-decoration-none">probably soon</a>).
+        </p>
       </div>
     </div>
   </div>
@@ -222,6 +286,69 @@
     </script>
 
     <!-- Additional scripts from child templates -->
-     
+    
+<script>
+  /**
+   * Typing Header Animation
+   * Cycles through "hello" in multiple languages with typing effect
+   */
+
+  class TypingHeader {
+    constructor() {
+      this.languages = [
+        { text: 'Hello', lang: 'en' },
+        { text: '你好', lang: 'zh' },
+        { text: 'こんにちは', lang: 'ja' },
+        { text: '안녕하세요', lang: 'ko' },
+      ];
+      this.currentIndex = 0;
+      this.typingSpeed = 120; // ms per character
+      this.pauseTime = 1500; // ms to pause between languages
+
+      this.init();
+    }
+
+    init() {
+      this.textElement = document.getElementById('typing-text');
+      if (!this.textElement) return;
+
+      this.startTyping();
+    }
+
+    async startTyping() {
+      while (true) {
+        const currentLang = this.languages[this.currentIndex];
+
+        // Type out the current text
+        await this.typeText(currentLang.text);
+
+        // Pause before next language
+        await this.sleep(this.pauseTime);
+
+        // Move to next language
+        this.currentIndex = (this.currentIndex + 1) % this.languages.length;
+      }
+    }
+
+    async typeText(text) {
+      this.textElement.textContent = '';
+
+      for (let i = 0; i < text.length; i++) {
+        this.textElement.textContent += text[i];
+        await this.sleep(this.typingSpeed);
+      }
+    }
+
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    }
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    new TypingHeader();
+  });
+</script>
+
   </body>
 </html>
