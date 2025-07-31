@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let boids = [];
   let grid = new SpatialGrid(50);
-  let isPaused = true;
+  let isPaused = false;
   let attractionPoint = null;
   let isMousePressed = false;
   let lastFrameTime = 0;
@@ -267,9 +267,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createBoids() {
     boids = [];
+    const minDistance = 35;
+    const maxAttempts = 50;
+
     for (let i = 0; i < params.boidCount; i++) {
-      boids.push(new Boid(Math.random() * canvas.width, Math.random() * canvas.height));
+      let position = findNonOverlappingPosition(minDistance, maxAttempts);
+      boids.push(new Boid(position.x, position.y));
     }
+  }
+
+  function findNonOverlappingPosition(minDistance, maxAttempts) {
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height;
+
+      if (isPositionValid(x, y, minDistance)) {
+        return { x, y };
+      }
+    }
+    return { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+  }
+
+  function isPositionValid(x, y, minDistance) {
+    for (const boid of boids) {
+      const dx = x - boid.x;
+      const dy = y - boid.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      if (distance < minDistance) {
+        return false;
+      }
+    }
+    return true;
   }
 
   function resizeCanvas() {
@@ -335,7 +363,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isDark = document.body.getAttribute('data-bs-theme') === 'dark';
     const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-    console.log(gridColor);
 
     ctx.strokeStyle = gridColor;
     ctx.lineWidth = 1.5;

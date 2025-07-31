@@ -1,0 +1,13 @@
+/* Tools CSS - Styling for all tools */
+
+.tool-page-wrapper {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .tool-page-wrapper {
+    padding: 1rem;
+  }
+}

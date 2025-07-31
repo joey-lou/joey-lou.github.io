@@ -23,27 +23,27 @@
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="static/favicon/apple-touch-icon.png"
+      href="../static/favicon/apple-touch-icon.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
-      href="static/favicon/favicon-32x32.png"
+      href="../static/favicon/favicon-32x32.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="16x16"
-      href="static/favicon/favicon-16x16.png"
+      href="../static/favicon/favicon-16x16.png"
     />
-    <link rel="manifest" href="static/favicon/site.webmanifest" />
+    <link rel="manifest" href="../static/favicon/site.webmanifest" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>JLou's Home</title>
 
     <!-- Theme toggle functionality -->
-    <script type="module" src="static/js/theme-toggle.js"></script>
+    <script type="module" src="../static/js/theme-toggle.js"></script>
 
     <!-- Bootstrap CSS and Icons -->
     <link
@@ -58,8 +58,8 @@
     />
 
     <!-- CSS Variables and Base Styles -->
-    <link rel="stylesheet" href="static/css/variables.css" />
-    <link rel="stylesheet" href="static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/variables.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
 
     <!-- Google Fonts import (Arvo, Oxanium, Oxygen) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -86,56 +86,8 @@
     <!-- Additional head content from child templates -->
     
 <style>
-  .typing-header {
-    font-size: 3.5rem;
-    font-weight: 700;
-    text-align: center;
-    margin-bottom: 2rem;
-    min-height: 4.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .typing-cursor {
-    display: inline-block;
-    width: 3px;
-    height: 3.5rem;
-    background-color: var(--text-primary);
-    margin-left: 4px;
-    animation: blink 1s infinite;
-    vertical-align: middle;
-  }
-
-  @keyframes blink {
-    0%,
-    50% {
-      opacity: 1;
-    }
-    51%,
-    100% {
-      opacity: 0;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .typing-header {
-      font-size: 2.5rem;
-      min-height: 3.5rem;
-    }
-    .typing-cursor {
-      height: 2.5rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .typing-header {
-      font-size: 2rem;
-      min-height: 3rem;
-    }
-    .typing-cursor {
-      height: 2rem;
-    }
+  .card {
+    margin-bottom: 0.75rem;
   }
 </style>
 
@@ -144,7 +96,7 @@
   <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
     <!-- Navigation bar with theme toggle -->
     <nav class="navbar sticky-top navbar-expand-lg bg-secondary bg-opacity-50 px-5">
-      <a class="navbar-brand" href="index.html">About</a>
+      <a class="navbar-brand" href="../index.html">About</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -158,9 +110,9 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          <a class="nav-item nav-link" href="blogs/index.html">Blogs</a>
-          <a class="nav-item nav-link" href="games/index.html">Games</a>
-          <a class="nav-item nav-link" href="tools/index.html">Tools</a>
+          <a class="nav-item nav-link" href="../blogs/index.html">Blogs</a>
+          <a class="nav-item nav-link" href="../games/index.html">Games</a>
+          <a class="nav-item nav-link" href="index.html">Tools</a>
         </ul>
         <!-- Theme toggle button -->
         <ul class="navbar-nav ms-auto">
@@ -187,75 +139,20 @@
       <div id="content-body" class="flex-grow-1 px-3 py-3">
         <!-- Page content from child templates -->
         
-
 <div class="container py-5 col-lg-8">
   <div class="row justify-content-center">
-    <div class="typing-header">
-      <span id="typing-text">Hello</span>
-      <span class="typing-cursor"></span>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title h4">Who am I?</h2>
-        I go by Joey, and I'm a
-        <a href="https://www.linkedin.com/in/joeylou/" class="text-decoration-none"
-          >software engineer</a
-        >
-        at a trading firm.
+    
+    <a href="networth-sim.html" class="text-decoration-none">
+      <div class="card mb-1">
+        <div class="card-body">
+          <h2 class="card-title h4">Net Worth Simulator</h2>
+          <p class="card-text">To buy or not to buy (a house)?</p>
+        </div>
       </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title h4">How is this site generated?</h2>
-        <ul class="list-unstyled">
-          <li>
-            <i class="fas fa-code mr-2"></i> Built with Python using
-            <a href="https://flask.palletsprojects.com/en/stable/" class="text-decoration-none"
-              >Flask</a
-            >.
-          </li>
-          <li>
-            <i class="fas fa-snowflake mr-2"></i> Rendered using
-            <a href="https://frozen-flask.readthedocs.io/en/latest/" class="text-decoration-none"
-              >Frozen-Flask</a
-            >.
-          </li>
-          <li><i class="fab fa-js-square mr-2"></i> Games and tools are written in JavaScript.</li>
-          <li>
-            <i class="fab fa-markdown mr-2"></i> Blog posts are written in Markdown and rendered
-            using
-            <a href="https://python-markdown.github.io" class="text-decoration-none"
-              >Python-Markdown</a
-            >.
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title h4">How to reach me?</h2>
-        <p class="card-text">
-          I may make mistakes or if you find the site interesting, feel free to contact me at
-          <a href="mailto:usjoeylou@gmail.com" class="text-decoration-none">joey99lou@gmail.com</a>
-        </p>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-body">
-        <h2 class="card-title h4">Did I vibe code this?</h2>
-        <p class="card-text">
-          Not initially, but now I am counting the days till Claude replaces me and keeps a better
-          blog page (<a href="https://ai-2027.com/" class="text-decoration-none">probably soon</a>).
-        </p>
-      </div>
-    </div>
+    </a>
+    
   </div>
 </div>
-
 
       </div>
     </div>
@@ -287,69 +184,6 @@
     </script>
 
     <!-- Additional scripts from child templates -->
-    
-<script>
-  /**
-   * Typing Header Animation
-   * Cycles through "hello" in multiple languages with typing effect
-   */
-
-  class TypingHeader {
-    constructor() {
-      this.languages = [
-        { text: 'Hello', lang: 'en' },
-        { text: '你好', lang: 'zh' },
-        { text: 'こんにちは', lang: 'ja' },
-        { text: '안녕하세요', lang: 'ko' },
-      ];
-      this.currentIndex = 0;
-      this.typingSpeed = 120; // ms per character
-      this.pauseTime = 1500; // ms to pause between languages
-
-      this.init();
-    }
-
-    init() {
-      this.textElement = document.getElementById('typing-text');
-      if (!this.textElement) return;
-
-      this.startTyping();
-    }
-
-    async startTyping() {
-      while (true) {
-        const currentLang = this.languages[this.currentIndex];
-
-        // Type out the current text
-        await this.typeText(currentLang.text);
-
-        // Pause before next language
-        await this.sleep(this.pauseTime);
-
-        // Move to next language
-        this.currentIndex = (this.currentIndex + 1) % this.languages.length;
-      }
-    }
-
-    async typeText(text) {
-      this.textElement.textContent = '';
-
-      for (let i = 0; i < text.length; i++) {
-        this.textElement.textContent += text[i];
-        await this.sleep(this.typingSpeed);
-      }
-    }
-
-    sleep(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
-    }
-  }
-
-  // Initialize when DOM is loaded
-  document.addEventListener('DOMContentLoaded', () => {
-    new TypingHeader();
-  });
-</script>
-
+     
   </body>
 </html>

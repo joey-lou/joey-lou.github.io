@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBtn = document.getElementById('reset-btn');
   const pauseBtn = document.getElementById('pause-btn');
 
-  let isPaused = true;
+  let isPaused = false;
   let isDragging = false;
   let H = parseFloat(hInput.value);
   let SPEED = parseFloat(speedInput.value);
@@ -38,10 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     oscillator = createOscillator();
     t = 0;
-    if (!isPaused) {
-      isPaused = true;
-      pauseBtn.textContent = 'Run';
-    }
   }
 
   resizeCanvas();

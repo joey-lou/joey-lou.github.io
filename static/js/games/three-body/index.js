@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const pauseBtn = document.getElementById('pause-btn');
 
   // Simulation state
-  let isPaused = true; // Start paused
+  let isPaused = false;
   let selectedBody = null;
   let isDragging = false;
   let H = parseFloat(hInput.value); // Integration step size
@@ -71,10 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInitialVelocities(bodies);
     t = 0;
     lastFrameTime = 0;
-    if (!isPaused) {
-      isPaused = true;
-      pauseBtn.textContent = 'Run';
-    }
   }
 
   resizeCanvas();
