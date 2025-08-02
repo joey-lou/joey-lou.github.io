@@ -2,6 +2,11 @@ import { getCurrentColors } from './chart-themes.js';
 import { formatCurrency, createChartOptions, destroyChart } from './chart-utils.js';
 import { calculateHouseScenario, calculateInvestmentScenario } from './financial-calculations.js';
 
+// Set global Chart.js font defaults to use the site's primary font
+Chart.defaults.font.family = getComputedStyle(document.documentElement)
+  .getPropertyValue('--font-primary')
+  .trim();
+
 class NetWorthSimulator {
   constructor() {
     this.charts = {

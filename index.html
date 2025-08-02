@@ -61,14 +61,13 @@
     <link rel="stylesheet" href="static/css/variables.css" />
     <link rel="stylesheet" href="static/css/styles.css" />
 
-    <!-- Google Fonts import (Arvo, Oxanium, Oxygen) -->
+    <!-- Google Fonts import -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
       rel="stylesheet"
     />
-
     <!-- Google Analytics (if enabled) -->
     
     <!-- Google tag (gtag.js) -->
@@ -95,6 +94,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-handwriting);
   }
 
   .typing-cursor {
@@ -184,7 +184,7 @@
 
     <!-- Main content area -->
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
-      <div id="content-body" class="flex-grow-1 px-3 py-3">
+      <div id="content-body" class="flex-grow-1 px-3 py-1">
         <!-- Page content from child templates -->
         
 
@@ -198,18 +198,20 @@
     <div class="card">
       <div class="card-body">
         <h2 class="card-title h4">Who am I?</h2>
-        I go by Joey, and I'm a
-        <a href="https://www.linkedin.com/in/joeylou/" class="text-decoration-none"
-          >software engineer</a
-        >
-        at a trading firm.
+        <p class="card-text">
+          I go by Joey, and I'm a
+          <a href="https://www.linkedin.com/in/joeylou/" class="text-decoration-none"
+            >software engineer</a
+          >
+          at a trading firm.
+        </p>
       </div>
     </div>
 
     <div class="card">
       <div class="card-body">
         <h2 class="card-title h4">How is this site generated?</h2>
-        <ul class="list-unstyled">
+        <ul class="list-unstyled card-text">
           <li>
             <i class="fas fa-code mr-2"></i> Built with Python using
             <a href="https://flask.palletsprojects.com/en/stable/" class="text-decoration-none"
@@ -300,7 +302,6 @@
         { text: 'Hello', lang: 'en' },
         { text: '你好', lang: 'zh' },
         { text: 'こんにちは', lang: 'ja' },
-        { text: '안녕하세요', lang: 'ko' },
       ];
       this.currentIndex = 0;
       this.typingSpeed = 120; // ms per character

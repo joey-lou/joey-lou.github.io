@@ -31,7 +31,7 @@ body {
 
 /* Footer font family override */
 footer {
-  font-family: var(--font-secondary);
+  font-family: var(--font-footer);
   color: var(--text-secondary);
   width: 100%;
 }
@@ -86,6 +86,8 @@ footer {
   transition: background-color var(--transition-standard);
   background-color: var(--bg-secondary);
   width: 100%;
+  font-family: var(--font-header);
+  padding-bottom: 0;
 }
 
 /* Navbar links with underline animation */
@@ -130,6 +132,7 @@ footer {
 #theme-toggle {
   transition: opacity var(--transition-standard);
   align-self: self-start;
+  padding-top: 0;
 }
 
 /* Theme toggle SVG icon sizing */

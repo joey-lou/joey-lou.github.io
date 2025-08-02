@@ -61,14 +61,13 @@
     <link rel="stylesheet" href="../static/css/variables.css" />
     <link rel="stylesheet" href="../static/css/styles.css" />
 
-    <!-- Google Fonts import (Arvo, Oxanium, Oxygen) -->
+    <!-- Google Fonts import -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Oxanium:wght@200..800&family=Oxygen:wght@300;400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
       rel="stylesheet"
     />
-
     <!-- Google Analytics (if enabled) -->
     
     <!-- Google tag (gtag.js) -->
@@ -96,6 +95,10 @@
     display: grid;
     grid-template-rows: repeat(21, 1fr);
     grid-template-columns: repeat(21, 1fr);
+  }
+
+  kbd {
+    font-family: var(--font-game);
   }
 
   .snake {
@@ -190,7 +193,7 @@
 
     <!-- Main content area -->
     <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
-      <div id="content-body" class="flex-grow-1 px-3 py-3">
+      <div id="content-body" class="flex-grow-1 px-3 py-1">
         <!-- Page content from child templates -->
         
 <!-- Game page wrapper to prevent scrolling -->
@@ -198,8 +201,10 @@
   <!-- Game content section -->
   
 <div id="game-bar">
-  <div><kbd>SPACE</kbd> to start <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to move</div>
-  <div class="mt-1 fw-bold text-center">
+  <div class="mt-1 text-center">
+    <kbd>SPACE</kbd> to start <kbd>↑</kbd> <kbd>↓</kbd> <kbd>←</kbd> <kbd>→</kbd> to move
+  </div>
+  <div class="mt-1 text-center">
     <span class="text-secondary">Score: </span><span id="score">0</span>
     <span class="text-secondary ms-3">High Score: </span
     ><span id="high-score" class="text-primary">0</span>

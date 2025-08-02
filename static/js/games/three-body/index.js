@@ -1,9 +1,16 @@
 import { Body } from './body.js';
 import { NBodySolver } from './utils.js';
+import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
-  const ctx = canvas.getContext('2d');
+  const ctx = setupHighDPICanvas(canvas);
+
+  // Track logical canvas dimensions for game calculations
+  let canvasLogicalDimensions = {
+    width: canvas.getBoundingClientRect().width,
+    height: canvas.getBoundingClientRect().height,
+  };
 
   // UI elements
   const solverSelect = document.getElementById('solver-select');
@@ -30,9 +37,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastFrameTime = 0; // For real-time animation
 
   function createBodies() {
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = canvas.width * 0.03;
+    const centerX = canvasLogicalDimensions.width / 2;
+    const centerY = canvasLogicalDimensions.height / 2;
+    const radius = canvasLogicalDimensions.width * 0.03;
 
     const bodies = [
       new Body(centerX + radius, centerY, MASS, '#ff0000'), // Red
@@ -63,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
   );
 
   function resizeCanvas() {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    const dimensions = resizeHighDPICanvas(canvas, ctx);
+    canvasLogicalDimensions = dimensions;
 
     // Reset simulation on resize
     bodies = createBodies();
@@ -175,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dt = (currentTime - lastFrameTime) / 1000; // Convert to seconds
     lastFrameTime = currentTime;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
 
     if (!isPaused) {
       // Advance simulation by dt * SPEED using multiple steps of size H

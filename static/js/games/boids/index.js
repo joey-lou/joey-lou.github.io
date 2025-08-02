@@ -1,3 +1,5 @@
+import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
+
 // Fixed physics parameters for consistent, reasonable behavior
 const RESPONSIVENESS = 0.05; // Good balance between smooth and responsive
 const MOMENTUM = 0.98; // Natural momentum without being sluggish
@@ -228,7 +230,13 @@ class SpatialGrid {
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
-  const ctx = canvas.getContext('2d');
+  const ctx = setupHighDPICanvas(canvas);
+
+  // Track logical canvas dimensions for game calculations
+  let canvasLogicalDimensions = {
+    width: canvas.getBoundingClientRect().width,
+    height: canvas.getBoundingClientRect().height,
+  };
 
   const boidCountInput = document.getElementById('boid-count');
   const boidCountValue = document.getElementById('boid-count-value');
@@ -278,14 +286,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function findNonOverlappingPosition(minDistance, maxAttempts) {
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height;
+      const x = Math.random() * canvasLogicalDimensions.width;
+      const y = Math.random() * canvasLogicalDimensions.height;
 
       if (isPositionValid(x, y, minDistance)) {
         return { x, y };
       }
     }
-    return { x: Math.random() * canvas.width, y: Math.random() * canvas.height };
+    return {
+      x: Math.random() * canvasLogicalDimensions.width,
+      y: Math.random() * canvasLogicalDimensions.height,
+    };
   }
 
   function isPositionValid(x, y, minDistance) {
@@ -301,8 +312,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resizeCanvas() {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    const dimensions = resizeHighDPICanvas(canvas, ctx);
+    canvasLogicalDimensions = dimensions;
     createBoids();
   }
 
@@ -324,14 +335,14 @@ document.addEventListener('DOMContentLoaded', () => {
         neighbors,
         isMousePressed ? attractionPoint : null,
         params,
-        canvas.width,
-        canvas.height
+        canvasLogicalDimensions.width,
+        canvasLogicalDimensions.height
       );
     }
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
 
     // Draw grid if enabled
     if (showGrid) {
@@ -339,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     for (const boid of boids) {
-      boid.draw(ctx, canvas.width, canvas.height);
+      boid.draw(ctx, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
     }
 
     if (isMousePressed && attractionPoint) {
@@ -358,7 +369,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const targetCells = 25;
     const cellSize = Math.max(
       10,
-      Math.min(80, Math.floor(Math.min(canvas.width, canvas.height) / targetCells))
+      Math.min(
+        80,
+        Math.floor(
+          Math.min(canvasLogicalDimensions.width, canvasLogicalDimensions.height) / targetCells
+        )
+      )
     );
 
     const isDark = document.body.getAttribute('data-bs-theme') === 'dark';
@@ -368,18 +384,18 @@ document.addEventListener('DOMContentLoaded', () => {
     ctx.lineWidth = 1.5;
 
     // Draw vertical lines
-    for (let x = 0; x <= canvas.width; x += cellSize) {
+    for (let x = 0; x <= canvasLogicalDimensions.width; x += cellSize) {
       ctx.beginPath();
       ctx.moveTo(x, 0);
-      ctx.lineTo(x, canvas.height);
+      ctx.lineTo(x, canvasLogicalDimensions.height);
       ctx.stroke();
     }
 
     // Draw horizontal lines
-    for (let y = 0; y <= canvas.height; y += cellSize) {
+    for (let y = 0; y <= canvasLogicalDimensions.height; y += cellSize) {
       ctx.beginPath();
       ctx.moveTo(0, y);
-      ctx.lineTo(canvas.width, y);
+      ctx.lineTo(canvasLogicalDimensions.width, y);
       ctx.stroke();
     }
   }
@@ -393,7 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const dt = (currentTime - lastFrameTime) / 1000; // Convert to seconds
     lastFrameTime = currentTime;
 
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
 
     if (!isPaused) {
       // Apply sim step as time multiplier
@@ -407,8 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
           neighbors,
           isMousePressed ? attractionPoint : null,
           params,
-          canvas.width,
-          canvas.height,
+          canvasLogicalDimensions.width,
+          canvasLogicalDimensions.height,
           simulationTime
         );
       }

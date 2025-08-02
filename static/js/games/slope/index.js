@@ -1,3 +1,5 @@
+import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
+
 const GRAVITY = 200;
 const BEZIER_SEGMENTS = 20000;
 const GAME_SPEED = 1000 / 120; // 120 FPS
@@ -145,22 +147,31 @@ function drawSpline(ctx, points) {
   ctx.stroke();
 }
 
-function drawTime(ctx, canvas, T) {
-  ctx.font = '20px Oxanium';
+function drawTime(ctx, canvasLogicalDimensions, T) {
+  const gameFont = getComputedStyle(document.documentElement)
+    .getPropertyValue('--font-game')
+    .trim();
+  ctx.font = `20px ${gameFont}`;
   const theme = localStorage.getItem('theme') || 'light';
   ctx.fillStyle = theme === 'light' ? '#000' : '#fff';
   ctx.textAlign = 'right';
   const timeText = `Time: ${T.toFixed(2)}s`;
-  ctx.fillText(timeText, canvas.width - 20, 30);
+  ctx.fillText(timeText, canvasLogicalDimensions.width - 20, 30);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
-  const ctx = canvas.getContext('2d');
+  const ctx = setupHighDPICanvas(canvas);
   const startBtn = document.getElementById('start-btn');
   const resetBtn = document.getElementById('reset-btn');
   const pointsSlider = document.getElementById('points-slider');
   const pointsValue = document.getElementById('points-value');
+
+  // Track logical canvas dimensions for game calculations
+  let canvasLogicalDimensions = {
+    width: canvas.getBoundingClientRect().width,
+    height: canvas.getBoundingClientRect().height,
+  };
 
   function initializeNodes() {
     const numControlPoints = parseInt(pointsSlider.value);
@@ -168,7 +179,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fixed end points
     const fixedNodes = [
       new Node(50, 50, false), // Start node (fixed)
-      new Node(canvas.width - 50, canvas.height - 50, false), // End node (fixed)
+      new Node(canvasLogicalDimensions.width - 50, canvasLogicalDimensions.height - 50, false), // End node (fixed)
     ];
 
     const controlNodes = Array.from({ length: numControlPoints }, (_, i) => {
@@ -212,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
 
     // Only draw control points and dotted lines in FREE state
     if (gameState === GameState.FREE) {
@@ -223,7 +234,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Always draw the spline and ball
     drawSpline(ctx, splinePoints);
     ball.draw(ctx);
-    drawTime(ctx, canvas, T);
+    drawTime(ctx, canvasLogicalDimensions, T);
   }
 
   function reset() {
@@ -237,11 +248,11 @@ document.addEventListener('DOMContentLoaded', () => {
     draw();
   }
 
-  // Set canvas size to match container
+  // Set canvas size to match container with high-DPI support
   function resizeCanvas() {
-    const computedStyle = getComputedStyle(canvas);
-    canvas.width = parseInt(computedStyle.width, 10);
-    canvas.height = parseInt(computedStyle.height, 10);
+    const dimensions = resizeHighDPICanvas(canvas, ctx);
+    canvasLogicalDimensions = dimensions;
+    // Update any game state that depends on canvas dimensions
     reset();
   }
 

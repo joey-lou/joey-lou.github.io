@@ -9,10 +9,12 @@
 
 :root {
   /* Typography */
-  --font-primary: 'Oxygen', sans-serif;
-  --font-secondary: 'Arvo', serif;
-  --font-game: 'Oxanium', monospace;
+  --font-primary: 'LXGW WenKai TC', cursive;
+  --font-footer: 'LXGW WenKai TC', cursive;
+  --font-game: 'Bitcount Prop Single', system-ui;
   --font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  --font-header: 'LXGW WenKai TC', cursive;
+  --font-handwriting: 'LXGW WenKai TC', cursive;
 
   /* Colors - Light Theme (default) */
   --bg-primary: #ffffff;

@@ -1,8 +1,9 @@
 import { Oscillator, OscillatorSolver } from './utils.js';
+import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
-  const ctx = canvas.getContext('2d');
+  const ctx = setupHighDPICanvas(canvas);
 
   const solverSelect = document.getElementById('solver-select');
   const hInput = document.getElementById('h-input');
@@ -24,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let lastFrameTime = 0;
 
   function createOscillator() {
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+    const rect = canvas.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
     return new Oscillator(centerX, centerY);
   }
 
@@ -33,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let solver = new OscillatorSolver(K, MASS, DAMPING);
 
   function resizeCanvas() {
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
+    resizeHighDPICanvas(canvas, ctx);
 
     oscillator = createOscillator();
     t = 0;

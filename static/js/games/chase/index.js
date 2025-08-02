@@ -1,3 +1,5 @@
+import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
+
 // Constants
 const DUCK_SPEED = 200;
 let FOX_SPEED_MULTIPLIER = 1.05;
@@ -127,14 +129,58 @@ class Fox {
 }
 
 class GameInfo {
+  constructor() {
+    this.cachedFont = null;
+    this.cachedFontFamily = null;
+    this.cachedTheme = null;
+    this.cachedFillStyle = null;
+    // Use rem-based values for responsive sizing
+    this.leftPaddingRem = 3;
+    this.lineHeightRem = 1.5;
+    this.fontSizeRem = 1.5;
+    this.updateFontCache();
+  }
+
+  // Convert rem to pixels based on document font size
+  remToPx(rem) {
+    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  }
+
+  updateFontCache() {
+    const theme = localStorage.getItem('theme') || 'light';
+    const gameFont = getComputedStyle(document.documentElement)
+      .getPropertyValue('--font-game')
+      .trim();
+
+    // Convert rem-based values to pixels
+    const fontSizePx = this.remToPx(this.fontSizeRem);
+    this.leftPadding = this.remToPx(this.leftPaddingRem);
+    this.lineHeight = this.remToPx(this.lineHeightRem);
+
+    this.cachedFont = `${fontSizePx}px ${gameFont}`;
+    this.cachedFontFamily = gameFont;
+    this.cachedTheme = theme;
+    this.cachedFillStyle = theme === 'light' ? '#333' : '#fff';
+  }
+
+  setupTextStyle(ctx) {
+    const currentTheme = localStorage.getItem('theme') || 'light';
+
+    // Only update font if theme changed
+    if (currentTheme !== this.cachedTheme) {
+      this.updateFontCache();
+    }
+
+    ctx.font = this.cachedFont;
+    ctx.fillStyle = this.cachedFillStyle;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+  }
+
   draw(ctx, duck, fox) {
     ctx.save();
     ctx.resetTransform();
-    const theme = localStorage.getItem('theme') || 'light';
-    // Use a monospace font
-    ctx.font = '14px monospace';
-    ctx.fillStyle = theme === 'light' ? '#333' : '#fff';
-    ctx.textAlign = 'left';
+    this.setupTextStyle(ctx);
 
     const stats = [
       `Distance:       ${Math.sqrt((duck.x - fox.x) ** 2 + (duck.y - fox.y) ** 2)
@@ -148,7 +194,7 @@ class GameInfo {
     ];
 
     stats.forEach((stat, i) => {
-      ctx.fillText(stat, 20, 30 + i * 20);
+      ctx.fillText(stat, this.leftPadding, 30 + i * this.lineHeight);
     });
 
     ctx.restore();
@@ -157,9 +203,15 @@ class GameInfo {
 
 document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
-  const ctx = canvas.getContext('2d');
+  const ctx = setupHighDPICanvas(canvas);
   const resetBtn = document.getElementById('reset-btn');
   const infoBtn = document.getElementById('info-btn');
+
+  // Track logical canvas dimensions for game calculations
+  let canvasLogicalDimensions = {
+    width: canvas.getBoundingClientRect().width,
+    height: canvas.getBoundingClientRect().height,
+  };
   let gameState = 'playing'; // 'playing', 'won', 'lost'
   let showInfo = true;
 
@@ -173,11 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resizeCanvas() {
-    const computedStyle = getComputedStyle(canvas);
-    canvas.width = parseInt(computedStyle.width, 10);
-    canvas.height = parseInt(computedStyle.height, 10);
-    // Set pond radius to 40% of the smaller canvas dimension
-    POND_RADIUS = Math.floor(Math.min(250, Math.min(canvas.width, canvas.height) * 0.4));
+    const dimensions = resizeHighDPICanvas(canvas, ctx);
+    canvasLogicalDimensions = dimensions;
+    // Set pond radius to 40% of the smaller canvas dimension (use logical dimensions)
+    POND_RADIUS = Math.floor(Math.min(250, Math.min(dimensions.width, dimensions.height) * 0.4));
     reset();
   }
 
@@ -232,9 +283,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
     ctx.save();
-    ctx.translate(canvas.width / 2, canvas.height / 2);
+    ctx.translate(canvasLogicalDimensions.width / 2, canvasLogicalDimensions.height / 2);
 
     drawPond();
     duck.draw(ctx);
@@ -245,10 +296,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (gameState !== 'playing') {
-      ctx.font = '48px Oxanium';
+      // Use cached font from gameInfo for consistency and performance
+      gameInfo.setupTextStyle(ctx);
+      const endGameFontSize = gameInfo.remToPx(5); // 5rem for end game text
+      ctx.font = `${endGameFontSize}px ${gameInfo.cachedFontFamily}`;
       ctx.fillStyle = gameState === 'won' ? 'green' : 'red';
       ctx.textAlign = 'center';
-      ctx.fillText(gameState === 'won' ? 'Escaped!' : 'Caught!', 0, 0);
+      // Shift text up a bit
+      ctx.fillText(
+        gameState === 'won' ? 'Escaped!' : 'Caught!',
+        0,
+        -Math.floor(endGameFontSize / 2)
+      );
     }
 
     ctx.restore();
@@ -273,8 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
   canvas.addEventListener('mousemove', (e) => {
     if (duck.isMoving && gameState === 'playing') {
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX - rect.left - canvas.width / 2;
-      const y = e.clientY - rect.top - canvas.height / 2;
+      const x = e.clientX - rect.left - canvasLogicalDimensions.width / 2;
+      const y = e.clientY - rect.top - canvasLogicalDimensions.height / 2;
       duck.targetX = x;
       duck.targetY = y;
     }
@@ -290,6 +349,16 @@ document.addEventListener('DOMContentLoaded', () => {
   speedSlider.addEventListener('input', (e) => {
     FOX_SPEED_MULTIPLIER = parseInt(e.target.value) / 100;
     speedValue.textContent = `${e.target.value}%`;
+  });
+
+  // Update font cache when theme changes (check on window focus)
+  window.addEventListener('focus', () => {
+    gameInfo.updateFontCache();
+  });
+
+  // Update font cache when window resizes (in case root font size changed)
+  window.addEventListener('resize', () => {
+    gameInfo.updateFontCache();
   });
 
   requestAnimationFrame(gameLoop);
