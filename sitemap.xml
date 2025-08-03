@@ -16,6 +16,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://jiujiulou.com/tools/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://jiujiulou.com/blogs/capm.html</loc>
     <lastmod>2020-10-18</lastmod>
     <changefreq>yearly</changefreq>
@@ -64,6 +69,11 @@
   </url>
   <url>
     <loc>https://jiujiulou.com/games/boids.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://jiujiulou.com/tools/networth-sim.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
