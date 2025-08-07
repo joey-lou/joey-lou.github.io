@@ -117,17 +117,6 @@ footer {
   width: 100%;
 }
 
-/* Responsive adjustments for smaller screens */
-@media (max-width: 991px) {
-  .navbar-nav {
-    margin-top: 1rem;
-  }
-
-  .nav-link {
-    padding: 0.5rem 0;
-  }
-}
-
 /* Theme toggle button styling */
 #theme-toggle {
   transition: opacity var(--transition-standard);
