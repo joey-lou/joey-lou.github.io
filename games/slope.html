@@ -84,11 +84,9 @@
 
     <!-- Additional head content from child templates -->
     
-<!-- Core game styling -->
-<link rel="stylesheet" href="../static/css/game.css" />
-
 <!-- Game-specific styles can be added in child templates -->
 
+<link rel="stylesheet" href="../static/css/game.css" />
 <style>
   #game-board {
     background: var(--game-board-simple-background);
@@ -143,10 +141,14 @@
     </nav>
 
     <!-- Main content area -->
-    <div id="content-wrapper" class="flex-grow-1 d-flex flex-column">
-      <div id="content-body" class="flex-grow-1 px-3 py-1">
+    <div id="content-wrapper">
+      <div id="content-body">
         <!-- Page content from child templates -->
         
+<!-- Navigation and footer trigger zones (will be activated by CSS if game-fs.css is loaded) -->
+<div class="nav-trigger-zone" id="nav-trigger-zone"></div>
+<div class="footer-trigger-zone" id="footer-trigger-zone"></div>
+
 <!-- Game page wrapper to prevent scrolling -->
 <div class="game-page-wrapper">
   <!-- Game content section -->
@@ -209,6 +211,65 @@
 
     <!-- Additional scripts from child templates -->
     
+<!-- Auto-hide navigation and footer logic -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if game-fs.css is loaded (indicates full-screen game)
+    const isFullScreenGame = document.querySelector('link[href*="game-fs.css"]');
+
+    if (isFullScreenGame) {
+      const navbar = document.querySelector('.navbar');
+      const footer = document.querySelector('footer');
+      const navTrigger = document.getElementById('nav-trigger-zone');
+      const footerTrigger = document.getElementById('footer-trigger-zone');
+
+      let navHideTimeout;
+      let footerHideTimeout;
+
+      // Navigation auto-hide logic
+      const showNavbar = () => {
+        clearTimeout(navHideTimeout);
+        navbar.classList.add('navbar-visible');
+      };
+
+      const hideNavbar = () => {
+        navHideTimeout = setTimeout(() => {
+          navbar.classList.remove('navbar-visible');
+        }, 800); // Hide after 0.8 seconds
+      };
+
+      // Footer auto-hide logic
+      const showFooter = () => {
+        clearTimeout(footerHideTimeout);
+        footer.classList.add('footer-visible');
+      };
+
+      const hideFooter = () => {
+        footerHideTimeout = setTimeout(() => {
+          footer.classList.remove('footer-visible');
+        }, 800); // Hide after 0.8 seconds
+      };
+
+      // Event listeners for navigation
+      navTrigger.addEventListener('mouseenter', showNavbar);
+      navbar.addEventListener('mouseenter', showNavbar);
+      navbar.addEventListener('mouseleave', hideNavbar);
+
+      // Event listeners for footer
+      footerTrigger.addEventListener('mouseenter', showFooter);
+      footerTrigger.addEventListener('mouseleave', hideFooter);
+      footer.addEventListener('mouseenter', showFooter);
+      footer.addEventListener('mouseleave', hideFooter);
+
+      // Accessibility: show/hide on focus
+      navbar.addEventListener('focusin', showNavbar);
+      navbar.addEventListener('focusout', hideNavbar);
+      footer.addEventListener('focusin', showFooter);
+      footer.addEventListener('focusout', hideFooter);
+    }
+  });
+</script>
+
 <!-- Game-specific scripts -->
 
 <script type="module" src="../static/js/games/slope/index.js"></script>

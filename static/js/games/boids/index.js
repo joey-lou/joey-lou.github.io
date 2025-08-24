@@ -18,7 +18,6 @@ class Boid {
   update(neighbors, attractionPoint, params, canvasWidth, canvasHeight, dt = 1) {
     const desired = this.calculateDesiredVelocity(neighbors, attractionPoint, params);
 
-    // Use fixed physics parameters for consistent, reasonable behavior
     this.vx += (desired.x - this.vx) * RESPONSIVENESS;
     this.vy += (desired.y - this.vy) * RESPONSIVENESS;
 
@@ -321,23 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.clear();
     for (const boid of boids) {
       grid.add(boid);
-    }
-  }
-
-  function update() {
-    if (isPaused) return;
-
-    updateGrid();
-
-    for (const boid of boids) {
-      const neighbors = grid.getNeighbors(boid, params.visionRadius);
-      boid.update(
-        neighbors,
-        isMousePressed ? attractionPoint : null,
-        params,
-        canvasLogicalDimensions.width,
-        canvasLogicalDimensions.height
-      );
     }
   }
 

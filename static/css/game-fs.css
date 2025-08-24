@@ -3,6 +3,7 @@
  * 
  * This file contains styles for fullscreen game layout including:
  * - Fullscreen container layout
+ * - Auto-hide navigation and footer
  * - Floating game controls panel
  * - Form controls within the game bar
  * - Info button styling
@@ -10,14 +11,78 @@
  * This is used for more complex games that benefit from maximum screen space.
  */
 
+/* Auto-hide navigation and footer for full-screen games */
+.navbar {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+.navbar.navbar-visible {
+  transform: translateY(0);
+}
+
+footer {
+  transform: translateY(100%);
+  transition: transform 0.3s ease-in-out;
+  position: fixed !important;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+footer.footer-visible {
+  transform: translateY(0);
+}
+
+/* Navigation and footer trigger zones */
+.nav-trigger-zone {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 999;
+  pointer-events: all;
+}
+
+.footer-trigger-zone {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 999;
+  pointer-events: all;
+}
+
+/* Adjust content for full-screen mode */
+#content-wrapper {
+  margin-top: 0 !important;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  overflow: hidden;
+}
+
 /* Fullscreen game container */
 .game-container,
 #game-container {
-  position: relative;
+  position: absolute;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow: hidden;
-  font-family: var(--font-game); /* Set game font for all game elements */
+  font-family: var(--font-game);
+  margin: 0;
+  top: 0;
+  left: 0;
 }
 
 /* Fullscreen game board (overrides standard game board styles) */
@@ -27,6 +92,7 @@
   background: none;
   border-radius: 0;
   box-shadow: none;
+  margin-bottom: 0;
 }
 
 /* Floating game control panel for fullscreen mode */
