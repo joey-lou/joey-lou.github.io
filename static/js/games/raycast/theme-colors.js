@@ -69,10 +69,10 @@ export class ThemeColors {
   }
 
   getEnvironmentColors() {
-    const isDark = this.getCurrentTheme() === 'dark';
-    return isDark
-      ? { ceiling: '#1a1a2e', floor: '#16213e' }
-      : { ceiling: '#87ceeb', floor: '#deb887' };
+    return {
+      ceiling: this.getColorFromCSS('--maze-ceiling'),
+      floor: this.getColorFromCSS('--maze-floor'),
+    };
   }
 
   darkenColor(color, factor = 0.7) {

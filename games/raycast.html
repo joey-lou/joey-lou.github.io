@@ -155,24 +155,31 @@
 
   /* Maze colors */
   :root {
-    --maze-wall-1: #4a90e2;
-    --maze-wall-2: #8e44ad;
-    --maze-wall-3: #e67e22;
-    --maze-wall-4: #f1c40f;
-    --maze-border: #a2a2a2;
-    --maze-start: #28a745;
-    --maze-exit: #dc3545;
+    --maze-wall-1: #1e90ff;
+    --maze-wall-2: #ee690a;
+    --maze-wall-3: #ffd500;
+    --maze-wall-4: #1fb81f;
+    --maze-border: #375f5f;
+    --maze-start: #2ee903;
+    --maze-exit: #ff0000;
+    --maze-ceiling: #87ceeb;
+    --maze-floor: #deb887;
   }
 
   [data-bs-theme='dark'] {
-    --maze-wall-1: #00ffff;
+    --maze-wall-1: #00fff7;
     --maze-wall-2: #ff00ff;
-    --maze-wall-3: #ff6b35;
-    --maze-wall-4: #ffff00;
-    --maze-border: #404040;
+    --maze-wall-3: #ffff00;
+    --maze-wall-4: #00ff40;
+    --maze-border: #434242;
+    --maze-start: #2fff00;
+    --maze-exit: #ff0000;
+    --maze-ceiling: #0a0a1a;
+    --maze-floor: #2a2a3a;
   }
 
   .editor-controls {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -343,27 +350,33 @@
       </div>
       <div class="control-row">
         <button id="toggle-mode-btn" class="btn btn-primary">Enter 3D Mode</button>
-        <div
-          class="info-container"
-          data-bs-toggle="tooltip"
-          data-bs-placement="top"
-          data-bs-title="Inspired by Lode's Tutorial on Raycasting."
-          style="margin-left: auto"
+      </div>
+      <div
+        class="info-container"
+        data-bs-toggle="tooltip"
+        data-bs-placement="left"
+        data-bs-title="Inspired by Lode's Tutorial on Raycasting."
+        style="
+          position: absolute;
+          bottom: 1rem;
+          right: 1rem;
+          color: var(--text-secondary);
+          opacity: 0.7;
+        "
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-info-circle"
+          viewBox="0 0 16 16"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-info-circle"
-            viewBox="0 0 16 16"
-          >
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-            <path
-              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-            />
-          </svg>
-        </div>
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+          <path
+            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+          />
+        </svg>
       </div>
     </div>
     <div id="maze-grid" class="maze-grid"></div>

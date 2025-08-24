@@ -98,10 +98,10 @@ body {
 /* Floating game control panel for fullscreen mode */
 #game-bar {
   position: absolute;
-  top: 1rem;
+  top: 2rem;
   left: 1rem;
   width: 250px;
-  padding: 0.5rem;
+  padding: 1rem;
   font-size: 0.85rem;
   border-radius: 1rem;
   box-shadow:
