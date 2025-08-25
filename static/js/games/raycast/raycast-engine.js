@@ -15,10 +15,7 @@ export class RaycastEngine {
 
     this.posX = 1.5;
     this.posY = 1.5;
-    this.dirX = 1.0;
-    this.dirY = 0.0;
-    this.planeX = 0.0;
-    this.planeY = -0.66;
+    this.initVectors();
 
     this.themeColors = new ThemeColors();
     this.setupCanvas();
@@ -66,10 +63,11 @@ export class RaycastEngine {
       this.posX = this.mazeData.playerStart.x + 0.5;
       this.posY = this.mazeData.playerStart.y + 0.5;
     }
-    this.dirX = 1.0;
-    this.dirY = 0.0;
-    this.planeX = 0.0;
-    this.planeY = -0.66;
+    // 45 degree FOV
+    this.dirX = 0.707;
+    this.dirY = 0.707;
+    this.planeX = 0.467;
+    this.planeY = -0.467;
   }
 
   start(mazeData, gameInstance = null) {
