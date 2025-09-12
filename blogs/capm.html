@@ -249,7 +249,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
     <span class="n">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="Investment Opportunity Curves with Different Correlations" src="/static/images/blogs/capm/correlation_curves.png" /></p>
+<p><img alt="Investment Opportunity Curves with Different Correlations" src="/static/images/blogs/capm/correlation_curves.png" width="800px" /></p>
 <p><em>Figure 1: Investment opportunity curves showing how correlation between assets affects the shape of possible combinations. When correlation = 1, assets form a straight line; when correlation = -1, diversification benefits are maximized.</em></p>
 <h2>Risk Free Return</h2>
 <p>So far, we have only looked at assets where risk is non-zero, meaning $\sigma &gt; 0$, we can explore the addition of risk-free asset, and how that will affect our overall portfolio.</p>
@@ -299,7 +299,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
     <span class="n">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="Efficient Combinations with Risk-Free Asset" src="/static/images/blogs/capm/risk_free_combinations.png" /></p>
+<p><img alt="Efficient Combinations with Risk-Free Asset" src="/static/images/blogs/capm/risk_free_combinations.png" width="800px" /></p>
 <p><em>Figure 2: Efficient combinations between risk-free and risky assets. The tangent line PA represents the most efficient portfolio combinations. Different alpha values show various risk-return profiles, including leveraged positions (negative alpha).</em></p>
 <h2>Capital Market Line</h2>
 <p>If the above picture accurately captures our current market, then what will happen?</p>
@@ -396,7 +396,7 @@ Sharpe suggests a regression analysis on their respective returns for a better p
     <span class="n">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
 </code></pre></div>
 
-<p><img alt="Beta Analysis" src="/static/images/blogs/capm/beta_analysis.png" /></p>
+<p><img alt="Beta Analysis" src="/static/images/blogs/capm/beta_analysis.png" width="1000px" /></p>
 <p><em>Figure 4: Beta analysis showing regression relationships between individual asset returns and market returns. Different beta values demonstrate varying levels of systematic risk relative to the market portfolio.</em></p>
 <p>As illustrated above, we can take another view at the relationship between assets $i$ and $g$ via regression analysis. The results come nicely together with the equation we found earlier.</p>
 <p>The regression coefficient between $R_i$ and $R_g$, $B_{ig} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$.</p>
