@@ -169,20 +169,20 @@
   <div class="col-lg-8 col-md-10 mx-auto blog-content">
     <!-- Rendered markdown content -->
     <h1>Fastest Descent</h1>
-<p>Also known as the Brachistochrone problem: we release a ball from top of slope, how do we shape the slope to minimize the time of descent?</p>
+<p>Also known as the Brachistochrone problem: we release a ball from the top of a slope, how do we shape the slope to minimize the time of descent?</p>
 <p><a href="/games/slope.html">Try interactive simulation →</a></p>
 <h2>Implementation</h2>
-<p>Some implmentation details of above simulation.</p>
+<p>Some implementation details of the above simulation.</p>
 <h3>Bezier Curve</h3>
 <p>To allow users to create their own slope, I used bezier curves, which are flexible and intuitive.</p>
-<p>To understand Bezier curves, it is easy to start with 2 nodes (linear) case, given a start $P_0$ and end point $P_1$, we can define the curve as:
+<p>To understand Bezier curves, it is easy to start with the 2-node (linear) case. Given a start point $P_0$ and end point $P_1$, we can define the curve as:
 $$S(t) = P_0 + t(P_1 - P_0), \quad 0 \leq t \leq 1$$</p>
-<p>With three nodes (quadratic) case, we can construct the curve iteratively. First, we find the "linear" Bezier points by sliding along the line connecting $P_0$ and $P_1$, and $P_1$ and $P_2$.
+<p>With the three-node (quadratic) case, we can construct the curve iteratively. First, we find the "linear" Bezier points by sliding along the line connecting $P_0$ and $P_1$, and $P_1$ and $P_2$.
 $$S_0(t) = P_0 + t(P_1 - P_0)$$
 $$S_1(t) = P_1 + t(P_2 - P_1)$$</p>
-<p>Then we slide along the line connecting $S_0(t)$ and $S_1(t)$, and find "quadratic" Bezier points to create the Bezier curve.
+<p>Then we slide along the line connecting $S_0(t)$ and $S_1(t)$, and find the "quadratic" Bezier points to create the Bezier curve.
 $$S(t) = S_0(t) + t(S_1(t) - S_0(t)), \quad 0 \leq t \leq 1$$</p>
-<p>For the $N$ nodes case, we can follow the same process iteratively, and the algorithm is known as De Casteljau's Algorithm. Below is a JavaScript implementation used in the demo.</p>
+<p>For the $N$-node case, we can follow the same process iteratively, and the algorithm is known as De Casteljau's Algorithm. Below is a JavaScript implementation used in the demo.</p>
 <div class="codehilite"><pre><span></span><code><span class="kd">function</span><span class="w"> </span><span class="nx">calculateBezierPoint</span><span class="p">(</span><span class="nx">t</span><span class="p">,</span><span class="w"> </span><span class="nx">points</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
 <span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">currentPoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">points</span><span class="p">];</span>
 
@@ -201,15 +201,15 @@ $$S(t) = S_0(t) + t(S_1(t) - S_0(t)), \quad 0 \leq t \leq 1$$</p>
 </code></pre></div>
 
 <h3>Simulation</h3>
-<p>Normally we would have to construct an accurate physics simulation. I.e. calculate acceleration of the ball, detect collisions against the slope, solve for system of equations, etc.</p>
+<p>Normally we would have to construct an accurate physics simulation—i.e., calculate acceleration of the ball, detect collisions against the slope, solve for a system of equations, etc.</p>
 <p>However, we can cheat a bit by making some simplifying assumptions:</p>
 <ol>
 <li>No friction.</li>
-<li>Ball stays on the surface.</li>
+<li>The ball stays on the surface.</li>
 </ol>
 <p>Given these assumptions, and knowing conservation of energy, we can derive the speed of the ball at any given point along the slope, which is uniquely determined by the height $h$ of the point.
 $$E = \frac{1}{2}mv^2 + mgh \Rightarrow v(h) = \sqrt{2g(h_0 - h)}$$</p>
-<p>Then we can discretize the slope into $M-1$ segments with $M$ points. Given that we know the distance of the segment and velocity over which the ball travels over each segment, we can approximate the time it takes to travel over the segment and arrive at a table like one below, where $t_i$ is the time when ball reaches point $i$.</p>
+<p>Then we can discretize the slope into $M-1$ segments with $M$ points. Given that we know the distance of each segment and the velocity at which the ball travels over each segment, we can approximate the time it takes to travel over the segment and arrive at a table like the one below, where $t_i$ is the time when the ball reaches point $i$.</p>
 <table class="table table-striped table-bordered">
 <thead>
 <tr>
@@ -252,7 +252,7 @@ $$E = \frac{1}{2}mv^2 + mgh \Rightarrow v(h) = \sqrt{2g(h_0 - h)}$$</p>
 </tr>
 </tbody>
 </table>
-<p>Finally, we can effectively replay the ball's motion. Given the current time $t$, find the cloest point $i$ on the slope using binary search and move the ball to the point.</p>
+<p>Finally, we can effectively replay the ball's motion. Given the current time $t$, find the closest point $i$ on the slope using binary search and move the ball to that point.</p>
   </div>
 </div>
 

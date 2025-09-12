@@ -180,7 +180,7 @@
 </code></pre></div>
 
 <h2>Efficient Assets</h2>
-<p>As rational investors, we worry about the expected wealth and the volitility (fluctuations) of our wealth. But since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
+<p>As rational investors, we worry about the expected wealth and the volatility (fluctuations) of our wealth. But since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
 <p>We define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
 <p>Further, the efficient asset lies on a curve in the 2-D plane of $E_R$ and $\sigma_R$. The conditions for an efficient asset are as follows:
 Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\nexists A_{Ri} \in R^2$, where $\sigma_{Ri} &lt; \sigma_{Ra} \wedge E_{Ri} &gt; E_{Ra}$.</p>
@@ -215,13 +215,13 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 </code></pre></div>
 
 <h2>The Investment Opportunity Curve</h2>
-<p>Given two assets A and B, we can always construct combined asset from two, and depending on the correlation between two original assets, the combined asset will form the U-shaped curve, representing possible investment opportunities.</p>
-<p>For a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
+<p>Given two assets A and B, we can always construct a combined asset from the two, and depending on the correlation between the two original assets, the combined asset will form a curved line representing possible investment opportunities.</p>
+<p>For a combined asset between A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
 <ul>
 <li>$E_{c} = \alpha E_a + (1- \alpha)E_b$</li>
 <li>$\sigma_c = \sqrt{\alpha^2 \sigma_a^2 + (1-\alpha)^2\sigma_b^2 + 2r_{ab}\alpha(1-\alpha)\sigma_a\sigma_b}$, where $r_{ab}$ is the correlation between two assets.</li>
 </ul>
-<p>Observe that under extreme condition where $r_{ab} = {1, -1}$, the two assets will form either line or two stright lines to the x-axis:</p>
+<p>Observe that under extreme conditions where $r_{ab} = {1, -1}$, the two assets will form either a line or two straight lines to the x-axis:</p>
 <ul>
 <li>If $r_{ab} =1$,  $\sigma_c = \alpha\sigma_a + (1-\alpha)\sigma_b$</li>
 <li>If $r_{ab} =-1$, $\sigma_c = \alpha\sigma_a - (1-\alpha)\sigma_b$</li>
@@ -254,9 +254,9 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <h2>Risk Free Return</h2>
 <p>So far, we have only looked at assets where risk is non-zero, meaning $\sigma &gt; 0$, we can explore the addition of risk-free asset, and how that will affect our overall portfolio.</p>
 <p>Now, the original ideas are still valid, where risky assets will make up an <strong>investment opportunity curve</strong>. But with addition of risk-free asset P, with $E_{Rp} = P, \sigma_{Rp} = 0$, we can form new combination assets with P and any point "inside" the opportunity curve to form our new opportunity lines:</p>
-<p>Combined asset C between P and A will have  $\sigma_{Rc} = (1 - \alpha)\sigma_{Ra} $, thus forming a stright line from $(E_{Rp}, 0)$ to $(E_{Ra}, \sigma_{Ra})$.</p>
+<p>Combined asset C between P and A will have $\sigma_{Rc} = (1 - \alpha)\sigma_{Ra}$, thus forming a straight line from $(E_{Rp}, 0)$ to $(E_{Ra}, \sigma_{Ra})$.</p>
 <p>Therefore, as rational investors, we can maximize our expected return with the least risk ($\sigma_R$) by placing our bets on a combined asset that is on the line that originates from the risk-free asset point, and is tangent to the investment opportunity curve.</p>
-<p>In the example below, we can adjust $\alpha$, the proportion of risk-free asset we take on in combination of risky asset A. Notice that we can take on negative $\alpha$, which means we can borrow to take on more risks for better returns. But regardless, we travel along line PA which represents the most efficient assets that can be achieved from combinaing the risk-less and the risky.</p>
+<p>In the example below, we can adjust $\alpha$, the proportion of risk-free asset we take on in combination of risky asset A. Notice that we can take on negative $\alpha$, which means we can borrow to take on more risks for better returns. But regardless, we travel along line PA which represents the most efficient assets that can be achieved from combining the risk-free and the risky.</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To illustrate the idea, we use a quadratic equation to mimic</span>
 <span class="sd">    the set of risky assets which form the investment opportunity curve</span>
@@ -304,8 +304,8 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <h2>Capital Market Line</h2>
 <p>If the above picture accurately captures our current market, then what will happen?</p>
 <p>Every rational investor should be rushing to purchase the combinations on line $PA$ outlined above since it is most efficient. However, those actions should in turn have an effect on the returns and risks of the asset A: it will drive up the price and reduce the expected returns of A, thus making it move above and left with respect to the opportunity curve and no longer the most efficient.</p>
-<p>By contrast, those which were previous inside the efficient tangent $PA$ could move outwards as they are deemed less desirable, which could in turn decrease their price and increase their returns.</p>
-<p>As a result, as market reaches equilibrium, the investment opportunity curve will morph its shape till there is on longer a single point of asset that is most efficient but instead a line of effcient assets that could achieve the same effect.</p>
+<p>By contrast, those which were previously inside the efficient tangent $PA$ could move outwards as they are deemed less desirable, which could in turn decrease their price and increase their returns.</p>
+<p>As a result, as the market reaches equilibrium, the investment opportunity curve will morph its shape until there is no longer a single point of asset that is most efficient but instead a line of efficient assets that could achieve the same effect.</p>
 <p>As illustrated below, there will be multiple assets that lie on the efficient line $PBA^*$ and they should all be perfectly correlated. Assets on this line can either be formed from a combination of risky asset with the risk-free or a combination of risky assets (if it is on the section $BA^*$ for instance).</p>
 <p>This line $PBA^*$ is what Sharpe referred in his paper as the <strong>Capital Market Line</strong>, indicating a linear relationship between risk and return on efficient asset combinations.</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
@@ -347,10 +347,11 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <h2>Systematic and Unsystematic Risk</h2>
 <p>We have seen what an efficient frontier should look like, with and without the risk-free assets, as well as under the condition where rational investors create feedback loop that reshapes the frontier.</p>
 <p>Now, we can go on to look at individual assets and their relation to efficient combinations.
-Sharpe suggests a regression analyses on their respective returns for a better picture.</p>
+Sharpe suggests a regression analysis on their respective returns for a better picture.</p>
 <p>Borrowing the picture from paper, we have a combination asset $g$ that is on the efficient capital line, and its constituent asset $i$, which is inside the shaded feasible region. The combination line formed by these assets should be a curve lodging on the <strong>Capital Market Line</strong> (CML). This is implied by the continuity of combination assets and its optimum when touching the efficient CML.</p>
 <p><img alt="CAPM" src="/static/images/blogs/capm/CAPM_1.png" width="500px" /></p>
-<p>More interestingly, this tangential relationship suggests an underlying equation that links the return and risk of our arbitrary constinuent asset $i$, and those of our efficient asset $g$ which is on the CML. The proof is relatively simple to follow and detailed in the paper. The resulting equation is as follows:</p>
+<p><em>Figure from Sharpe's original paper: This diagram illustrates the relationship between an efficient portfolio g (on the Capital Market Line) and an individual asset i (inside the feasible region). The curved line represents possible combinations between assets g and i, which must be tangent to the CML at point g for optimality.</em></p>
+<p>More interestingly, this tangential relationship suggests an underlying equation that links the return and risk of our arbitrary constituent asset $i$, and those of our efficient asset $g$ which is on the CML. The proof is relatively simple to follow and detailed in the paper. The resulting equation is as follows:</p>
 <p>$$\frac{Cov(R_i, R_g)}{Var(R_g)} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$$</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    We will simulate an efficient asset g and i as random variables with</span>
