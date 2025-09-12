@@ -249,6 +249,8 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
     <span class="n">draw_with_corr</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
 </code></pre></div>
 
+<p><img alt="Investment Opportunity Curves with Different Correlations" src="/static/images/blogs/capm/correlation_curves.png" /></p>
+<p><em>Figure 1: Investment opportunity curves showing how correlation between assets affects the shape of possible combinations. When correlation = 1, assets form a straight line; when correlation = -1, diversification benefits are maximized.</em></p>
 <h2>Risk Free Return</h2>
 <p>So far, we have only looked at assets where risk is non-zero, meaning $\sigma &gt; 0$, we can explore the addition of risk-free asset, and how that will affect our overall portfolio.</p>
 <p>Now, the original ideas are still valid, where risky assets will make up an <strong>investment opportunity curve</strong>. But with addition of risk-free asset P, with $E_{Rp} = P, \sigma_{Rp} = 0$, we can form new combination assets with P and any point "inside" the opportunity curve to form our new opportunity lines:</p>
@@ -297,6 +299,8 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
     <span class="n">draw_with_alpha</span><span class="p">(</span><span class="n">alpha</span><span class="p">)</span>
 </code></pre></div>
 
+<p><img alt="Efficient Combinations with Risk-Free Asset" src="/static/images/blogs/capm/risk_free_combinations.png" /></p>
+<p><em>Figure 2: Efficient combinations between risk-free and risky assets. The tangent line PA represents the most efficient portfolio combinations. Different alpha values show various risk-return profiles, including leveraged positions (negative alpha).</em></p>
 <h2>Capital Market Line</h2>
 <p>If the above picture accurately captures our current market, then what will happen?</p>
 <p>Every rational investor should be rushing to purchase the combinations on line $PA$ outlined above since it is most efficient. However, those actions should in turn have an effect on the returns and risks of the asset A: it will drive up the price and reduce the expected returns of A, thus making it move above and left with respect to the opportunity curve and no longer the most efficient.</p>
@@ -338,6 +342,8 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <span class="n">fig</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
 </code></pre></div>
 
+<p><img alt="Capital Market Line" src="/static/images/blogs/capm/capital_market_line.png" /></p>
+<p><em>Figure 3: The Capital Market Line showing market equilibrium. The line PBA</em> represents efficient asset combinations where all rational investors should invest. Assets A<em> and B lie on this efficient frontier, while the original asset A is no longer optimal.</em></p>
 <h2>Systematic and Unsystematic Risk</h2>
 <p>We have seen what an efficient frontier should look like, with and without the risk-free assets, as well as under the condition where rational investors create feedback loop that reshapes the frontier.</p>
 <p>Now, we can go on to look at individual assets and their relation to efficient combinations.
@@ -389,9 +395,11 @@ Sharpe suggests a regression analyses on their respective returns for a better p
     <span class="n">draw_with_beta</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
 </code></pre></div>
 
+<p><img alt="Beta Analysis" src="/static/images/blogs/capm/beta_analysis.png" /></p>
+<p><em>Figure 4: Beta analysis showing regression relationships between individual asset returns and market returns. Different beta values demonstrate varying levels of systematic risk relative to the market portfolio.</em></p>
 <p>As illustrated above, we can take another view at the relationship between assets $i$ and $g$ via regression analysis. The results come nicely together with the equation we found earlier.</p>
 <p>The regression coefficient between $R_i$ and $R_g$, $B_{ig} = \frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = \frac{E_{Ri}-P}{E_{Rg}-P}$.</p>
-<p>This is hugely important as we can see a clear relationship between risk, return and risk-free rate:</p>
+<p>This is important as we can see a clear relationship between risk, return and risk-free rate:</p>
 <ol>
 <li>If expected return of our asset is the same as risk-free rate $P$, then it should not have any risk associated with it, since $\frac{r_{ig}\sigma_{Ri}}{\sigma_{Rg}} = 0 \Rightarrow \sigma_{Ri} = 0$</li>
 <li>If we expect returns higher than risk-free return, the risk will be captured by the coefficient $B_{ig}$, which suggests the risk is relative to that of the efficient asset</li>
