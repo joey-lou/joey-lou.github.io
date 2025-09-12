@@ -180,9 +180,8 @@
 </code></pre></div>
 
 <h2>Efficient Assets</h2>
-<p>The concept for efficient assets is actually quite straightforward. 
-As rational investors, we worry about the expected wealth and the volitility (fluctuations) of our wealth. Since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
-<p>Thus, we define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
+<p>If we are rational investors (big if), we worry about the expected wealth and the volitility (fluctuations) of our wealth. But since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
+<p>We define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
 <p>Further, the efficient asset lies on a curve in the 2-D plane of $E_R$ and $\sigma_R$. The conditions for an efficient asset are as follows:
 Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\nexists A_{Ri} \in R^2$, where $\sigma_{Ri} &lt; \sigma_{Ra} \wedge E_{Ri} &gt; E_{Ra}$.</p>
 <div class="codehilite"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
@@ -216,10 +215,8 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 </code></pre></div>
 
 <h2>The Investment Opportunity Curve</h2>
-<p>We will illustrate the reason behind U-shaped investment opportunity curve below.
-In the real world, there will always be correlation between assets, therefore, some form of "curving" is expected for the opportunity curve:</p>
 <p>Given two assets A and B, we can always construct combined asset from two, and depending on the correlation between two original assets, the combined asset will form the U-shaped curve, representing possible investment opportunities.</p>
-<p>Recall that for a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
+<p>For a combined asset bewteen A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
 <ul>
 <li>$E_{c} = \alpha E_a + (1- \alpha)E_b$</li>
 <li>$\sigma_c = \sqrt{\alpha^2 \sigma_a^2 + (1-\alpha)^2\sigma_b^2 + 2r_{ab}\alpha(1-\alpha)\sigma_a\sigma_b}$, where $r_{ab}$ is the correlation between two assets.</li>
