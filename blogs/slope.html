@@ -174,7 +174,7 @@
 <h2>Implementation</h2>
 <p>Some implmentation details of above simulation.</p>
 <h3>Bezier Curve</h3>
-<p>To allow users to create their own slope, I chose the interesting bezier curves, which are quite flexible and intuitive to understand.</p>
+<p>To allow users to create their own slope, I used bezier curves, which are flexible and intuitive.</p>
 <p>To understand Bezier curves, it is easy to start with 2 nodes (linear) case, given a start $P_0$ and end point $P_1$, we can define the curve as:
 $$S(t) = P_0 + t(P_1 - P_0), \quad 0 \leq t \leq 1$$</p>
 <p>With three nodes (quadratic) case, we can construct the curve iteratively. First, we find the "linear" Bezier points by sliding along the line connecting $P_0$ and $P_1$, and $P_1$ and $P_2$.
