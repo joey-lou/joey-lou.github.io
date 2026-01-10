@@ -21,6 +21,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://jiujiulou.com/blogs/ai-01-fed.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jiujiulou.com/blogs/chase.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://jiujiulou.com/blogs/capm.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>

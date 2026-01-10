@@ -88,9 +88,7 @@
     
 
     <!-- Additional head content from child templates -->
-    
-<!-- Game-specific styles can be added in child templates -->
-
+     
 <link rel="stylesheet" href="../static/css/game.css" />
 <style>
   #game-board {
@@ -104,38 +102,6 @@
     max-width: 800px;
   }
 </style>
-
-
-<!-- Optional blog section styling (only loaded if game has a blog component) -->
-
-<link
-  id="pypigment-style"
-  rel="stylesheet"
-  type="text/css"
-  href="../static/css/pypigments/solarized-light.css"
-/>
-<link
-  id="blog-style"
-  rel="stylesheet"
-  type="text/css"
-  href="../static/css/blogs.css"
-/>
-<!-- Include MathJax library for LaTeX in blog content -->
-<script>
-  MathJax = {
-    tex: {
-      inlineMath: [
-        ['$', '$'],
-        ['\\(', '\\)'],
-      ],
-    },
-  };
-</script>
-<script
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-></script>
  
   </head>
 
@@ -192,8 +158,6 @@
 
 <!-- Game page wrapper to prevent scrolling -->
 <div class="game-page-wrapper">
-  <!-- Game content section -->
-  
 <div id="game-bar">
   <div class="d-flex align-items-center gap-3">
     <button id="info-btn" class="btn btn-outline-secondary active">Stats</button>
@@ -216,84 +180,15 @@
 <div id="game-container">
   <canvas id="game-board"></canvas>
 </div>
-
 </div>
 
-<!-- Optional blog explanation section -->
-
-<div class="row">
-  <div class="col-lg-8 col-md-10 mx-auto blog-content mt-5"><h1>Duck Chase</h1>
-<p>Imagine our yellow dot is a duck swimming in a pond, and the red dot is a hungry fox. The fox circles around the pond to search for an opportunity to catch the duck. The duck is safe in the pond, but it needs to reach the shore to escape.</p>
-<h2>Game Rules</h2>
-<ol>
-<li>Click anywhere on the canvas to move the duck to the pointed location. </li>
-<li>The fox (red) will chase the duck, such that it minimizes its distance to the duck.</li>
-<li>If the duck reaches the shore without being caught, then you win!</li>
-</ol>
-<h3>Turn around and run?</h3>
-<p>Intuitively, we may be tempted to run in the opposite direction of the fox and take the shortest path ashore.
-But the speed of the fox is set up to be at least $\pi$ times the duck's speed. Therefore, as the duck moves towards the shore, the fox will surely catch up.</p>
-<h2>Solution</h2>
-<details class="tip">
-<summary>Hint</summary>
-<p>
-Try moving along the grey circle within the pond.</p>
-</details>
-<h3>Step One</h3>
-<p>As you probably noticed, if the duck moves along or outside the grey circle, it will maintain the same angle with the fox. This is because beyond the grey circle, the angular velocity of the duck is the same as the fox: $\omega_{duck} = \omega_{fox}$.</p>
-<p>On the flip side, if the duck moves within the grey circle, it can potentially increase its angle difference with the fox. This gives us an idea for a strategy: <strong>move spirally towards the grey circle from the center of the pond.</strong> </p>
-<p>This way, the duck can gradually increase its angle difference with the fox. In an ideal scenario, the duck can reach a point on the grey circle that is at most $\pi$ or $180^\circ$ away from the fox, marking the maximum angle and distance away from the fox.</p>
-<h3>Step Two</h3>
-<h4>Maybe take the shortest path now?</h4>
-<p>Intuitively, we may think from this optimal point, the duck should take the shortest path to the shore. But is this really the best strategy?</p>
-<p>Well, if you give it a try, you may find as we increase the speed of the fox, this strategy may not work as well.</p>
-<h4>Optimize it!</h4>
-<p>Assuming we followed step one, and we are at the optimal point (maximum angle/distance away from the fox), as shown in the graph below. We can then formulate this problem of finding the optimal path from this point onwards into an optimization.</p>
-<p><img alt="optimal_scenario" src="/static/images/games/chase/optimal_scenario.png" width="600px" /></p>
-<p>As shown in the plot, we will first define a few variables:</p>
-<ul>
-<li>$v_d$ to be the duck's velocity, $v_f$ to be the fox's velocity, and $\omega_f$ to be its angular velocity.</li>
-<li>$r$ to be the grey circle's radius, $R$ to be the pond's radius.</li>
-<li>$\theta$ to be the potential angle the duck takes to reach the shore, while $\gamma$ is the angle the fox will travel during the time the duck takes to reach the shore.</li>
-<li>$d$ being the distance the duck travels. </li>
-</ul>
-<p>From here, we can immediately derive a few relations:</p>
-<ol>
-<li>$\frac{r}{R} = \frac{v_d}{v_f}$</li>
-<li>$d = \sqrt{(R \cos{\theta} - r)^2 + (R\sin{\theta})^2} = \sqrt{R^2 + r^2 - 2Rr\cos{\theta}}$ </li>
-<li>$\gamma = \frac{d}{v_d}\omega_f = \frac{d}{v_d}\frac{v_f}{R} = \frac{d}{r}$</li>
-</ol>
-<p>We will define the objective as the final angle between the duck and fox and aim to maximize it:
-$$f(\theta) = \theta + \pi - \gamma  = \theta + \pi - \frac{\sqrt{R^2 + r^2 - 2Rr\cos\theta}}{r}, \text{where } 0\leq\theta\leq \arccos{\frac{r}{R}}.$$</p>
-<blockquote>
-<p><em>Side note on the limits: if $\theta\lt 0$, then it will certainly be worse for the duck as it travels in the direction of the fox.
-If $\theta\gt \arccos{\frac{r}{R}}$, which means the duck travels beyond the tangent line, this will cause the fox to chase in the opposite direction, resulting in a speedier catch/failure as well.</em> </p>
-</blockquote>
-<p>We can take derivative and attempt to solve for optimal solution (assume there is one).
-$$f'(\theta) = 1 - \frac{R\sin\theta}{\sqrt{R^2 + r^2 - 2Rr\cos\theta}} = 0$$
-With basic calculus, we get the following,
-$$R^2\cos^2\theta - 2Rr\cos\theta + r^2 = 0$$
-$$\theta = \arccos{\frac{r}{R}}$$
-This means our upper limit for $\theta$ (intersection of the tangent line to the grey circle and the pond) happens to be a critical point.</p>
-<p>To further confirm, we can also plot out the solution for the case when $v_f = \pi v_d$.</p>
-<p><img alt="solution" src="/static/images/games/chase/solution.png" width="800px" /></p>
-<p><strong>The optimal path onwards is indeed to aim for an angle of $\theta = \arccos{\frac{r}{R}}$.</strong></p>
-<h3>Conclusion</h3>
-<p>The optimal strategy is as follows:</p>
-<ol>
-<li>Move spirally towards the grey circle from the center of the pond, until the duck reaches maximum angle/distance away from the fox.</li>
-<li>From that point, move along the tangent line of the grey circle to the shore.</li>
-</ol>
-<p>Give it a try!</p></div>
-</div>
- 
       </div>
     </div>
 
     <!-- Footer with copyright info -->
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2025
+        © Joey Lou | 2022-2026
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
       >
     </footer>

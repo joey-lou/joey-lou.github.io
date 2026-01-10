@@ -256,8 +256,11 @@
       <div class="card-body">
         <h2 class="card-title h4">Did I vibe code this?</h2>
         <p class="card-text">
-          Not initially, but now I am counting the days till Claude replaces me and keeps a better
-          blog page (<a href="https://ai-2027.com/" class="text-decoration-none">probably soon</a>).
+          <s
+            >Not initially, but now I am counting the days till Claude replaces me and keeps a
+            better blog page</s
+          >
+          Absolutely YES.
         </p>
       </div>
     </div>
@@ -271,7 +274,7 @@
     <!-- Footer with copyright info -->
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2025
+        © Joey Lou | 2022-2026
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
       >
     </footer>

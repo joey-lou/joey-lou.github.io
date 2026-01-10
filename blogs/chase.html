@@ -1,0 +1,322 @@
+<!--
+  JLou's Home
+  Copyright (c) 2022-2025 Joey Lou
+  Licensed under the MIT License.
+  
+  Base Template - Primary layout template that all other templates extend
+  
+  Structure:
+  - <head>: Meta tags, favicon, title, CSS and font imports
+  - <body>: Navigation, content area, and footer
+  - Scripts: Bootstrap JS and custom scripts
+  
+  Blocks that child templates can override:
+  - head: Additional head content (styles, meta)
+  - content: Main page content
+  - scripts: Additional JavaScript imports
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Favicon and Apple touch icon setup -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../static/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../static/favicon/site.webmanifest" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou's Home</title>
+
+    <!-- Canonical URL -->
+    
+    <link rel="canonical" href="https://jiujiulou.com/blogs/chase.html" />
+    
+
+    <!-- Theme toggle functionality -->
+    <script type="module" src="../static/js/theme-toggle.js"></script>
+
+    <!-- Bootstrap CSS and Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- CSS Variables and Base Styles -->
+    <link rel="stylesheet" href="../static/css/variables.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+
+    <!-- Google Fonts import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Analytics (if enabled) -->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPJT5CNCH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-ZRPJT5CNCH');
+    </script>
+    
+
+    <!-- Additional head content from child templates -->
+    
+<!-- Syntax highlighting for code blocks -->
+<link
+  id="pypigment-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/pypigments/solarized-light.css"
+/>
+<!-- Markdown content styling -->
+<link
+  id="blog-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/blogs.css"
+/>
+<!-- Include MathJax library for LaTeX formatting -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)'],
+      ],
+    },
+  };
+</script>
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
+
+  </head>
+
+  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+    <!-- Navigation bar with theme toggle -->
+    <nav class="navbar sticky-top navbar-expand-md bg-secondary bg-opacity-50 px-5">
+      <a class="navbar-brand" href="../index.html">About</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        style="transform: scale(0.75)"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html">Blogs</a>
+          <a class="nav-item nav-link" href="../games/index.html">Games</a>
+          <a class="nav-item nav-link" href="../tools/index.html">Tools</a>
+        </ul>
+        <!-- Theme toggle button -->
+        <ul class="navbar-nav ms-auto">
+          <button class="btn align-items-center" id="theme-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-sun"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"
+              />
+            </svg>
+          </button>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <div id="content-wrapper">
+      <div id="content-body">
+        <!-- Page content from child templates -->
+        
+<!-- Blog content container with optional TOC sidebar -->
+<div class="blog-layout">
+  <div class="row justify-content-center">
+    <!-- TOC sidebar (sticky, positioned left of content) -->
+    
+    <aside class="blog-toc-sidebar d-none d-xl-block">
+      <nav class="blog-toc"><div class="toc"><span class="toctitle">Contents</span><ul>
+<li><a href="#rules">Rules</a><ul>
+<li><a href="#turn-around-and-run">Turn around and run?</a></li>
+</ul>
+</li>
+<li><a href="#solution">Solution</a><ul>
+<li><a href="#step-one">Step One</a></li>
+<li><a href="#step-two">Step Two</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+    </aside>
+    
+    <!-- Main content (centered as before) -->
+    <div class="col-lg-8 col-md-10 blog-content"><h1 id="duck-and-fox">Duck and Fox</h1>
+<p>Imagine a duck swimming in a circular pond, and a fox circling around the edge. The fox is faster, but the duck is safe in the water. The duck needs to reach the shore to escape.</p>
+<p><a href="/games/chase.html">Try the interactive game →</a></p>
+<h2 id="rules">Rules</h2>
+<ol>
+<li>Click anywhere on the canvas to move the duck to that location</li>
+<li>The fox (red) chases the duck, minimizing its distance to the duck</li>
+<li>If the duck reaches the shore without being caught, you win!</li>
+</ol>
+<h3 id="turn-around-and-run">Turn around and run?</h3>
+<p>Intuitively, we may be tempted to run in the opposite direction of the fox and take the shortest path ashore. But the speed of the fox is set up to be at least $\pi$ times the duck's speed. Therefore, as the duck moves towards the shore, the fox will surely catch up.</p>
+<h2 id="solution">Solution</h2>
+<blockquote>
+<p><strong>Hint:</strong> Try moving along the grey circle within the pond.</p>
+</blockquote>
+<h3 id="step-one">Step One</h3>
+<p>If the duck moves along or outside the grey circle, it maintains the same angle with the fox. This is because beyond the grey circle, the angular velocity of the duck equals that of the fox: $\omega_{duck} = \omega_{fox}$.</p>
+<p>If the duck moves within the grey circle, it can increase its angular difference with the fox. This gives us a strategy: <strong>move spirally towards the grey circle from the center of the pond.</strong></p>
+<p>This way, the duck can gradually increase its angular difference with the fox. In an ideal scenario, the duck can reach a point on the grey circle that is $\pi$ (or $180^\circ$) away from the fox — the maximum possible distance.</p>
+<h3 id="step-two">Step Two</h3>
+<h4 id="maybe-take-the-shortest-path-now">Maybe take the shortest path now?</h4>
+<p>From this optimal point, should the duck take the shortest path to the shore? If you try it, you'll find that as we increase the fox's speed, this strategy may not work.</p>
+<h4 id="optimization">Optimization</h4>
+<p>Assuming we followed step one and are at the optimal point (maximum angle/distance from the fox), as shown below, we can formulate this as an optimization problem.</p>
+<p><img alt="optimal_scenario" src="/static/images/games/chase/optimal_scenario.png" width="600px" /></p>
+<p>Define the following variables:</p>
+<ul>
+<li>$v_d$: duck's velocity, $v_f$: fox's velocity, $\omega_f$: fox's angular velocity</li>
+<li>$r$: grey circle's radius, $R$: pond's radius</li>
+<li>$\theta$: angle the duck takes to reach the shore</li>
+<li>$\gamma$: angle the fox travels while the duck reaches the shore</li>
+<li>$d$: distance the duck travels</li>
+</ul>
+<p>From here, we derive:</p>
+<ol>
+<li>$\frac{r}{R} = \frac{v_d}{v_f}$</li>
+<li>$d = \sqrt{(R \cos{\theta} - r)^2 + (R\sin{\theta})^2} = \sqrt{R^2 + r^2 - 2Rr\cos{\theta}}$</li>
+<li>$\gamma = \frac{d}{v_d}\omega_f = \frac{d}{v_d}\frac{v_f}{R} = \frac{d}{r}$</li>
+</ol>
+<p>The objective is to maximize the final angle between duck and fox:</p>
+<p>$$f(\theta) = \theta + \pi - \gamma = \theta + \pi - \frac{\sqrt{R^2 + r^2 - 2Rr\cos\theta}}{r}, \text{ where } 0 \leq \theta \leq \arccos{\frac{r}{R}}$$</p>
+<blockquote>
+<p><em>Note on limits: if $\theta &lt; 0$, the duck travels toward the fox. If $\theta &gt; \arccos{\frac{r}{R}}$ (beyond the tangent line), the fox reverses direction, catching the duck faster.</em></p>
+</blockquote>
+<p>Taking the derivative and solving:</p>
+<p>$$f'(\theta) = 1 - \frac{R\sin\theta}{\sqrt{R^2 + r^2 - 2Rr\cos\theta}} = 0$$</p>
+<p>With basic calculus:</p>
+<p>$$R^2\cos^2\theta - 2Rr\cos\theta + r^2 = 0$$
+$$\theta = \arccos{\frac{r}{R}}$$</p>
+<p>The upper limit for $\theta$ (tangent line intersection) is also the critical point.</p>
+<p>Plotting the solution for $v_f = \pi v_d$:</p>
+<p><img alt="solution" src="/static/images/games/chase/solution.png" width="800px" /></p>
+<p><strong>The optimal path is to aim for angle $\theta = \arccos{\frac{r}{R}}$.</strong></p>
+<h3 id="conclusion">Conclusion</h3>
+<p>The optimal strategy:</p>
+<ol>
+<li>Move spirally towards the grey circle from the center, until reaching maximum angular distance from the fox</li>
+<li>From that point, move along the tangent line to the shore</li>
+</ol></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+
+    const links = toc.querySelectorAll('a[href^="#"]');
+    const headings = [];
+
+    links.forEach((link) => {
+      const id = link.getAttribute('href').slice(1);
+      const heading = document.getElementById(id);
+      if (heading) headings.push({ id, link, heading });
+    });
+
+    if (!headings.length) return;
+
+    function updateActive() {
+      let current = headings[0];
+      const offset = 100;
+
+      for (const h of headings) {
+        if (h.heading.getBoundingClientRect().top <= offset) current = h;
+      }
+
+      links.forEach((l) => l.classList.remove('active'));
+      current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  })();
+</script>
+ 
+      </div>
+    </div>
+
+    <!-- Footer with copyright info -->
+    <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
+      <small>
+        © Joey Lou | 2022-2026
+        <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
+      >
+    </footer>
+
+    <!-- Bootstrap JS bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Initialize tooltips -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize all tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(
+          (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        );
+      });
+    </script>
+
+    <!-- Additional scripts from child templates -->
+     
+  </body>
+</html>

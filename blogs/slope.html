@@ -169,16 +169,30 @@
       <div id="content-body">
         <!-- Page content from child templates -->
         
-<!-- Blog content container -->
-<div class="row">
-  <div class="col-lg-8 col-md-10 mx-auto blog-content">
-    <!-- Rendered markdown content -->
-    <h1>Fastest Descent</h1>
+<!-- Blog content container with optional TOC sidebar -->
+<div class="blog-layout">
+  <div class="row justify-content-center">
+    <!-- TOC sidebar (sticky, positioned left of content) -->
+    
+    <aside class="blog-toc-sidebar d-none d-xl-block">
+      <nav class="blog-toc"><div class="toc"><span class="toctitle">Contents</span><ul>
+<li><a href="#implementation">Implementation</a><ul>
+<li><a href="#bezier-curve">Bezier Curve</a></li>
+<li><a href="#simulation">Simulation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+    </aside>
+    
+    <!-- Main content (centered as before) -->
+    <div class="col-lg-8 col-md-10 blog-content"><h1 id="fastest-descent">Fastest Descent</h1>
 <p>Also known as the Brachistochrone problem: we release a ball from the top of a slope, how do we shape the slope to minimize the time of descent?</p>
 <p><a href="/games/slope.html">Try interactive simulation →</a></p>
-<h2>Implementation</h2>
+<h2 id="implementation">Implementation</h2>
 <p>Some implementation details of the above simulation.</p>
-<h3>Bezier Curve</h3>
+<h3 id="bezier-curve">Bezier Curve</h3>
 <p>To allow users to create their own slope, I used bezier curves, which are flexible and intuitive.</p>
 <p>To understand Bezier curves, it is easy to start with the 2-node (linear) case. Given a start point $P_0$ and end point $P_1$, we can define the curve as:
 $$S(t) = P_0 + t(P_1 - P_0), \quad 0 \leq t \leq 1$$</p>
@@ -205,7 +219,7 @@ $$S(t) = S_0(t) + t(S_1(t) - S_0(t)), \quad 0 \leq t \leq 1$$</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<h3>Simulation</h3>
+<h3 id="simulation">Simulation</h3>
 <p>Normally we would have to construct an accurate physics simulation—i.e., calculate acceleration of the ball, detect collisions against the slope, solve for a system of equations, etc.</p>
 <p>However, we can cheat a bit by making some simplifying assumptions:</p>
 <ol>
@@ -257,17 +271,50 @@ $$E = \frac{1}{2}mv^2 + mgh \Rightarrow v(h) = \sqrt{2g(h_0 - h)}$$</p>
 </tr>
 </tbody>
 </table>
-<p>Finally, we can effectively replay the ball's motion. Given the current time $t$, find the closest point $i$ on the slope using binary search and move the ball to that point.</p>
+<p>Finally, we can effectively replay the ball's motion. Given the current time $t$, find the closest point $i$ on the slope using binary search and move the ball to that point.</p></div>
   </div>
 </div>
 
+<script>
+  (function () {
+    const toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+
+    const links = toc.querySelectorAll('a[href^="#"]');
+    const headings = [];
+
+    links.forEach((link) => {
+      const id = link.getAttribute('href').slice(1);
+      const heading = document.getElementById(id);
+      if (heading) headings.push({ id, link, heading });
+    });
+
+    if (!headings.length) return;
+
+    function updateActive() {
+      let current = headings[0];
+      const offset = 100;
+
+      for (const h of headings) {
+        if (h.heading.getBoundingClientRect().top <= offset) current = h;
+      }
+
+      links.forEach((l) => l.classList.remove('active'));
+      current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  })();
+</script>
+ 
       </div>
     </div>
 
     <!-- Footer with copyright info -->
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2025
+        © Joey Lou | 2022-2026
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
       >
     </footer>

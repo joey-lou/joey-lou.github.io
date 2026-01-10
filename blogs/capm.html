@@ -169,11 +169,25 @@
       <div id="content-body">
         <!-- Page content from child templates -->
         
-<!-- Blog content container -->
-<div class="row">
-  <div class="col-lg-8 col-md-10 mx-auto blog-content">
-    <!-- Rendered markdown content -->
-    <h1>CAPM</h1>
+<!-- Blog content container with optional TOC sidebar -->
+<div class="blog-layout">
+  <div class="row justify-content-center">
+    <!-- TOC sidebar (sticky, positioned left of content) -->
+    
+    <aside class="blog-toc-sidebar d-none d-xl-block">
+      <nav class="blog-toc"><div class="toc"><span class="toctitle">Contents</span><ul>
+<li><a href="#efficient-assets">Efficient Assets</a></li>
+<li><a href="#the-investment-opportunity-curve">The Investment Opportunity Curve</a></li>
+<li><a href="#risk-free-return">Risk Free Return</a></li>
+<li><a href="#capital-market-line">Capital Market Line</a></li>
+<li><a href="#systematic-and-unsystematic-risk">Systematic and Unsystematic Risk</a></li>
+</ul>
+</div>
+</nav>
+    </aside>
+    
+    <!-- Main content (centered as before) -->
+    <div class="col-lg-8 col-md-10 blog-content"><h1 id="capm">CAPM</h1>
 <blockquote>
 <p>This blog was adopted from a jupyter notebook I wrote after reading paper <em><a href="http://efinance.org.cn/cn/fm/Capital%20Asset%20Prices%20A%20Theory%20of%20Market%20Equilibrium%20under%20Conditions%20of%20Risk.pdf">A Theory of Market Equilibrium under Conditions of Risk</a></em> [William F. Sharpe].</p>
 </blockquote>
@@ -184,7 +198,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">stats</span>
 </code></pre></div>
 
-<h2>Efficient Assets</h2>
+<h2 id="efficient-assets">Efficient Assets</h2>
 <p>As rational investors, we worry about the expected wealth and the volatility (fluctuations) of our wealth. But since terminal wealth and return shares a linear relationship, we can instead focus on the distribution of returns instead of our terminal wealth.</p>
 <p>We define $E_{Ri}$ to be expected return and $\sigma_{Ri}$ to be the standard deviation of our returns of a particular asset $i$. The utility function will be a function of the two: $U=f(E_{Ri},\sigma_{Ri})$, where $\partial{U}/\partial{E_{Ri}} &gt; 0, \partial{U}/\partial{\sigma_{Ri}} &lt; 0$. The exact contour of such utility function is up for debate, but the derivative relationship is clear.</p>
 <p>Further, the efficient asset lies on a curve in the 2-D plane of $E_R$ and $\sigma_R$. The conditions for an efficient asset are as follows:
@@ -219,7 +233,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing&quot;</span><span class="p">,</span> <span class="n">a</span> <span class="o">*</span> <span class="mf">0.7</span> <span class="o">+</span> <span class="n">b</span> <span class="o">*</span> <span class="mf">0.3</span><span class="p">)</span>
 </code></pre></div>
 
-<h2>The Investment Opportunity Curve</h2>
+<h2 id="the-investment-opportunity-curve">The Investment Opportunity Curve</h2>
 <p>Given two assets A and B, we can always construct a combined asset from the two, and depending on the correlation between the two original assets, the combined asset will form a curved line representing possible investment opportunities.</p>
 <p>For a combined asset between A, B with $E_{a}, \sigma_{a}$, and $E_{b}, \sigma_{b}$ respectively, and their combined asset C with $E_{c}, \sigma_{c}$, and combination ratio $\alpha$, we have the following relation: </p>
 <ul>
@@ -256,7 +270,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 
 <p><img alt="Investment Opportunity Curves with Different Correlations" src="/static/images/blogs/capm/correlation_curves.png" width="800px" /></p>
 <p><em>Figure 1: Investment opportunity curves showing how correlation between assets affects the shape of possible combinations. When correlation = 1, assets form a straight line; when correlation = -1, diversification benefits are maximized.</em></p>
-<h2>Risk Free Return</h2>
+<h2 id="risk-free-return">Risk Free Return</h2>
 <p>So far, we have only looked at assets where risk is non-zero, meaning $\sigma &gt; 0$, we can explore the addition of risk-free asset, and how that will affect our overall portfolio.</p>
 <p>Now, the original ideas are still valid, where risky assets will make up an <strong>investment opportunity curve</strong>. But with addition of risk-free asset P, with $E_{Rp} = P, \sigma_{Rp} = 0$, we can form new combination assets with P and any point "inside" the opportunity curve to form our new opportunity lines:</p>
 <p>Combined asset C between P and A will have $\sigma_{Rc} = (1 - \alpha)\sigma_{Ra}$, thus forming a straight line from $(E_{Rp}, 0)$ to $(E_{Ra}, \sigma_{Ra})$.</p>
@@ -306,7 +320,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 
 <p><img alt="Efficient Combinations with Risk-Free Asset" src="/static/images/blogs/capm/risk_free_combinations.png" width="800px" /></p>
 <p><em>Figure 2: Efficient combinations between risk-free and risky assets. The tangent line PA represents the most efficient portfolio combinations. Different alpha values show various risk-return profiles, including leveraged positions (negative alpha).</em></p>
-<h2>Capital Market Line</h2>
+<h2 id="capital-market-line">Capital Market Line</h2>
 <p>If the above picture accurately captures our current market, then what will happen?</p>
 <p>Every rational investor should be rushing to purchase the combinations on line $PA$ outlined above since it is most efficient. However, those actions should in turn have an effect on the returns and risks of the asset A: it will drive up the price and reduce the expected returns of A, thus making it move above and left with respect to the opportunity curve and no longer the most efficient.</p>
 <p>By contrast, those which were previously inside the efficient tangent $PA$ could move outwards as they are deemed less desirable, which could in turn decrease their price and increase their returns.</p>
@@ -349,7 +363,7 @@ Given an asset $A_{Ra}=[E_{Ra},\sigma_{Ra}]$, it is efficient if and only if $\n
 
 <p><img alt="Capital Market Line" src="/static/images/blogs/capm/capital_market_line.png" width="500px" /></p>
 <p><em>Figure 3: The Capital Market Line showing market equilibrium. The line PBA</em> represents efficient asset combinations where all rational investors should invest. Assets A<em> and B lie on this efficient frontier, while the original asset A is no longer optimal.</em></p>
-<h2>Systematic and Unsystematic Risk</h2>
+<h2 id="systematic-and-unsystematic-risk">Systematic and Unsystematic Risk</h2>
 <p>We have seen what an efficient frontier should look like, with and without the risk-free assets, as well as under the condition where rational investors create feedback loop that reshapes the frontier.</p>
 <p>Now, we can go on to look at individual assets and their relation to efficient combinations.
 Sharpe suggests a regression analysis on their respective returns for a better picture.</p>
@@ -411,17 +425,50 @@ Sharpe suggests a regression analysis on their respective returns for a better p
 <li>If we expect returns higher than risk-free return, the risk will be captured by the coefficient $B_{ig}$, which suggests the risk is relative to that of the efficient asset</li>
 <li>The risk associated with assets on the efficient <strong>Capital Market Line</strong> are systematic, which represents the overall economic swings and cannot be diversified away</li>
 <li>More risks can be taken on if we expect higher than market return ($E_{Rg}$), this is shown as pushing $E_{Ri}&gt; E_{Rg}$, which gives $B_{ig} &gt; 1 \Rightarrow r_{ig}\sigma_{Ri} &gt; \sigma_{Rg}$</li>
-</ol>
+</ol></div>
   </div>
 </div>
 
+<script>
+  (function () {
+    const toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+
+    const links = toc.querySelectorAll('a[href^="#"]');
+    const headings = [];
+
+    links.forEach((link) => {
+      const id = link.getAttribute('href').slice(1);
+      const heading = document.getElementById(id);
+      if (heading) headings.push({ id, link, heading });
+    });
+
+    if (!headings.length) return;
+
+    function updateActive() {
+      let current = headings[0];
+      const offset = 100;
+
+      for (const h of headings) {
+        if (h.heading.getBoundingClientRect().top <= offset) current = h;
+      }
+
+      links.forEach((l) => l.classList.remove('active'));
+      current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  })();
+</script>
+ 
       </div>
     </div>
 
     <!-- Footer with copyright info -->
     <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
       <small>
-        © Joey Lou | 2022-2025
+        © Joey Lou | 2022-2026
         <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
       >
     </footer>

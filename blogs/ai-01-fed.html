@@ -1,0 +1,470 @@
+<!--
+  JLou's Home
+  Copyright (c) 2022-2025 Joey Lou
+  Licensed under the MIT License.
+  
+  Base Template - Primary layout template that all other templates extend
+  
+  Structure:
+  - <head>: Meta tags, favicon, title, CSS and font imports
+  - <body>: Navigation, content area, and footer
+  - Scripts: Bootstrap JS and custom scripts
+  
+  Blocks that child templates can override:
+  - head: Additional head content (styles, meta)
+  - content: Main page content
+  - scripts: Additional JavaScript imports
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Favicon and Apple touch icon setup -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../static/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../static/favicon/site.webmanifest" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou's Home</title>
+
+    <!-- Canonical URL -->
+    
+    <link rel="canonical" href="https://jiujiulou.com/blogs/ai-01-fed.html" />
+    
+
+    <!-- Theme toggle functionality -->
+    <script type="module" src="../static/js/theme-toggle.js"></script>
+
+    <!-- Bootstrap CSS and Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+
+    <!-- CSS Variables and Base Styles -->
+    <link rel="stylesheet" href="../static/css/variables.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+
+    <!-- Google Fonts import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Analytics (if enabled) -->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPJT5CNCH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-ZRPJT5CNCH');
+    </script>
+    
+
+    <!-- Additional head content from child templates -->
+    
+<!-- Syntax highlighting for code blocks -->
+<link
+  id="pypigment-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/pypigments/solarized-light.css"
+/>
+<!-- Markdown content styling -->
+<link
+  id="blog-style"
+  rel="stylesheet"
+  type="text/css"
+  href="../static/css/blogs.css"
+/>
+<!-- Include MathJax library for LaTeX formatting -->
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ['$', '$'],
+        ['\\(', '\\)'],
+      ],
+    },
+  };
+</script>
+<script
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
+
+  </head>
+
+  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+    <!-- Navigation bar with theme toggle -->
+    <nav class="navbar sticky-top navbar-expand-md bg-secondary bg-opacity-50 px-5">
+      <a class="navbar-brand" href="../index.html">About</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+        style="transform: scale(0.75)"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <a class="nav-item nav-link" href="index.html">Blogs</a>
+          <a class="nav-item nav-link" href="../games/index.html">Games</a>
+          <a class="nav-item nav-link" href="../tools/index.html">Tools</a>
+        </ul>
+        <!-- Theme toggle button -->
+        <ul class="navbar-nav ms-auto">
+          <button class="btn align-items-center" id="theme-toggle">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              class="bi bi-sun"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"
+              />
+            </svg>
+          </button>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <div id="content-wrapper">
+      <div id="content-body">
+        <!-- Page content from child templates -->
+        
+<!-- Blog content container with optional TOC sidebar -->
+<div class="blog-layout">
+  <div class="row justify-content-center">
+    <!-- TOC sidebar (sticky, positioned left of content) -->
+    
+    <aside class="blog-toc-sidebar d-none d-xl-block">
+      <nav class="blog-toc"><div class="toc"><span class="toctitle">Contents</span><ul>
+<li><a href="#where-does-the-fed-get-its-money">Where Does the Fed Get Its Money?</a></li>
+<li><a href="#the-money-family-tree">The Money Family Tree</a></li>
+<li><a href="#velocity-the-speed-of-money">Velocity: The Speed of Money</a></li>
+<li><a href="#a-brief-history-of-fiat-money">A Brief History of Fiat Money</a><ul>
+<li><a href="#the-gold-standard-era-1879-1971">The Gold Standard Era (1879-1971)</a></li>
+<li><a href="#where-did-the-fed-get-gold">Where Did the Fed Get Gold?</a></li>
+<li><a href="#nixons-temporary-suspension-1971">Nixon's "Temporary" Suspension (1971)</a></li>
+</ul>
+</li>
+<li><a href="#the-feds-power-over-time">The Fed's Power Over Time</a><ul>
+<li><a href="#the-benjamin-strong-era-1914-1928-one-mans-fed">The Benjamin Strong Era (1914-1928): One Man's Fed</a></li>
+<li><a href="#the-leaderless-years-1929-1933-policy-paralysis">The Leaderless Years (1929-1933): Policy Paralysis</a></li>
+<li><a href="#fdr-takes-over-1933-1951-fed-becomes-a-puppet">FDR Takes Over (1933-1951): Fed Becomes a Puppet</a></li>
+<li><a href="#the-accord-1951-independence-restored">The Accord (1951): Independence Restored</a></li>
+<li><a href="#volcker-1979-1987-the-fed-asserts-independence">Volcker (1979-1987): The Fed Asserts Independence</a></li>
+<li><a href="#the-greenspan-bernanke-powell-era-expanded-authority">The Greenspan-Bernanke-Powell Era: Expanded Authority</a></li>
+</ul>
+</li>
+<li><a href="#the-great-depression-debate">The Great Depression Debate</a><ul>
+<li><a href="#team-monetarist-friedman-bernanke">Team Monetarist (Friedman, Bernanke)</a></li>
+<li><a href="#team-austrian-hayek-rothbard">Team Austrian (Hayek, Rothbard)</a></li>
+<li><a href="#whos-right">Who's Right?</a></li>
+</ul>
+</li>
+<li><a href="#the-2000-exception-when-bubbles-pop-cleanly">The 2000 Exception: When Bubbles Pop Cleanly</a></li>
+<li><a href="#the-modern-dilemma">The Modern Dilemma</a></li>
+<li><a href="#the-bottom-line">The Bottom Line</a></li>
+</ul>
+</div>
+</nav>
+    </aside>
+    
+    <!-- Main content (centered as before) -->
+    <div class="col-lg-8 col-md-10 blog-content"><h1 id="ai-teaches-dumb-me-the-federal-reserve">AI Teaches Dumb Me -- The Federal Reserve</h1>
+<div class="codehilite"><pre><span></span><code>  +--------------------------------------------------+
+  |  [!] AI-GENERATED CONTENT                        |
+  |                                                  |
+  |  This blog was written by AI based on a chat     |
+  |  about learning how the Fed works. Think of it   |
+  |  as a patient teacher who never tires of your    |
+  |  questions -- because they literally can&#39;t.      |
+  +--------------------------------------------------+
+</code></pre></div>
+
+<hr />
+<h2 id="where-does-the-fed-get-its-money">Where Does the Fed Get Its Money?</h2>
+<p>Where does the Federal Reserve get money to buy trillions in bonds?</p>
+<p>The answer: <strong>they create it</strong>.</p>
+<p>When the Fed buys a \$1 billion Treasury bond from a bank:
+1. Fed adds the bond to its <strong>Assets</strong> (+\$1B)
+2. Fed credits the bank's reserve account → <strong>Liabilities</strong> (+\$1B)</p>
+<p>No vault of cash required. Just entries in a ledger. The Fed is the monopoly issuer of dollars.</p>
+<p>This is what people mean by "printing money" — though no actual printing occurs. The constraint isn't technical; it's confidence. Create too much, and people stop trusting the currency.</p>
+<hr />
+<h2 id="the-money-family-tree">The Money Family Tree</h2>
+<p>Not all money is created equal. There's a hierarchy:</p>
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>Type</th>
+<th>What It Is</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>M0 (Monetary Base)</strong></td>
+<td>Currency + Bank Reserves (Fed liabilities)</td>
+<td>~\$6T</td>
+</tr>
+<tr>
+<td><strong>M1</strong></td>
+<td>M0 + Checking deposits</td>
+<td>~\$18T</td>
+</tr>
+<tr>
+<td><strong>M2</strong></td>
+<td>M1 + Savings, CDs, Money Markets</td>
+<td>~\$21T</td>
+</tr>
+</tbody>
+</table>
+<p>The Fed only directly creates M0. Commercial banks multiply it through lending via fractional reserve banking. Every \$100 in reserves can become \$1,000 in deposits through successive rounds of lending.</p>
+<p>When the Fed expands the monetary base, banks amplify that expansion through the credit creation process.</p>
+<hr />
+<h2 id="velocity-the-speed-of-money">Velocity: The Speed of Money</h2>
+<p>Here's a puzzle: US GDP is ~\$29 trillion, but M2 is only ~\$21 trillion. How does \$21T support \$29T of economic activity?</p>
+<p>The answer is <strong>velocity</strong> — each dollar gets spent multiple times per year. The equation is elegant:</p>
+<p>$$M \times V = GDP$$</p>
+<p>So velocity ≈ 1.4, meaning each dollar "turns over" about 1.4 times annually.</p>
+<p>The problem? This used to be 2.0+ in the 1990s. Velocity has been declining.</p>
+<p><strong>Why?</strong>
+- <strong>Wealth inequality</strong>: Money concentrates with those who save rather than spend
+- <strong>Aging demographics</strong>: Older populations tend to save more
+- <strong>Financialization</strong>: Money flows into assets rather than the real economy
+- <strong>Low rates</strong>: Reduced penalty for holding cash
+- <strong>Precautionary savings</strong>: Uncertainty encourages hoarding</p>
+<p>This is why the Fed could expand the money supply dramatically after 2008 and 2020 without immediate hyperinflation. Much of the new money sat idle.</p>
+<p>The corollary: if velocity rebounds, that dormant money activates at once — potentially triggering inflation.</p>
+<hr />
+<h2 id="a-brief-history-of-fiat-money">A Brief History of Fiat Money</h2>
+<p>The Fed's unconstrained money-creation powers are historically unprecedented — and only about 50 years old.</p>
+<h3 id="the-gold-standard-era-1879-1971">The Gold Standard Era (1879-1971)</h3>
+<p>Under the gold standard, the Fed was constrained:
+- Had to maintain ~40% gold backing for currency
+- Couldn't just "credit accounts" — needed physical gold
+- Gold supply is finite → money supply is limited</p>
+<p>This was a feature, not a bug. It prevented governments from debasing currency. Prices barely moved from 1800 to 1900.</p>
+<p>But it had a flaw: <strong>limited flexibility during crises</strong>. When the economy needed liquidity, the gold constraint limited the Fed's options.</p>
+<h3 id="where-did-the-fed-get-gold">Where Did the Fed Get Gold?</h3>
+<ol>
+<li><strong>Member banks deposited reserves</strong> when joining the Fed (1913)</li>
+<li><strong>WWI gold inflows</strong> — Europe paid for American goods in gold</li>
+<li><strong>FDR's gold confiscation (1933)</strong> — the big one</li>
+</ol>
+<p>Executive Order 6102 made private gold ownership illegal. Citizens surrendered their gold at \$20.67/oz. The government then revalued it to \$35/oz — a 69% devaluation of dollar-denominated savings.</p>
+<h3 id="nixons-temporary-suspension-1971">Nixon's "Temporary" Suspension (1971)</h3>
+<p>By the 1960s, America was running out of gold. France kept demanding gold for their dollars. Reserves were draining.</p>
+<p>On August 15, 1971, Nixon announced a "temporary suspension" of gold convertibility. That suspension is now 54 years old and counting.</p>
+<p>The dollar became pure faith: <em>"This is valuable because we say so, and everyone believes it."</em></p>
+<hr />
+<h2 id="the-feds-power-over-time">The Fed's Power Over Time</h2>
+<p>The Fed hasn't always been the powerful institution it is today. Its authority has fluctuated significantly.</p>
+<h3 id="the-benjamin-strong-era-1914-1928-one-mans-fed">The Benjamin Strong Era (1914-1928): One Man's Fed</h3>
+<p>The early Fed was decentralized — 12 regional banks with real autonomy. But NY Fed Governor Benjamin Strong dominated through sheer competence and force of personality. He was basically the Fed.</p>
+<p>Then he died in October 1928. One year before the crash.</p>
+<h3 id="the-leaderless-years-1929-1933-policy-paralysis">The Leaderless Years (1929-1933): Policy Paralysis</h3>
+<p>Without Strong, the Fed fragmented. Regional banks disagreed. No one had authority to override.</p>
+<p>The Fed <strong>tightened into the Depression</strong>. Yes, really. Money supply collapsed 30%. Banks failed in waves. The result was catastrophic.</p>
+<h3 id="fdr-takes-over-1933-1951-fed-becomes-a-puppet">FDR Takes Over (1933-1951): Fed Becomes a Puppet</h3>
+<p>Roosevelt didn't just strip the Fed of gold — he stripped it of power. The Treasury ran monetary policy. The Fed became a printing press for war finance, required to keep rates pegged at 2.5% regardless of conditions.</p>
+<p>"Independent" Fed was a polite fiction.</p>
+<h3 id="the-accord-1951-independence-restored">The Accord (1951): Independence Restored</h3>
+<p>After WWII, the Fed finally pushed back. The 1951 Treasury-Fed Accord restored Fed independence to set interest rates. The beginning of the modern era.</p>
+<h3 id="volcker-1979-1987-the-fed-asserts-independence">Volcker (1979-1987): The Fed Asserts Independence</h3>
+<p>Paul Volcker raised rates to 20% to crush inflation, despite political pressure. Unemployment hit 10%. He faced significant public backlash.</p>
+<p>He succeeded. Inflation fell. And the Fed demonstrated it could act independently of political pressures.</p>
+<h3 id="the-greenspan-bernanke-powell-era-expanded-authority">The Greenspan-Bernanke-Powell Era: Expanded Authority</h3>
+<p>Each crisis expanded Fed authority:
+- 1987: Emergency rate cuts
+- 2008: QE, MBS purchases, emergency lending facilities
+- 2020: Corporate bonds, municipal backstops, broad market support</p>
+<p>The balance sheet expanded from \$900B (2007) to \$9T (2022). Each crisis brought new powers that were never fully relinquished.</p>
+<hr />
+<h2 id="the-great-depression-debate">The Great Depression Debate</h2>
+<p>Two major schools of thought on the Fed's role:</p>
+<h3 id="team-monetarist-friedman-bernanke">Team Monetarist (Friedman, Bernanke)</h3>
+<blockquote>
+<p>"The Fed caused the Depression by not injecting liquidity"</p>
+</blockquote>
+<p>The crash was survivable. But the Fed tightened, banks failed, money supply collapsed. If they'd acted as lender of last resort, it would've been a bad recession, not a decade of misery.</p>
+<p>Bernanke acknowledged this at Friedman's 90th birthday: <em>"You're right, we did it. We're very sorry. We won't do it again."</em></p>
+<h3 id="team-austrian-hayek-rothbard">Team Austrian (Hayek, Rothbard)</h3>
+<blockquote>
+<p>"The Fed caused the bubble in the 1920s — the crash was the cure"</p>
+</blockquote>
+<p>Strong's Fed kept rates too low in the 1920s, fueling speculation and malinvestment. 1929 was the market correcting distortions. Intervention would just delay the inevitable and make it worse.</p>
+<h3 id="whos-right">Who's Right?</h3>
+<p><strong>Both, kind of.</strong></p>
+<p>The bubble shouldn't have been blown (Austrian critique ✓). But once blown, the Fed's response made it worse (Monetarist critique ✓).</p>
+<p>The modern Fed learned only half the lesson:
+- 1920s lesson: "Don't blow bubbles" → <strong>IGNORED</strong>
+- 1930s lesson: "Don't let credit collapse" → <strong>FOLLOWED AGGRESSIVELY</strong></p>
+<p>Result: serial bubble-blowing with aggressive crash response. Each rescue creates expectations. Each bubble gets bigger. The bill keeps growing.</p>
+<hr />
+<h2 id="the-2000-exception-when-bubbles-pop-cleanly">The 2000 Exception: When Bubbles Pop Cleanly</h2>
+<p>The dot-com crash was different. The NASDAQ fell 78%. The S&amp;P 500 dropped 49%. Yet the recession was mild — eight months, with unemployment peaking at 6.3%.</p>
+<p>Why did this work when 2008 was catastrophic?</p>
+<p><strong>It was an equity bubble, not a credit bubble.</strong></p>
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>2000</th>
+<th>2008</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VCs lost money</td>
+<td>Banks became insolvent</td>
+</tr>
+<tr>
+<td>Stocks went to zero</td>
+<td>Mortgages went underwater</td>
+</tr>
+<tr>
+<td>No leverage, no contagion</td>
+<td>Debt everywhere, cascading defaults</td>
+</tr>
+</tbody>
+</table>
+<p>When equity holders lose money, they absorb the loss — painful but contained. When credit defaults, it cascades through the system. Banks fail, credit freezes, and the real economy contracts.</p>
+<p>In 2000, investors lost money but didn't default on loans. Banks stayed solvent. The system kept functioning.</p>
+<p><strong>The catch</strong>: The Fed's response (rates to 1%, held too long) inflated the housing bubble that caused 2008. Even in "success," the seeds of the next crisis were planted.</p>
+<hr />
+<h2 id="the-modern-dilemma">The Modern Dilemma</h2>
+<p>So here we are. The Fed is more powerful than ever — and more trapped than ever.</p>
+<p><strong>The trap:</strong>
+- Asset prices depend on low rates
+- Corporate debt needs cheap refinancing
+- Financial system holds massive bond portfolios
+- Markets expect rescue ("Fed Put")</p>
+<p>Each bubble gets bigger. Each intervention gets larger. The endgame scenarios:</p>
+<ol>
+<li><strong>Muddle Through</strong>: Low growth forever, Japan-style stagnation</li>
+<li><strong>Inflate Away</strong>: Let inflation run hot, stealth default on debt</li>
+<li><strong>Volcker 2.0</strong>: Finally allow pain, deep recession, reset</li>
+<li><strong>Loss of Confidence</strong>: Dollar crisis, forced austerity</li>
+</ol>
+<p>No one knows which path will unfold. The current approach of perpetual intervention may be sustainable, or it may not be.</p>
+<hr />
+<h2 id="the-bottom-line">The Bottom Line</h2>
+<ul>
+<li>The Fed creates money through accounting entries — it works as long as confidence holds</li>
+<li>Money supply = Fed's base $\times$ bank multiplication $\times$ velocity</li>
+<li>Gold standard constrained money creation; fiat removed all external limits  </li>
+<li>Fed power has fluctuated wildly — it's only been "omnipotent" since ~1971</li>
+<li>The Depression debate: both the bubble AND the response were policy errors</li>
+<li>2000 shows bubbles CAN pop cleanly — but only equity bubbles, not credit bubbles</li>
+<li>Modern bubbles are credit-entangled; clean pops are unlikely</li>
+<li>The Fed is trapped: can't let it crash, can't stop inflating</li>
+</ul>
+<p>In short: fiat money is a system built on confidence, and the Fed's job is to maintain that confidence while navigating an increasingly complex set of constraints.</p></div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const toc = document.querySelector('.blog-toc');
+    if (!toc) return;
+
+    const links = toc.querySelectorAll('a[href^="#"]');
+    const headings = [];
+
+    links.forEach((link) => {
+      const id = link.getAttribute('href').slice(1);
+      const heading = document.getElementById(id);
+      if (heading) headings.push({ id, link, heading });
+    });
+
+    if (!headings.length) return;
+
+    function updateActive() {
+      let current = headings[0];
+      const offset = 100;
+
+      for (const h of headings) {
+        if (h.heading.getBoundingClientRect().top <= offset) current = h;
+      }
+
+      links.forEach((l) => l.classList.remove('active'));
+      current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+  })();
+</script>
+ 
+      </div>
+    </div>
+
+    <!-- Footer with copyright info -->
+    <footer class="bg-secondary bg-opacity-10 text-muted py-1 px-5 text-center">
+      <small>
+        © Joey Lou | 2022-2026
+        <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
+      >
+    </footer>
+
+    <!-- Bootstrap JS bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Initialize tooltips -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Initialize all tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        const tooltipList = [...tooltipTriggerList].map(
+          (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+        );
+      });
+    </script>
+
+    <!-- Additional scripts from child templates -->
+     
+  </body>
+</html>
