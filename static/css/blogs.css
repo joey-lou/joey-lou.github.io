@@ -84,15 +84,46 @@
 }
 
 /* ==========================================================================
+   AI Disclaimer Banner
+   ========================================================================== */
+
+.blog-content .ai-disclaimer {
+  background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+  border: 1px solid #ffda6a;
+  border-radius: 6px;
+  padding: 0.75em 1em;
+  margin-bottom: 1.5em;
+  color: #664d03;
+  font-size: 0.9em;
+}
+
+[data-theme='dark'] .blog-content .ai-disclaimer {
+  background: linear-gradient(135deg, #332701 0%, #443403 100%);
+  border-color: #665200;
+  color: #ffda6a;
+}
+
+/* ==========================================================================
    Original Blog Content Styles
    ========================================================================== */
 
-/* Blockquote styling with left border accent */
+/* Blockquote styling - used for Q&A questions */
 .blog-content blockquote {
   border-left: 4px solid var(--accent-primary);
   margin: 1.5em 0;
-  padding: 0 1em;
-  color: var(--text-secondary);
+  padding: 0.75em 1em;
+  background-color: var(--bg-code);
+  border-radius: 0 6px 6px 0;
+  color: var(--text-primary);
+  font-style: normal;
+}
+
+.blog-content blockquote p {
+  margin-bottom: 0;
+}
+
+.blog-content blockquote strong {
+  color: var(--accent-primary);
 }
 
 /* Headers (h1-h6) with specified margins */
@@ -184,7 +215,7 @@
   background-color: transparent;
   padding: 0;
   white-space: pre;
-  color: var(--text-code);
+  color: var(--text-primary);
   font-size: 85%;
 }
 
