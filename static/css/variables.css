@@ -51,6 +51,9 @@
 
   /* Transitions */
   --transition-standard: 0.3s ease;
+
+  /* Effects */
+  --noise-opacity: 0.1;
 }
 
 /* Dark theme variables */
@@ -86,4 +89,7 @@
   --shadow-sm: 0 0 0.5rem rgba(125, 125, 125, 0.2);
   --shadow-md: 0 0 1rem rgba(125, 125, 125, 0.3);
   --shadow-lg: 0 0 2rem rgba(125, 125, 125, 0.4);
+
+  /* Effects - Dark Theme */
+  --noise-opacity: 0.1;
 }
