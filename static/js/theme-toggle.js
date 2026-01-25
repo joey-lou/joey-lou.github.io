@@ -28,7 +28,8 @@ function updateThemeAwareButtons(theme) {
 
 // Set theme across the application
 function setTheme(theme) {
-  // Set Bootstrap theme attribute
+  // Set Bootstrap theme attribute on both html and body for consistency
+  document.documentElement.setAttribute('data-bs-theme', theme);
   document.body.setAttribute('data-bs-theme', theme);
 
   // Update code syntax highlighting theme (only for blog pages)

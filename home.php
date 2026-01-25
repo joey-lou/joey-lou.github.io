@@ -47,6 +47,14 @@
     <link rel="canonical" href="https://jiujiulou.com/" />
     
 
+    <!-- Apply saved theme immediately to prevent flash -->
+    <script>
+      (function () {
+        var theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', theme);
+      })();
+    </script>
+
     <!-- Theme toggle functionality -->
     <script type="module" src="static/js/theme-toggle.js"></script>
 
@@ -146,7 +154,7 @@
 
   </head>
 
-  <body data-bs-theme="light" class="d-flex flex-column min-vh-100">
+  <body class="d-flex flex-column min-vh-100">
     <!-- Navigation bar with theme toggle -->
     <nav class="navbar sticky-top navbar-expand-md bg-secondary bg-opacity-50 px-5">
       <a class="navbar-brand" href="index.html">About</a>
