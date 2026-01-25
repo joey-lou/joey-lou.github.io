@@ -55,13 +55,9 @@ function setTheme(theme) {
   updateThemeAwareButtons(theme);
 }
 
-// Function to apply theme with transition
-function applyThemeWithTransition(theme) {
-  document.body.style.transition = 'background-color 0.3s ease';
+// Function to apply theme
+function applyTheme(theme) {
   setTheme(theme);
-  setTimeout(() => {
-    document.body.style.transition = '';
-  }, 300);
 }
 
 // Initialize page and theme toggle functionality
@@ -71,7 +67,7 @@ function initializePage() {
     toggleButton.addEventListener('click', () => {
       const currentTheme = document.body.getAttribute('data-bs-theme');
       const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-      applyThemeWithTransition(newTheme);
+      applyTheme(newTheme);
       localStorage.setItem('theme', newTheme);
     });
   }
