@@ -45,9 +45,7 @@ The theme-toggle.js script in /static/js handles the toggling and persistence of
 
 ## CSS Variables
 
-The site makes limited use of CSS variables through Bootstrap's variable system:
-- `--bs-secondary-bg`: Used for card hover effects and shadows
-- `--game-board-background`: Set by theme-toggle.js for light/dark mode game boards
+The site uses CSS variables defined in variables.css for theming (light/dark). Game boards use `--game-board-background` for the default board background.
 
 ## Responsive Design
 

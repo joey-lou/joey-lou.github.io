@@ -78,7 +78,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bitcount+Grid+Single:wght@100..900&family=LXGW+WenKai+TC&display=swap"
       rel="stylesheet"
     />
     <!-- Google Analytics (if enabled) -->
@@ -99,11 +99,12 @@
      
 <link rel="stylesheet" href="../static/css/game.css" />
 <style>
-  /* Game board grid styling */
   #game-board {
     display: grid;
     grid-template-rows: repeat(21, 1fr);
     grid-template-columns: repeat(21, 1fr);
+    gap: 1px;
+    padding: 1px;
   }
 
   kbd {
@@ -111,29 +112,21 @@
   }
 
   .snake {
-    background-color: #4caf50;
-    border-radius: 20%;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    background-color: var(--snake-body);
+    border-radius: 3px;
+    box-shadow: 0 0 4px 2px color-mix(in srgb, var(--snake-body) 50%, transparent);
   }
 
   .snake-head {
-    background-color: #45a049;
-    border-radius: 30%;
+    background-color: var(--snake-head);
+    border-radius: 3px;
+    box-shadow: 0 0 4px 2px color-mix(in srgb, var(--snake-head) 50%, transparent);
   }
 
   .snake-food {
-    background-color: #ff5722;
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(255, 87, 34, 0.6);
-  }
-
-  @keyframes snakePulse {
-    0% {
-      transform: scale(0.95);
-    }
-    100% {
-      transform: scale(1.05);
-    }
+    background-color: var(--snake-food);
+    border-radius: 3px;
+    box-shadow: 0 0 4px 2px color-mix(in srgb, var(--snake-food) 50%, transparent);
   }
 
   .hidden {
@@ -141,7 +134,7 @@
   }
 
   .game-over {
-    color: #ff5722;
+    color: var(--game-result-failure);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -150,7 +143,7 @@
     z-index: 10;
     font-size: 3rem;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: var(--font-game);
   }
 </style>
  

@@ -1,5 +1,9 @@
 import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
 
+function getCssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 // Constants
 const DUCK_SPEED = 200;
 let FOX_SPEED_MULTIPLIER = 1.05;
@@ -26,7 +30,7 @@ class Duck {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#FFD700';
+    ctx.fillStyle = getCssVar('--chase-duck');
     ctx.fill();
     ctx.closePath();
   }
@@ -87,7 +91,7 @@ class Fox {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#FF4500';
+    ctx.fillStyle = getCssVar('--chase-fox');
     ctx.fill();
     ctx.closePath();
   }
@@ -128,20 +132,20 @@ class Fox {
   }
 }
 
+const VALUE_NUM_WIDTH = 8;
+
 class GameInfo {
   constructor() {
     this.cachedFont = null;
     this.cachedFontFamily = null;
     this.cachedTheme = null;
     this.cachedFillStyle = null;
-    // Use rem-based values for responsive sizing
     this.leftPaddingRem = 3;
     this.lineHeightRem = 1.5;
     this.fontSizeRem = 1.5;
     this.updateFontCache();
   }
 
-  // Convert rem to pixels based on document font size
   remToPx(rem) {
     return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
   }
@@ -152,7 +156,6 @@ class GameInfo {
       .getPropertyValue('--font-game')
       .trim();
 
-    // Convert rem-based values to pixels
     const fontSizePx = this.remToPx(this.fontSizeRem);
     this.leftPadding = this.remToPx(this.leftPaddingRem);
     this.lineHeight = this.remToPx(this.lineHeightRem);
@@ -160,7 +163,9 @@ class GameInfo {
     this.cachedFont = `${fontSizePx}px ${gameFont}`;
     this.cachedFontFamily = gameFont;
     this.cachedTheme = theme;
-    this.cachedFillStyle = theme === 'light' ? '#333' : '#fff';
+    this.cachedFillStyle = getComputedStyle(document.documentElement)
+      .getPropertyValue('--text-primary')
+      .trim();
   }
 
   setupTextStyle(ctx) {
@@ -182,19 +187,20 @@ class GameInfo {
     ctx.resetTransform();
     this.setupTextStyle(ctx);
 
-    const stats = [
-      `Distance:       ${Math.sqrt((duck.x - fox.x) ** 2 + (duck.y - fox.y) ** 2)
-        .toFixed(0)
-        .padStart(6)}`,
-      `Angular Dist:   ${((Math.abs(duck.getAngle() - fox.getAngle()) * 180) / Math.PI)
-        .toFixed(1)
-        .padStart(6)}°`,
-      `Duck Angular v: ${((duck.angularVelocity * 180) / Math.PI).toFixed(1).padStart(6)}°/s`,
-      `Fox Angular v:  ${((fox.angularVelocity * 180) / Math.PI).toFixed(1).padStart(6)}°/s`,
+    const valueX = this.leftPadding + this.remToPx(13);
+    const labels = ['Distance:', 'Angular Dist:', 'Duck Angular v:', 'Fox Angular v:'];
+    const numberParts = [
+      Math.sqrt((duck.x - fox.x) ** 2 + (duck.y - fox.y) ** 2).toFixed(0),
+      ((Math.abs(duck.getAngle() - fox.getAngle()) * 180) / Math.PI).toFixed(1),
+      ((duck.angularVelocity * 180) / Math.PI).toFixed(1),
+      ((fox.angularVelocity * 180) / Math.PI).toFixed(1),
     ];
+    const units = ['', '°', '°/s', '°/s'];
 
-    stats.forEach((stat, i) => {
-      ctx.fillText(stat, this.leftPadding, 30 + i * this.lineHeight);
+    labels.forEach((label, i) => {
+      const y = 30 + i * this.lineHeight;
+      ctx.fillText(label, this.leftPadding, y);
+      ctx.fillText(numberParts[i].padStart(VALUE_NUM_WIDTH) + units[i], valueX, y);
     });
 
     ctx.restore();
@@ -242,19 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let lastTime = performance.now();
   function drawPond() {
-    // Create gradient
-    const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, POND_RADIUS);
-    gradient.addColorStop(1, '#87CEEB'); // Light edge
-    gradient.addColorStop(0.5, '#4F94CD'); // Medium blue
-    gradient.addColorStop(0, '#104E8B'); // Dark blue center
-
     ctx.beginPath();
     ctx.arc(0, 0, POND_RADIUS, 0, Math.PI * 2);
-    ctx.fillStyle = '#4F94CD';
+    ctx.fillStyle = getCssVar('--chase-pond');
     ctx.fill();
+    ctx.closePath();
 
-    // Add ripple effect
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+    ctx.strokeStyle = getCssVar('--chase-ripple');
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, POND_RADIUS / FOX_SPEED_MULTIPLIER / Math.PI, 0, Math.PI * 2);
@@ -283,7 +283,9 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
+    const { width, height } = canvasLogicalDimensions;
+    ctx.fillStyle = getCssVar('--game-board-background');
+    ctx.fillRect(0, 0, width, height);
     ctx.save();
     ctx.translate(canvasLogicalDimensions.width / 2, canvasLogicalDimensions.height / 2);
 
@@ -296,11 +298,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (gameState !== 'playing') {
-      // Use cached font from gameInfo for consistency and performance
       gameInfo.setupTextStyle(ctx);
-      const endGameFontSize = gameInfo.remToPx(5); // 5rem for end game text
+      const endGameFontSize = gameInfo.remToPx(5);
       ctx.font = `${endGameFontSize}px ${gameInfo.cachedFontFamily}`;
-      ctx.fillStyle = gameState === 'won' ? 'green' : 'red';
+      ctx.fillStyle =
+        gameState === 'won' ? getCssVar('--chase-result-won') : getCssVar('--chase-result-lost');
       ctx.textAlign = 'center';
       // Shift text up a bit
       ctx.fillText(

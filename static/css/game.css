@@ -34,7 +34,7 @@
   margin: 0 auto; /* Center the DOM vertically */
 }
 
-/* Game board - primary display area for games */
+/* Game board - primary display area for games (default: simple/flat for grid games) */
 #game-board {
   width: 100%;
   height: 100%;
@@ -43,7 +43,6 @@
   box-shadow: var(--shadow-md);
   margin-bottom: 1rem;
   transition: background-color var(--transition-standard);
-  /* Don't include display: grid here as it's set by individual games that need it */
 }
 
 /* Control bar for game inputs and controls */

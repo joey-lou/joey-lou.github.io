@@ -1,5 +1,9 @@
 import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
 
+function getCssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 const GRAVITY = 200;
 const BEZIER_SEGMENTS = 20000;
 const GAME_SPEED = 1000 / 120; // 120 FPS
@@ -24,7 +28,9 @@ class Node {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = this.isMovable ? '#4CAF50' : '#FF5722';
+    ctx.fillStyle = this.isMovable
+      ? getCssVar('--slope-node-movable')
+      : getCssVar('--slope-node-fixed');
     ctx.fill();
     ctx.closePath();
   }
@@ -47,7 +53,7 @@ class Ball {
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#2196F3';
+    ctx.fillStyle = getCssVar('--slope-ball');
     ctx.fill();
     ctx.closePath();
   }
@@ -82,16 +88,13 @@ function getAllBezierPoints(nodes, numPoints) {
 }
 
 function drawControlPoints(ctx, nodes) {
-  // Draw dotted lines between control points
   ctx.beginPath();
   ctx.setLineDash([5, 5]);
   ctx.moveTo(nodes[0].x, nodes[0].y);
-
   for (let i = 1; i < nodes.length; i++) {
     ctx.lineTo(nodes[i].x, nodes[i].y);
   }
-
-  ctx.strokeStyle = '#999';
+  ctx.strokeStyle = getCssVar('--slope-control-line');
   ctx.lineWidth = 1;
   ctx.stroke();
 }
@@ -132,17 +135,13 @@ function binarySearch(arr, target) {
 }
 
 function drawSpline(ctx, points) {
-  // Reset line dash and draw the spline
   ctx.setLineDash([]);
   ctx.beginPath();
   ctx.moveTo(points[0].x, points[0].y);
-
   for (let i = 1; i < points.length; i++) {
-    const point = points[i];
-    ctx.lineTo(point.x, point.y);
+    ctx.lineTo(points[i].x, points[i].y);
   }
-
-  ctx.strokeStyle = '#666';
+  ctx.strokeStyle = getCssVar('--slope-spline');
   ctx.lineWidth = 3;
   ctx.stroke();
 }
@@ -152,8 +151,7 @@ function drawTime(ctx, canvasLogicalDimensions, T) {
     .getPropertyValue('--font-game')
     .trim();
   ctx.font = `20px ${gameFont}`;
-  const theme = localStorage.getItem('theme') || 'light';
-  ctx.fillStyle = theme === 'light' ? '#000' : '#fff';
+  ctx.fillStyle = getCssVar('--text-primary');
   ctx.textAlign = 'right';
   const timeText = `Time: ${T.toFixed(2)}s`;
   ctx.fillText(timeText, canvasLogicalDimensions.width - 20, 30);
@@ -223,16 +221,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
+    const { width, height } = canvasLogicalDimensions;
+    ctx.fillStyle = getCssVar('--game-board-background');
+    ctx.fillRect(0, 0, width, height);
 
-    // Only draw control points and dotted lines in FREE state
+    // Draw lines first (behind), then dots (in front)
     if (gameState === GameState.FREE) {
       drawControlPoints(ctx, nodes);
+    }
+    drawSpline(ctx, splinePoints);
+
+    if (gameState === GameState.FREE) {
       nodes.forEach((node) => node.draw(ctx));
     }
-
-    // Always draw the spline and ball
-    drawSpline(ctx, splinePoints);
     ball.draw(ctx);
     drawTime(ctx, canvasLogicalDimensions, T);
   }
