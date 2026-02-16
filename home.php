@@ -318,7 +318,6 @@
       this.languages = [
         { text: 'Hello', lang: 'en' },
         { text: '你好', lang: 'zh' },
-        { text: 'こんにちは', lang: 'ja' },
       ];
       this.currentIndex = 0;
       this.typingSpeed = 120; // ms per character
