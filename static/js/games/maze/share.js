@@ -25,27 +25,39 @@ export function shuffleArray(array) {
 
 export function carvePassage(x, y) {
   maze[y][x].isWall = false;
-  maze[y][x].element.classList.add('highlight');
-  maze[y][x].element.classList.remove('wall');
-  setTimeout(() => {
-    maze[y][x].element.classList.remove('highlight');
-  }, 300);
+  const el = maze[y][x].element;
+  el.classList.remove('wall');
+  if (getDelay() <= 80) return;
+  el.classList.add('highlight');
+  addTimeout(
+    setTimeout(() => {
+      el.classList.remove('highlight');
+    }, 300)
+  );
 }
 
 export function fillWall(x, y) {
   maze[y][x].isWall = true;
-  maze[y][x].element.classList.add('wall');
-  maze[y][x].element.classList.add('remove');
-  setTimeout(() => {
-    maze[y][x].element.classList.remove('remove');
-  }, 500);
+  const el = maze[y][x].element;
+  el.classList.add('wall');
+  if (getDelay() <= 80) return;
+  el.classList.add('remove');
+  addTimeout(
+    setTimeout(() => {
+      el.classList.remove('remove');
+    }, 500)
+  );
 }
 
 export function visitCell(x, y) {
-  maze[y][x].element.classList.add('visit');
-  setTimeout(() => {
-    maze[y][x].element.classList.remove('visit');
-  }, 300);
+  if (getDelay() <= 80) return;
+  const el = maze[y][x].element;
+  el.classList.add('visit');
+  addTimeout(
+    setTimeout(() => {
+      el.classList.remove('visit');
+    }, 300)
+  );
 }
 
 export function countDiagonalPassages(x, y) {
@@ -139,7 +151,6 @@ export function resizeGrid() {
   }
 
   GRID_SIZE = powerSum;
-  console.log(GRID_SIZE);
 }
 
 export function clearTimeouts() {

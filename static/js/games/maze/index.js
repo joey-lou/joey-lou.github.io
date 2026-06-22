@@ -23,18 +23,20 @@ document.addEventListener('DOMContentLoaded', () => {
     setIsGenerating(false);
     resizeGrid();
 
-    gridElement.innerHTML = '';
+    gridElement.replaceChildren();
     gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
     gridElement.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
+    const fragment = document.createDocumentFragment();
     for (let i = 0; i < GRID_SIZE; i++) {
       maze[i] = [];
       for (let j = 0; j < GRID_SIZE; j++) {
         const cell = document.createElement('div');
         cell.classList.add('maze', 'wall');
-        gridElement.appendChild(cell);
+        fragment.appendChild(cell);
         maze[i][j] = { element: cell, isWall: true };
       }
     }
+    gridElement.appendChild(fragment);
     generateBtn.disabled = false;
     algorithmSelect.disabled = false;
   }
@@ -73,7 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createGrid();
   generateBtn.addEventListener('click', generateMaze);
-  window.addEventListener('resize', createGrid);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(createGrid, 200);
+  });
 
   speedSlider.addEventListener('input', (e) => {
     const value = parseInt(e.target.value);

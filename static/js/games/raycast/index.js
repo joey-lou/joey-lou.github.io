@@ -81,6 +81,7 @@ class RaycastGame {
 
     this.mode = '3d';
     this.toggleModeBtn.textContent = 'Back to Editor';
+    document.documentElement.classList.add('raycast-3d');
 
     this.mazeEditorElement.classList.add('hidden');
     this.canvas.classList.remove('hidden');
@@ -92,6 +93,7 @@ class RaycastGame {
   enterEditorMode() {
     this.mode = 'editor';
     this.toggleModeBtn.textContent = 'Enter 3D Mode';
+    document.documentElement.classList.remove('raycast-3d');
 
     this.canvas.classList.add('hidden');
     this.mazeEditorElement.classList.remove('hidden');

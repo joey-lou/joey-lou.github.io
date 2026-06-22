@@ -4,28 +4,26 @@ export let GRID_SIZE = 50;
 export const MIN_GRID_SIZE = 30;
 export const MAX_GRID_SIZE = 80;
 export let grid = [];
-let newGrid = [];
 let isRunning = false;
 let intervalId = null;
 let isMouseDown = false;
-let wrapEdges = true;
+let wrapEdges = false;
 
 export function setCellAlive(x, y, alive) {
   if (x >= 0 && x < GRID_SIZE && y >= 0 && y < GRID_SIZE) {
-    grid[y][x].alive = alive;
+    const cell = grid[y][x];
+    if (cell.alive !== alive) {
+      cell.alive = alive;
+      cell.element.classList.toggle('alive', alive);
+    }
   }
 }
 
 function toggleCell(row, col) {
-  if (grid[row] && grid[row][col]) {
-    grid[row][col].alive = !grid[row][col].alive;
-    updateCellAppearance(row, col);
-  }
-}
-
-function updateCellAppearance(row, col) {
-  if (grid[row] && grid[row][col]) {
-    grid[row][col].element.classList.toggle('alive', grid[row][col].alive);
+  if (grid[row]?.[col]) {
+    const cell = grid[row][col];
+    cell.alive = !cell.alive;
+    cell.element.classList.toggle('alive', cell.alive);
   }
 }
 
@@ -52,32 +50,19 @@ function updateGrid() {
   for (let i = 0; i < GRID_SIZE; i++) {
     for (let j = 0; j < GRID_SIZE; j++) {
       const neighbors = countNeighbors(i, j);
-      if (grid[i][j].alive) {
-        newGrid[i][j].alive = neighbors === 2 || neighbors === 3;
-      } else {
-        newGrid[i][j].alive = neighbors === 3;
+      const cell = grid[i][j];
+      const nowAlive = cell.alive ? neighbors === 2 || neighbors === 3 : neighbors === 3;
+      if (nowAlive !== cell.alive) {
+        cell.alive = nowAlive;
+        cell.element.classList.toggle('alive', nowAlive);
       }
-    }
-  }
-  for (let i = 0; i < GRID_SIZE; i++) {
-    for (let j = 0; j < GRID_SIZE; j++) {
-      grid[i][j].alive = newGrid[i][j].alive;
-    }
-  }
-  updateGridAppearance();
-}
-
-function updateGridAppearance() {
-  for (let i = 0; i < GRID_SIZE; i++) {
-    for (let j = 0; j < GRID_SIZE; j++) {
-      updateCellAppearance(i, j);
     }
   }
 }
 
 function calculateGridSize() {
   const containerSize = Math.min(window.innerWidth, window.innerHeight) * 0.85;
-  const cellSize = 20; // Adjust this value to change the cell size
+  const cellSize = 20;
   let size = Math.floor(containerSize / cellSize);
   size = Math.max(MIN_GRID_SIZE, Math.min(MAX_GRID_SIZE, size));
   return size;
@@ -94,42 +79,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.addEventListener('mouseup', () => {
     isMouseDown = false;
+    gridElement.classList.remove('drawing');
+  });
+
+  gridElement.addEventListener('mousedown', (e) => {
+    const cellEl = e.target.closest('.cell');
+    if (!cellEl) return;
+    isMouseDown = true;
+    gridElement.classList.add('drawing');
+    toggleCell(+cellEl.dataset.row, +cellEl.dataset.col);
+  });
+
+  gridElement.addEventListener('mouseover', (e) => {
+    if (!isMouseDown) return;
+    const cellEl = e.target.closest('.cell');
+    if (!cellEl) return;
+    toggleCell(+cellEl.dataset.row, +cellEl.dataset.col);
   });
 
   function createGrid() {
     GRID_SIZE = calculateGridSize();
-    gridElement.innerHTML = ''; // Clear existing cells
+    gridElement.replaceChildren();
     gridElement.style.gridTemplateColumns = `repeat(${GRID_SIZE}, 1fr)`;
     gridElement.style.gridTemplateRows = `repeat(${GRID_SIZE}, 1fr)`;
     grid = [];
-    newGrid = [];
+    const fragment = document.createDocumentFragment();
     for (let i = 0; i < GRID_SIZE; i++) {
       grid[i] = [];
-      newGrid[i] = [];
       for (let j = 0; j < GRID_SIZE; j++) {
         const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.addEventListener('mousedown', () => {
-          isMouseDown = true;
-          toggleCell(i, j);
-        });
-
-        cell.addEventListener('mouseover', () => {
-          if (isMouseDown) {
-            toggleCell(i, j);
-          }
-        });
-
-        gridElement.appendChild(cell);
+        cell.className = 'cell';
+        cell.dataset.row = i;
+        cell.dataset.col = j;
+        fragment.appendChild(cell);
         grid[i][j] = { element: cell, alive: false };
-        newGrid[i][j] = { alive: false };
       }
     }
+    gridElement.appendChild(fragment);
   }
 
   function startGame() {
     if (!isRunning) {
       isRunning = true;
+      gridElement.classList.add('simulating');
       intervalId = setInterval(updateGrid, 100);
     }
   }
@@ -137,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function stopGame() {
     if (isRunning) {
       isRunning = false;
+      gridElement.classList.remove('simulating');
       clearInterval(intervalId);
     }
   }
@@ -145,20 +138,26 @@ document.addEventListener('DOMContentLoaded', () => {
     stopGame();
     for (let i = 0; i < GRID_SIZE; i++) {
       for (let j = 0; j < GRID_SIZE; j++) {
-        grid[i][j].alive = false;
+        const cell = grid[i][j];
+        if (cell.alive) {
+          cell.alive = false;
+          cell.element.classList.remove('alive');
+        }
       }
     }
-    updateGridAppearance();
   }
 
   function randomizeGrid() {
     for (let i = 0; i < GRID_SIZE; i++) {
       for (let j = 0; j < GRID_SIZE; j++) {
-        grid[i][j].alive = Math.random() < 0.3;
+        const cell = grid[i][j];
+        const alive = Math.random() < 0.3;
+        cell.alive = alive;
+        cell.element.classList.toggle('alive', alive);
       }
     }
-    updateGridAppearance();
   }
+
   createGrid();
 
   startBtn.addEventListener('click', startGame);
@@ -170,19 +169,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (selectedPattern) {
       clearGrid();
       populatePattern(selectedPattern);
-      updateGridAppearance();
     }
   });
   wrapToggle.addEventListener('change', (e) => {
     wrapEdges = e.target.checked;
   });
 
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    const oldGridSize = GRID_SIZE;
-    const newGridSize = calculateGridSize();
-    if (newGridSize !== oldGridSize) {
-      clearGrid();
-      createGrid();
-    }
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      const newGridSize = calculateGridSize();
+      if (newGridSize !== GRID_SIZE) {
+        stopGame();
+        createGrid();
+      }
+    }, 200);
   });
 });

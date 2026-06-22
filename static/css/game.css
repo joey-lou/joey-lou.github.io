@@ -38,18 +38,26 @@
 #game-board {
   width: 100%;
   height: 100%;
-  border-radius: 2rem;
   background: var(--game-board-background);
   box-shadow: var(--shadow-md);
   margin-bottom: 1rem;
   transition: background-color var(--transition-standard);
 }
 
+/* Grid gap lines use --cell-border-color; must beat #game-board background above */
+#game-board.life-grid,
+#game-board.maze-grid {
+  display: grid;
+  gap: 1px;
+  padding: 1px;
+  box-sizing: border-box;
+  background-color: var(--cell-border-color);
+}
+
 /* Control bar for game inputs and controls */
 #game-bar {
   width: 80vmin;
   padding: 0.25rem 0.5rem;
-  border-radius: 0.75rem;
   /* Remove box shadow */
   display: flex;
   align-items: center;

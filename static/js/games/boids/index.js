@@ -1,5 +1,9 @@
 import { setupHighDPICanvas, resizeHighDPICanvas } from '../utils/canvas-utils.js';
 
+function getCssVar(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 // Fixed physics parameters for consistent, reasonable behavior
 const RESPONSIVENESS = 0.05; // Good balance between smooth and responsive
 const MOMENTUM = 0.98; // Natural momentum without being sluggish
@@ -154,9 +158,7 @@ class Boid {
     const angle = Math.atan2(this.vy, this.vx);
     const size = Math.min(canvasWidth, canvasHeight) * 0.01;
 
-    // Theme-aware color
-    const isDark = document.body.getAttribute('data-bs-theme') === 'dark';
-    const color = isDark ? '#6ba6e8' : '#4a90e2';
+    const color = getCssVar('--accent-primary');
 
     ctx.save();
     ctx.translate(this.x, this.y);
@@ -261,7 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let attractionPoint = null;
   let isMousePressed = false;
   let lastFrameTime = 0;
-  let showGrid = true;
+  let showGrid = false;
   let params = {
     boidCount: parseInt(boidCountInput.value),
     simStep: parseFloat(speedInput.value),
@@ -359,8 +361,7 @@ document.addEventListener('DOMContentLoaded', () => {
       )
     );
 
-    const isDark = document.body.getAttribute('data-bs-theme') === 'dark';
-    const gridColor = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
+    const gridColor = getCssVar('--border-color');
 
     ctx.strokeStyle = gridColor;
     ctx.lineWidth = 1.5;

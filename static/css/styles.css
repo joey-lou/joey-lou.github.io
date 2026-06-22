@@ -11,29 +11,51 @@
 
 /* Base document styles */
 html {
+  font-size: 18px;
   height: 100%;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
 }
 
 body {
+  position: relative;
   min-height: 100%;
   margin: 0;
   padding: 0;
   font-family: var(--font-primary);
   color: var(--text-primary);
   background-color: var(--bg-primary);
-  /* Ensure body covers viewport */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: clip;
+  text-wrap: pretty;
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
 }
 
-/* Footer font family override */
+/* Footer with gradient fade */
 footer {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-footer);
   color: var(--text-secondary);
   width: 100%;
+  padding-top: 8rem;
+  padding-bottom: 2rem;
+  background: linear-gradient(to bottom, transparent, var(--bg-primary) 40%);
+}
+
+.footer-inner {
+  width: min(100%, var(--content-width));
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
+  text-align: center;
 }
 
 /* Card styling for grid items */
@@ -43,6 +65,7 @@ footer {
   margin-bottom: 0.75rem;
   transition: transform var(--transition-standard);
   border-color: var(--border-color);
+  background-color: var(--bg-primary);
 }
 
 /* Card body with footnote accommodation */
@@ -81,16 +104,20 @@ footer {
 /* Hover effects for cards */
 .card:hover {
   transform: scale(1.05);
-  background-color: var(--bg-card-hover);
+  background-color: var(--bg-primary);
   box-shadow: var(--shadow-md);
 }
 
 /* Main content minimum height to push footer down */
 #content-wrapper {
+  position: relative;
+  z-index: 1;
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: min(100%, var(--content-width));
+  margin: 0 auto;
+  padding: 0 var(--content-padding);
 }
 
 #content-body {
@@ -100,11 +127,35 @@ footer {
 
 /* Navbar styles */
 .navbar {
-  transition: background-color var(--transition-standard);
-  background-color: var(--bg-secondary);
-  width: 100%;
+  position: sticky;
+  top: 0.75rem;
+  z-index: 1030;
+  width: min(calc(100% - 2rem), calc(var(--content-width) + 4rem));
+  margin: 0.75rem auto 0;
+  padding: 0.5rem 0;
+  background: linear-gradient(
+    to bottom,
+    var(--bg-navbar-highlight) 0%,
+    var(--bg-navbar) 35%,
+    var(--bg-navbar) 65%,
+    var(--bg-navbar-depth) 100%
+  );
+  border: 0 1px 1px 1px solid var(--border-color);
+  box-shadow: var(--navbar-elevation);
   font-family: var(--font-header);
-  padding-bottom: 0;
+  transition:
+    background 0.4s ease,
+    color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
 /* Navbar links with underline animation */
@@ -158,13 +209,8 @@ footer {
   fill: var(--text-primary);
 }
 
-/* For dark mode */
-[data-bs-theme='dark'] #theme-toggle:hover svg {
-  fill: #ccc; /* Lighter color on hover for dark mode */
-}
-
 /* ==========================================================================
-   Effect 1: Subtle Noise Texture Background
+   Effect 1: Halftone dot texture (background-image set by halftone.js)
    ========================================================================== */
 
 body::after {
@@ -175,9 +221,9 @@ body::after {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 9999;
-  opacity: var(--noise-opacity);
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  z-index: 0;
+  opacity: var(--texture-opacity);
+  background-repeat: repeat;
 }
 
 /* ==========================================================================
@@ -197,4 +243,138 @@ body::after {
 
 #content-body {
   animation: fade-in-up 0.4s ease-out;
+}
+
+/* ==========================================================================
+   Bootstrap button bridge (CDN bakes hex into --bs-btn-*; remap to theme)
+   ========================================================================== */
+
+.btn-primary {
+  --bs-btn-bg: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: var(--accent-secondary);
+  --bs-btn-hover-border-color: var(--accent-secondary);
+  --bs-btn-active-bg: var(--accent-secondary);
+  --bs-btn-active-border-color: var(--accent-secondary);
+  --bs-btn-disabled-bg: var(--bs-primary);
+  --bs-btn-disabled-border-color: var(--bs-primary);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+.btn-secondary {
+  --bs-btn-bg: var(--bs-secondary);
+  --bs-btn-border-color: var(--bs-secondary);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-secondary) 86%, black);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-secondary) 78%, black);
+  --bs-btn-active-bg: color-mix(in srgb, var(--bs-secondary) 72%, black);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--bs-secondary) 68%, black);
+  --bs-btn-disabled-bg: var(--bs-secondary);
+  --bs-btn-disabled-border-color: var(--bs-secondary);
+  --bs-btn-focus-shadow-rgb: var(--bs-secondary-rgb);
+}
+
+.btn-success {
+  --bs-btn-bg: var(--bs-success);
+  --bs-btn-border-color: var(--bs-success);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-success) 86%, black);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-success) 78%, black);
+  --bs-btn-active-bg: color-mix(in srgb, var(--bs-success) 72%, black);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--bs-success) 68%, black);
+  --bs-btn-disabled-bg: var(--bs-success);
+  --bs-btn-disabled-border-color: var(--bs-success);
+  --bs-btn-focus-shadow-rgb: var(--bs-success-rgb);
+}
+
+.btn-danger {
+  --bs-btn-bg: var(--bs-danger);
+  --bs-btn-border-color: var(--bs-danger);
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-danger) 86%, black);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-danger) 78%, black);
+  --bs-btn-active-bg: color-mix(in srgb, var(--bs-danger) 72%, black);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--bs-danger) 68%, black);
+  --bs-btn-disabled-bg: var(--bs-danger);
+  --bs-btn-disabled-border-color: var(--bs-danger);
+  --bs-btn-focus-shadow-rgb: var(--bs-danger-rgb);
+}
+
+.btn-info {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--bs-info);
+  --bs-btn-border-color: var(--bs-info);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: color-mix(in srgb, var(--bs-info) 86%, black);
+  --bs-btn-hover-border-color: color-mix(in srgb, var(--bs-info) 78%, black);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: color-mix(in srgb, var(--bs-info) 72%, black);
+  --bs-btn-active-border-color: color-mix(in srgb, var(--bs-info) 68%, black);
+  --bs-btn-disabled-bg: var(--bs-info);
+  --bs-btn-disabled-border-color: var(--bs-info);
+  --bs-btn-focus-shadow-rgb: var(--bs-info-rgb);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--bs-primary);
+  --bs-btn-border-color: var(--bs-primary);
+  --bs-btn-hover-bg: var(--bs-primary);
+  --bs-btn-hover-border-color: var(--bs-primary);
+  --bs-btn-active-bg: var(--bs-primary);
+  --bs-btn-active-border-color: var(--bs-primary);
+  --bs-btn-disabled-color: var(--bs-primary);
+  --bs-btn-disabled-border-color: var(--bs-primary);
+  --bs-btn-focus-shadow-rgb: var(--bs-primary-rgb);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--bs-secondary);
+  --bs-btn-border-color: var(--bs-secondary);
+  --bs-btn-hover-bg: var(--bs-secondary);
+  --bs-btn-hover-border-color: var(--bs-secondary);
+  --bs-btn-active-bg: var(--bs-secondary);
+  --bs-btn-active-border-color: var(--bs-secondary);
+  --bs-btn-disabled-color: var(--bs-secondary);
+  --bs-btn-disabled-border-color: var(--bs-secondary);
+  --bs-btn-focus-shadow-rgb: var(--bs-secondary-rgb);
+}
+
+/* ==========================================================================
+   Square corners (must follow Bootstrap in base.html)
+   ========================================================================== */
+
+:root,
+[data-bs-theme='light'],
+[data-bs-theme='dark'] {
+  --bs-border-radius: 0;
+  --bs-border-radius-sm: 0;
+  --bs-border-radius-lg: 0;
+  --bs-border-radius-xl: 0;
+  --bs-border-radius-xxl: 0;
+  --bs-border-radius-2xl: 0;
+  --bs-border-radius-pill: 0;
+}
+
+.card,
+.card-header,
+.card-footer,
+.card-img,
+.card-img-top,
+.card-img-bottom,
+.btn,
+.form-control,
+.form-select,
+.input-group-text,
+.navbar-toggler,
+.dropdown-menu,
+.alert,
+.badge,
+.list-group-item,
+.modal-content,
+.toast,
+.popover,
+.offcanvas,
+.pagination .page-link,
+.nav-tabs .nav-link,
+.nav-pills .nav-link,
+.accordion-item,
+.accordion-button {
+  border-radius: 0;
 }

@@ -7,7 +7,10 @@
  * Usage: Import this file before other CSS files in base.html
  */
 
-:root {
+:root,
+[data-bs-theme='light'] {
+  color-scheme: light;
+
   /* Typography */
   --font-primary: 'LXGW WenKai TC', cursive;
   --font-footer: 'LXGW WenKai TC', cursive;
@@ -16,26 +19,54 @@
   --font-header: 'LXGW WenKai TC', cursive;
   --font-handwriting: 'LXGW WenKai TC', cursive;
 
-  /* Colors - Light Theme (default) */
-  --bg-primary: #ffffff;
-  --bg-primary-rgb: 255, 255, 255;
-  --bg-secondary: rgba(108, 117, 125, 0.1);
-  --bg-card-hover: rgba(108, 117, 125, 0.1);
-  --text-primary: #212529;
-  --text-secondary: #6c757d;
-  --border-color: rgba(108, 117, 125, 0.25);
-  --accent-primary: #007bff;
-  --accent-secondary: #0056b3;
+  /* Colors - Light Theme (sage green, anchored on --bg-navbar) */
+  --bg-primary: #f9fbf9;
+  --bg-primary-rgb: 249, 251, 249;
+  --bg-secondary: rgba(58, 107, 84, 0.08);
+  --bg-card-hover: #eef3ef;
+  --text-primary: #1a2820;
+  --text-secondary: #5c6d64;
+  --border-color: rgba(58, 90, 74, 0.22);
+  --accent-primary: #3a6b54;
+  --accent-secondary: #2d5342;
 
-  /* Game-specific - Light Theme (Life, Maze) */
+  /* Bootstrap bridge (keep components in sync with site palette) */
+  --bs-body-bg: var(--bg-primary);
+  --bs-body-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+  --bs-border-color: var(--border-color);
+  --bs-primary: var(--accent-primary);
+  --bs-primary-rgb: 58, 107, 84;
+  --bs-secondary: #5c6d64;
+  --bs-secondary-rgb: 92, 109, 100;
+  --bs-success: var(--game-result-success);
+  --bs-success-rgb: 46, 204, 64;
+  --bs-danger: var(--game-result-failure);
+  --bs-danger-rgb: 232, 92, 76;
+  --bs-info: var(--game-blue);
+  --bs-info-rgb: 106, 159, 184;
+  --bs-link-color: var(--accent-primary);
+  --bs-link-color-rgb: var(--bs-primary-rgb);
+  --bs-link-hover-color: var(--accent-secondary);
+  --bs-link-hover-color-rgb: 45, 83, 66;
+  --bs-card-bg: var(--bg-primary);
+  --bs-card-border-color: var(--border-color);
+
+  /* Notice banner (blog AI disclaimer) */
+  --bg-notice: #e8f2ec;
+  --bg-notice-end: #d4e8dc;
+  --border-notice: #a8c9b8;
+  --text-notice: #2a4a38;
+
+  /* Game board & grid cells (Life, Maze) — derived from site theme */
+  --game-board-background: var(--bg-footer);
   --cell-dead-color: var(--game-board-background);
-  --cell-alive-color: var(--game-blue);
-  --cell-border-color: #ccc;
-  --cell-hover-color: #e0e0e0;
-  --game-board-background: #ebebeb;
+  --cell-alive-color: var(--accent-primary);
+  --cell-border-color: color-mix(in srgb, var(--accent-primary) 42%, var(--cell-dead-color));
+  --cell-hover-color: color-mix(in srgb, var(--accent-primary) 28%, var(--cell-dead-color));
 
   /* Maze algorithm states */
-  --maze-highlight: var(--game-blue-light);
+  --maze-highlight: color-mix(in srgb, var(--accent-primary) 40%, var(--bg-primary));
   --maze-remove: var(--game-result-failure);
   --maze-visit: var(--game-gold);
 
@@ -75,43 +106,84 @@
   --slope-control-line: var(--game-ink-soft);
 
   /* Blog & Code blocks - Light Theme */
-  --bg-code: rgba(0, 0, 0, 0.05);
-  --bg-code-block: rgba(0, 0, 0, 0.03);
-  --text-code: #d63384;
-  --bg-table-header: rgba(0, 0, 0, 0.03);
-  --bg-table-alternate: rgba(0, 0, 0, 0.02);
+  --bg-code: rgba(58, 107, 84, 0.08);
+  --bg-code-block: rgba(58, 107, 84, 0.05);
+  --text-code: #3d7a5f;
+  --bg-table-header: rgba(58, 107, 84, 0.07);
+  --bg-table-alternate: rgba(58, 107, 84, 0.04);
 
   /* Shadows - Light Theme */
-  --shadow-md: 0 0 1rem rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 0 1rem rgba(26, 40, 32, 0.12);
 
   /* Transitions */
   --transition-standard: 0.3s ease;
 
+  /* Layout */
+  --content-width: 80rem;
+  --content-padding: 2rem;
+
+  /* Opaque surface tints (pre-composited against --bg-primary) */
+  --bg-navbar: #bfcec7;
+  --bg-navbar-highlight: color-mix(in srgb, white 7%, var(--bg-navbar));
+  --bg-navbar-depth: color-mix(in srgb, black 4%, var(--bg-navbar));
+  --navbar-elevation: 0 1px 3px rgba(26, 40, 32, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  --bg-footer: #eef4f1;
+
   /* Effects */
-  --noise-opacity: 0.2;
+  --texture-opacity: 0.15;
 }
 
 /* Dark theme variables */
 [data-bs-theme='dark'] {
-  --bg-primary: #212529;
-  --bg-primary-rgb: 33, 37, 41;
-  --bg-secondary: rgba(255, 255, 255, 0.05);
-  --bg-card-hover: rgba(255, 255, 255, 0.1);
-  --text-primary: #f8f9fa;
-  --text-secondary: #adb5bd;
-  --border-color: rgba(255, 255, 255, 0.25);
-  --accent-primary: #0d6efd;
-  --accent-secondary: #6ea8fe;
+  color-scheme: dark;
 
-  /* Game-specific - Dark Theme (Life, Maze) */
-  --cell-dead-color: var(--game-board-background);
-  --cell-alive-color: var(--game-blue);
-  --cell-border-color: #555;
-  --cell-hover-color: #aaa;
-  --game-board-background: #313437;
+  --bg-primary: #181b22;
+  --bg-primary-rgb: 24, 27, 34;
+  --bg-secondary: rgba(125, 162, 212, 0.08);
+  --bg-card-hover: #222831;
+  --text-primary: #e8eaef;
+  --text-secondary: #9aa3b5;
+  --border-color: rgba(157, 175, 210, 0.22);
+  --accent-primary: #82a5dc;
+  --accent-secondary: #a3bce8;
+
+  /* Bootstrap bridge */
+  --bs-body-bg: var(--bg-primary);
+  --bs-body-color: var(--text-primary);
+  --bs-secondary-color: var(--text-secondary);
+  --bs-border-color: var(--border-color);
+  --bs-primary: var(--accent-primary);
+  --bs-primary-rgb: 130, 165, 220;
+  --bs-secondary: #6a7385;
+  --bs-secondary-rgb: 106, 115, 133;
+  --bs-success: var(--game-result-success);
+  --bs-success-rgb: 76, 216, 88;
+  --bs-danger: var(--game-result-failure);
+  --bs-danger-rgb: 240, 104, 88;
+  --bs-info: var(--game-blue);
+  --bs-info-rgb: 106, 133, 146;
+  --bs-link-color: var(--accent-primary);
+  --bs-link-color-rgb: var(--bs-primary-rgb);
+  --bs-link-hover-color: var(--accent-secondary);
+  --bs-link-hover-color-rgb: 163, 188, 232;
+  --bs-card-bg: var(--bg-primary);
+  --bs-card-border-color: var(--border-color);
+
+  /* Notice banner */
+  --bg-notice: #1e2330;
+  --bg-notice-end: #282e3d;
+  --border-notice: #3d4a66;
+  --text-notice: #a3b8d8;
+
+  /* Game board & grid cells (Life, Maze) — derived from site theme */
+  --game-board-background: var(--bg-primary);
+  --cell-dead-color: var(--bg-footer);
+  --cell-alive-color: var(--accent-primary);
+  --cell-border-color: color-mix(in srgb, var(--accent-primary) 45%, var(--cell-dead-color));
+  --cell-hover-color: color-mix(in srgb, var(--accent-primary) 55%, var(--cell-dead-color));
 
   /* Maze algorithm states */
-  --maze-highlight: var(--game-blue-light);
+  --maze-highlight: color-mix(in srgb, var(--accent-primary) 55%, var(--bg-primary));
   --maze-remove: var(--game-result-failure);
   --maze-visit: var(--game-gold);
 
@@ -151,15 +223,22 @@
   --slope-control-line: var(--game-ink-soft);
 
   /* Blog & Code blocks - Dark Theme */
-  --bg-code: rgba(255, 255, 255, 0.1);
-  --bg-code-block: rgba(255, 255, 255, 0.08);
-  --text-code: #f783ac;
-  --bg-table-header: rgba(255, 255, 255, 0.08);
-  --bg-table-alternate: rgba(255, 255, 255, 0.04);
+  --bg-code: rgba(125, 162, 212, 0.12);
+  --bg-code-block: rgba(125, 162, 212, 0.08);
+  --text-code: #9eb8e8;
+  --bg-table-header: rgba(125, 162, 212, 0.1);
+  --bg-table-alternate: rgba(125, 162, 212, 0.05);
 
   /* Shadows - Dark Theme */
-  --shadow-md: 0 0 1rem rgba(125, 125, 125, 0.3);
+  --shadow-md: 0 0 1rem rgba(8, 10, 18, 0.45);
+
+  /* Opaque surface tints - Dark Theme (primary darkest → footer → navbar) */
+  --bg-navbar: #2d333e;
+  --bg-navbar-highlight: color-mix(in srgb, white 5%, var(--bg-navbar));
+  --bg-navbar-depth: color-mix(in srgb, black 6%, var(--bg-navbar));
+  --navbar-elevation: 0 1px 4px rgba(0, 0, 0, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --bg-footer: #222831;
 
   /* Effects - Dark Theme */
-  --noise-opacity: 0.1;
+  --texture-opacity: 0.18;
 }
