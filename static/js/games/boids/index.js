@@ -4,9 +4,8 @@ function getCssVar(name) {
   return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 }
 
-// Fixed physics parameters for consistent, reasonable behavior
-const RESPONSIVENESS = 0.05; // Good balance between smooth and responsive
-const MOMENTUM = 0.98; // Natural momentum without being sluggish
+const RESPONSIVENESS = 0.05;
+const MOMENTUM = 0.98;
 
 class Boid {
   constructor(x, y) {
@@ -16,7 +15,8 @@ class Boid {
     this.vy = (Math.random() - 0.5) * 200;
     this.maxSpeed = 110;
     this.minSpeed = 90;
-    this.separationRadius = 30; // Fixed separation distance
+    this.separationRadius = 30;
+    this.separationRadiusSq = 30 * 30;
   }
 
   update(neighbors, attractionPoint, params, canvasWidth, canvasHeight, dt = 1) {
@@ -37,114 +37,87 @@ class Boid {
       this.vy = (this.vy / speed) * this.minSpeed;
     }
 
-    // Apply time-scaled movement
     this.x += this.vx * dt;
     this.y += this.vy * dt;
     this.wrap(canvasWidth, canvasHeight);
   }
 
   calculateDesiredVelocity(neighbors, attractionPoint, params) {
-    const separation = this.separate(neighbors, params.separation);
-    const alignment = this.align(neighbors, params.alignment);
-    const cohesion = this.cohere(neighbors, params.cohesion);
-    const attraction = this.attract(attractionPoint, params.attraction);
+    let sepX = 0;
+    let sepY = 0;
+    let sepCount = 0;
+    let alignX = 0;
+    let alignY = 0;
+    let cohX = 0;
+    let cohY = 0;
+    const count = neighbors.length;
 
-    return {
-      x: separation.x + alignment.x + cohesion.x + attraction.x,
-      y: separation.y + alignment.y + cohesion.y + attraction.y,
-    };
-  }
-
-  separate(neighbors, weight) {
-    const steer = { x: 0, y: 0 };
-    let count = 0;
-
-    for (const other of neighbors) {
+    for (let i = 0; i < count; i++) {
+      const other = neighbors[i];
       const dx = this.x - other.x;
       const dy = this.y - other.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      const distSq = dx * dx + dy * dy;
 
-      if (dist > 0 && dist < this.separationRadius) {
+      if (distSq > 0 && distSq < this.separationRadiusSq) {
+        const dist = Math.sqrt(distSq);
         const force = (this.separationRadius - dist) / this.separationRadius;
-        steer.x += (dx / dist) * force;
-        steer.y += (dy / dist) * force;
-        count++;
+        sepX += (dx / dist) * force;
+        sepY += (dy / dist) * force;
+        sepCount++;
       }
+
+      alignX += other.vx;
+      alignY += other.vy;
+      cohX += other.x;
+      cohY += other.y;
     }
 
-    if (count > 0) {
-      steer.x /= count;
-      steer.y /= count;
-      const mag = Math.sqrt(steer.x * steer.x + steer.y * steer.y);
+    let x = 0;
+    let y = 0;
+
+    if (sepCount > 0) {
+      sepX /= sepCount;
+      sepY /= sepCount;
+      const mag = Math.sqrt(sepX * sepX + sepY * sepY);
       if (mag > 0) {
-        steer.x = (steer.x / mag) * this.maxSpeed * weight;
-        steer.y = (steer.y / mag) * this.maxSpeed * weight;
+        const scale = (this.maxSpeed * params.separation) / mag;
+        x += sepX * scale;
+        y += sepY * scale;
       }
     }
 
-    return steer;
-  }
-
-  align(neighbors, weight) {
-    const steer = { x: 0, y: 0 };
-    let count = 0;
-
-    for (const other of neighbors) {
-      steer.x += other.vx;
-      steer.y += other.vy;
-      count++;
-    }
-
     if (count > 0) {
-      steer.x /= count;
-      steer.y /= count;
-      const mag = Math.sqrt(steer.x * steer.x + steer.y * steer.y);
-      if (mag > 0) {
-        steer.x = (steer.x / mag) * this.maxSpeed * weight;
-        steer.y = (steer.y / mag) * this.maxSpeed * weight;
+      alignX /= count;
+      alignY /= count;
+      const alignMag = Math.sqrt(alignX * alignX + alignY * alignY);
+      if (alignMag > 0) {
+        const scale = (this.maxSpeed * params.alignment) / alignMag;
+        x += alignX * scale;
+        y += alignY * scale;
+      }
+
+      cohX = cohX / count - this.x;
+      cohY = cohY / count - this.y;
+      const cohDist = Math.sqrt(cohX * cohX + cohY * cohY);
+      if (cohDist > 0) {
+        const scale = (this.maxSpeed * params.cohesion) / cohDist;
+        x += cohX * scale;
+        y += cohY * scale;
       }
     }
 
-    return steer;
-  }
-
-  cohere(neighbors, weight) {
-    const steer = { x: 0, y: 0 };
-    let count = 0;
-
-    for (const other of neighbors) {
-      steer.x += other.x;
-      steer.y += other.y;
-      count++;
+    if (attractionPoint) {
+      const dx = attractionPoint.x - this.x;
+      const dy = attractionPoint.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 0) {
+        const scale = (this.maxSpeed * params.attraction) / dist;
+        x += dx * scale;
+        y += dy * scale;
+      }
     }
 
-    if (count > 0) {
-      steer.x /= count;
-      steer.y /= count;
-      return this.seek(steer, weight);
-    }
-
-    return steer;
-  }
-
-  attract(point, weight) {
-    if (!point) return { x: 0, y: 0 };
-    return this.seek(point, weight);
-  }
-
-  seek(target, weight) {
-    const dx = target.x - this.x;
-    const dy = target.y - this.y;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    if (dist > 0) {
-      return {
-        x: (dx / dist) * this.maxSpeed * weight,
-        y: (dy / dist) * this.maxSpeed * weight,
-      };
-    }
-
-    return { x: 0, y: 0 };
+    return { x, y };
   }
 
   wrap(canvasWidth, canvasHeight) {
@@ -154,25 +127,25 @@ class Boid {
     if (this.y > canvasHeight) this.y = 0;
   }
 
-  draw(ctx, canvasWidth, canvasHeight) {
+  draw(ctx, size) {
     const angle = Math.atan2(this.vy, this.vx);
-    const size = Math.min(canvasWidth, canvasHeight) * 0.01;
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    const half = size / 2;
+    const third = size / 3;
 
-    const color = getCssVar('--accent-primary');
+    // Tip, rear-left, rear-right in local space, rotated into world space
+    const x0 = this.x + size * cos;
+    const y0 = this.y + size * sin;
+    const x1 = this.x + (-half * cos - third * sin);
+    const y1 = this.y + (-half * sin + third * cos);
+    const x2 = this.x + (-half * cos + third * sin);
+    const y2 = this.y + (-half * sin - third * cos);
 
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(angle);
-
-    ctx.beginPath();
-    ctx.moveTo(size, 0);
-    ctx.lineTo(-size / 2, size / 3);
-    ctx.lineTo(-size / 2, -size / 3);
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.lineTo(x2, y2);
     ctx.closePath();
-
-    ctx.fillStyle = color;
-    ctx.fill();
-    ctx.restore();
   }
 }
 
@@ -180,52 +153,61 @@ class SpatialGrid {
   constructor(cellSize) {
     this.cellSize = cellSize;
     this.grid = new Map();
+    this._activeCells = [];
   }
 
   clear() {
-    this.grid.clear();
+    for (let i = 0; i < this._activeCells.length; i++) {
+      this._activeCells[i].length = 0;
+    }
+    this._activeCells.length = 0;
   }
 
-  getCell(x, y) {
-    const cellX = Math.floor(x / this.cellSize);
-    const cellY = Math.floor(y / this.cellSize);
-    return `${cellX},${cellY}`;
+  cellKey(x, y) {
+    return (
+      ((Math.floor(x / this.cellSize) & 0xffff) << 16) | (Math.floor(y / this.cellSize) & 0xffff)
+    );
   }
 
   add(boid) {
-    const cell = this.getCell(boid.x, boid.y);
-    if (!this.grid.has(cell)) {
-      this.grid.set(cell, []);
+    const key = this.cellKey(boid.x, boid.y);
+    let cell = this.grid.get(key);
+    if (!cell) {
+      cell = [];
+      this.grid.set(key, cell);
     }
-    this.grid.get(cell).push(boid);
+    if (cell.length === 0) {
+      this._activeCells.push(cell);
+    }
+    cell.push(boid);
   }
 
-  getNeighbors(boid, radius) {
-    const neighbors = [];
+  getNeighbors(boid, radius, out) {
+    out.length = 0;
     const cellX = Math.floor(boid.x / this.cellSize);
     const cellY = Math.floor(boid.y / this.cellSize);
     const range = Math.ceil(radius / this.cellSize);
+    const radiusSq = radius * radius;
 
     for (let dx = -range; dx <= range; dx++) {
       for (let dy = -range; dy <= range; dy++) {
-        const cell = `${cellX + dx},${cellY + dy}`;
-        const cellBoids = this.grid.get(cell);
-        if (cellBoids) {
-          for (const other of cellBoids) {
-            if (other !== boid) {
-              const dx = boid.x - other.x;
-              const dy = boid.y - other.y;
-              const dist = Math.sqrt(dx * dx + dy * dy);
-              if (dist <= radius) {
-                neighbors.push(other);
-              }
-            }
+        const key = (((cellX + dx) & 0xffff) << 16) | ((cellY + dy) & 0xffff);
+        const cellBoids = this.grid.get(key);
+        if (!cellBoids) continue;
+
+        for (let i = 0; i < cellBoids.length; i++) {
+          const other = cellBoids[i];
+          if (other === boid) continue;
+          const ox = boid.x - other.x;
+          const oy = boid.y - other.y;
+          if (ox * ox + oy * oy <= radiusSq) {
+            out.push(other);
           }
         }
       }
     }
 
-    return neighbors;
+    return out;
   }
 }
 
@@ -233,7 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas = document.getElementById('game-board');
   const ctx = setupHighDPICanvas(canvas);
 
-  // Track logical canvas dimensions for game calculations
   let canvasLogicalDimensions = {
     width: canvas.getBoundingClientRect().width,
     height: canvas.getBoundingClientRect().height,
@@ -264,6 +245,10 @@ document.addEventListener('DOMContentLoaded', () => {
   let isMousePressed = false;
   let lastFrameTime = 0;
   let showGrid = false;
+  let boidSize = 0;
+  let accentColor = getCssVar('--accent-primary');
+  let borderColor = getCssVar('--border-color');
+  const neighborBuffer = [];
   let params = {
     boidCount: parseInt(boidCountInput.value),
     simStep: parseFloat(speedInput.value),
@@ -274,13 +259,31 @@ document.addEventListener('DOMContentLoaded', () => {
     attraction: parseFloat(attractionInput.value),
   };
 
+  function refreshThemeColors() {
+    accentColor = getCssVar('--accent-primary');
+    borderColor = getCssVar('--border-color');
+  }
+
+  new MutationObserver(refreshThemeColors).observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-bs-theme'],
+  });
+  new MutationObserver(refreshThemeColors).observe(document.body, {
+    attributes: true,
+    attributeFilter: ['data-bs-theme'],
+  });
+
+  function updateBoidSize() {
+    boidSize = Math.min(canvasLogicalDimensions.width, canvasLogicalDimensions.height) * 0.01;
+  }
+
   function createBoids() {
     boids = [];
     const minDistance = 35;
     const maxAttempts = 50;
 
     for (let i = 0; i < params.boidCount; i++) {
-      let position = findNonOverlappingPosition(minDistance, maxAttempts);
+      const position = findNonOverlappingPosition(minDistance, maxAttempts);
       boids.push(new Boid(position.x, position.y));
     }
   }
@@ -301,11 +304,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function isPositionValid(x, y, minDistance) {
+    const minDistanceSq = minDistance * minDistance;
     for (const boid of boids) {
       const dx = x - boid.x;
       const dy = y - boid.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      if (distance < minDistance) {
+      if (dx * dx + dy * dy < minDistanceSq) {
         return false;
       }
     }
@@ -315,6 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function resizeCanvas() {
     const dimensions = resizeHighDPICanvas(canvas, ctx);
     canvasLogicalDimensions = dimensions;
+    updateBoidSize();
     createBoids();
   }
 
@@ -326,16 +330,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function draw() {
-    ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
-
-    // Draw grid if enabled
     if (showGrid) {
       drawGrid();
     }
 
+    ctx.beginPath();
+    ctx.fillStyle = accentColor;
     for (const boid of boids) {
-      boid.draw(ctx, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
+      boid.draw(ctx, boidSize);
     }
+    ctx.fill();
 
     if (isMousePressed && attractionPoint) {
       ctx.beginPath();
@@ -349,7 +353,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawGrid() {
-    // Scale grid size with canvas - aim for roughly 10-15 cells across the screen
     const targetCells = 25;
     const cellSize = Math.max(
       10,
@@ -361,26 +364,19 @@ document.addEventListener('DOMContentLoaded', () => {
       )
     );
 
-    const gridColor = getCssVar('--border-color');
-
-    ctx.strokeStyle = gridColor;
+    ctx.strokeStyle = borderColor;
     ctx.lineWidth = 1.5;
+    ctx.beginPath();
 
-    // Draw vertical lines
     for (let x = 0; x <= canvasLogicalDimensions.width; x += cellSize) {
-      ctx.beginPath();
       ctx.moveTo(x, 0);
       ctx.lineTo(x, canvasLogicalDimensions.height);
-      ctx.stroke();
     }
-
-    // Draw horizontal lines
     for (let y = 0; y <= canvasLogicalDimensions.height; y += cellSize) {
-      ctx.beginPath();
       ctx.moveTo(0, y);
       ctx.lineTo(canvasLogicalDimensions.width, y);
-      ctx.stroke();
     }
+    ctx.stroke();
   }
 
   function gameLoop(currentTime) {
@@ -388,22 +384,19 @@ document.addEventListener('DOMContentLoaded', () => {
       lastFrameTime = currentTime;
     }
 
-    // Calculate real time delta
-    const dt = (currentTime - lastFrameTime) / 1000; // Convert to seconds
+    const dt = (currentTime - lastFrameTime) / 1000;
     lastFrameTime = currentTime;
 
     ctx.clearRect(0, 0, canvasLogicalDimensions.width, canvasLogicalDimensions.height);
 
     if (!isPaused) {
-      // Apply sim step as time multiplier
       const simulationTime = dt * params.simStep;
 
-      // Update boids with time-scaled physics
       updateGrid();
       for (const boid of boids) {
-        const neighbors = grid.getNeighbors(boid, params.visionRadius);
+        grid.getNeighbors(boid, params.visionRadius, neighborBuffer);
         boid.update(
-          neighbors,
+          neighborBuffer,
           isMousePressed ? attractionPoint : null,
           params,
           canvasLogicalDimensions.width,
