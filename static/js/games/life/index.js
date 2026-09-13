@@ -46,12 +46,22 @@ function countNeighbors(row, col) {
   return count;
 }
 
+function nextAlive(alive, neighbors) {
+  return alive ? neighbors === 2 || neighbors === 3 : neighbors === 3;
+}
+
 function updateGrid() {
+  const next = [];
+  for (let i = 0; i < GRID_SIZE; i++) {
+    next[i] = [];
+    for (let j = 0; j < GRID_SIZE; j++) {
+      next[i][j] = nextAlive(grid[i][j].alive, countNeighbors(i, j));
+    }
+  }
   for (let i = 0; i < GRID_SIZE; i++) {
     for (let j = 0; j < GRID_SIZE; j++) {
-      const neighbors = countNeighbors(i, j);
       const cell = grid[i][j];
-      const nowAlive = cell.alive ? neighbors === 2 || neighbors === 3 : neighbors === 3;
+      const nowAlive = next[i][j];
       if (nowAlive !== cell.alive) {
         cell.alive = nowAlive;
         cell.element.classList.toggle('alive', nowAlive);
@@ -159,6 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   createGrid();
+  if (patternSelect.value) populatePattern(patternSelect.value);
 
   startBtn.addEventListener('click', startGame);
   stopBtn.addEventListener('click', stopGame);
