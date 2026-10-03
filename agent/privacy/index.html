@@ -1,0 +1,223 @@
+<!--
+  JLou's Home
+  Copyright (c) 2022-2026 Joey Lou
+  Licensed under the MIT License.
+  
+  Base Template - Primary layout template that all other templates extend
+  
+  Structure:
+  - <head>: Meta tags, favicon, title, CSS and font imports
+  - <body>: Navigation, content area, and footer
+  - Scripts: Bootstrap JS and custom scripts
+  
+  Blocks that child templates can override:
+  - head: Additional head content (styles, meta)
+  - content: Main page content
+  - scripts: Additional JavaScript imports
+-->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Favicon and Apple touch icon setup -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="../../static/favicon/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../../static/favicon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="../../static/favicon/favicon-16x16.png"
+    />
+    <link rel="manifest" href="../../static/favicon/site.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JLou&#39;s Privacy</title>
+
+    <!-- Canonical URL -->
+    
+<link rel="canonical" href="https://jiujiulou.com/agent/privacy/" />
+
+
+    <!-- Apply saved theme immediately to prevent flash -->
+    <script>
+      (function () {
+        var theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-bs-theme', theme);
+      })();
+    </script>
+
+    <!-- Theme toggle functionality -->
+    <script type="module" src="../../static/js/theme-toggle.js"></script>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+
+    <!-- CSS Variables and Base Styles -->
+    <link rel="stylesheet" href="../../static/css/variables.css" />
+    <link rel="stylesheet" href="../../static/css/styles.css" />
+
+    <!-- Google Fonts import -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Google Analytics (if enabled) -->
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZRPJT5CNCH"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', 'G-ZRPJT5CNCH');
+    </script>
+    
+
+    <!-- Additional head content from child templates -->
+    
+<link rel="stylesheet" href="../../static/css/blogs.css" />
+
+  </head>
+
+  <body class="d-flex flex-column min-vh-100">
+    <!-- Navigation bar with theme toggle -->
+    <nav class="navbar navbar-expand-md">
+      <div class="navbar-inner">
+        <a class="navbar-brand" href="../../index.html">About</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+          style="transform: scale(0.75)"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <a class="nav-item nav-link" href="../../blogs/index.html">Blogs</a>
+            <a class="nav-item nav-link" href="../../games/index.html">Games</a>
+            <a class="nav-item nav-link" href="../../tools/index.html">Tools</a>
+          </ul>
+          <!-- Theme toggle button -->
+          <ul class="navbar-nav ms-auto">
+            <button class="btn align-items-center" id="theme-toggle">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="currentColor"
+                class="bi bi-sun"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"
+                />
+              </svg>
+            </button>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <div id="content-wrapper">
+      <div id="content-body">
+        <!-- Page content from child templates -->
+        
+<div class="container py-5 col-lg-8">
+  <article class="blog-content">
+    <h1>Privacy Policy</h1>
+    <p>Last updated: 2026-10-03</p>
+    <p>
+      <a href="../index.html">JLou's Agent</a> is a personal mail tool run by Joey Lou. It
+      is not a public service. This page describes how it handles Google user data for the Google
+      account that authorizes it.
+    </p>
+
+    <h2>What the tool accesses</h2>
+    <p>When an account authorizes JLou's Agent, the tool requests Gmail access so it can:</p>
+    <ul>
+      <li>read, label, and organize messages in that account</li>
+      <li>create and update labels and filters</li>
+    </ul>
+    <p>
+      The scopes are <code>https://www.googleapis.com/auth/gmail.modify</code> and
+      <code>https://www.googleapis.com/auth/gmail.settings.basic</code>.
+    </p>
+
+    <h2>How data is used</h2>
+    <p>
+      Gmail data is used only to organize the authorizing account, including labels, filters, and
+      similar mailbox cleanup. It is not used for advertising, not sold, and not transferred to
+      anyone else. It is not used to train generalized models.
+    </p>
+
+    <h2>Where data is stored</h2>
+    <p>
+      JLou's Agent runs on Joey Lou's own computer. OAuth tokens and mailbox data stay on that
+      machine. This website is a static site and does not receive or store Gmail data. Requests to
+      read or change mail go to Google's Gmail API.
+    </p>
+
+    <h2>Revoking access</h2>
+    <p>
+      Access lasts until the authorization is revoked or the tokens are deleted from that computer.
+      You can revoke it at any time from
+      <a href="https://myaccount.google.com/permissions">Google Account permissions</a>.
+    </p>
+
+    <h2>Contact</h2>
+    <p>
+      Questions about this policy:
+      <a href="mailto:joey99lou@gmail.com">joey99lou@gmail.com</a>.
+    </p>
+  </article>
+</div>
+
+      </div>
+    </div>
+
+    <!-- Footer with copyright info -->
+    <footer>
+      <div class="footer-inner">
+        <small>
+          © Joey Lou | 2022-2026
+          <a href="https://github.com/joey-lou/joey-lou.github.io">GitHub</a></small
+        >
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS bundle -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+
+    <script defer src="../../static/js/halftone.js"></script>
+
+    <!-- Additional scripts from child templates -->
+     
+  </body>
+</html>
