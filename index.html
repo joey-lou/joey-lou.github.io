@@ -39,7 +39,7 @@
     />
     <link rel="manifest" href="static/favicon/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>JLou's Home</title>
+    <title>JLou&#39;s Home</title>
 
     <!-- Canonical URL -->
     
