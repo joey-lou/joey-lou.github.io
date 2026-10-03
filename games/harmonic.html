@@ -1,6 +1,6 @@
 <!--
   JLou's Home
-  Copyright (c) 2022-2025 Joey Lou
+  Copyright (c) 2022-2026 Joey Lou
   Licensed under the MIT License.
   
   Base Template - Primary layout template that all other templates extend
