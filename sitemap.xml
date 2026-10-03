@@ -21,12 +21,12 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://jiujiulou.com/agent/</loc>
+    <loc>https://jiujiulou.com/mailer/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
   <url>
-    <loc>https://jiujiulou.com/agent/privacy/</loc>
+    <loc>https://jiujiulou.com/mailer/privacy/</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
